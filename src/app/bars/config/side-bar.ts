@@ -45,6 +45,21 @@ export const CALC_SIDE_BAR: Bar = {
   ],
 };
 
+export const CALENDAR_SIDE_BAR: Bar = {
+  alink: [
+    {
+      name: 'home',
+      link: 'calendar/home',
+      icon: '',
+    },
+    {
+      name: 'calendar',
+      link: '/home',
+      icon: '',
+    },
+  ],
+};
+
 export const SETTING_SIDE_BAR: Bar = {
   alink: [
     {
