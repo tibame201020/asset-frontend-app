@@ -10,12 +10,17 @@ export const HEADER: Bar = {
       {
         name: 'Deposit',
         link: '/deposit',
-        icon: 'broken_image',
+        icon: 'terminal',
       },
       {
         name: 'Calc',
         link: '/calc',
-        icon: 'chat_bubble_outline',
+        icon: 'data_thresholding',
+      },
+      {
+        name: 'Calendar',
+        link: '/calendar',
+        icon: 'token',
       },
       {
         name: 'Setting',
