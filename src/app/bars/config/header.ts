@@ -1,4 +1,4 @@
-import { Bar } from "../model/bar";
+import { Bar } from "../../calc/model/bar";
 
 export const HEADER: Bar = {
     alink: [
