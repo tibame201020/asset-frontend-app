@@ -1,4 +1,4 @@
-import { Bar } from "../model/bar";
+import { Bar } from "../../model/bar";
 
 export const HOME_SIDE_BAR: Bar = {
   alink: [
@@ -38,8 +38,8 @@ export const CALC_SIDE_BAR: Bar = {
       icon: '',
     },
     {
-      name: 'calc',
-      link: '/home',
+      name: 'config',
+      link: 'calc/config',
       icon: '',
     },
   ],
