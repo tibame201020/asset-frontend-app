@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HEADER } from '../config/header';
-import { Bar } from '../../calc/model/bar';
+import { Bar } from '../../model/bar';
 
 @Component({
   selector: 'app-header',
