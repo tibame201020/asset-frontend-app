@@ -1,19 +1,17 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
+import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
+import { BarsModule } from './bars/bars.module';
+import { AppRoutingModule } from './app-routing.module';
+import { DepositModule } from './deposit/deposit.module';
+import { SettingModule } from './setting/setting.module';
+import { CalcModule } from './calc/calc.module';
+import { CommonModule } from '@angular/common';
+import { FrontIndexComponent } from './front-index/front-index.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  declarations: [AppComponent, FrontIndexComponent],
+  imports: [BarsModule, AppRoutingModule, CommonModule],
   providers: [],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule { }
+export class AppModule {}

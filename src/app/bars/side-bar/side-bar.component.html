@@ -1,0 +1,15 @@
+<div class="container">
+    <hr />
+  
+    <!-- As a link -->
+    <nav
+      class="navbar navbar-light"
+      *ngFor="let alink of this.sideBarService.sidebar.alink"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand sidelink" href="#" routerLink="{{ alink.link }}">
+          {{ alink.name }}
+        </a>
+      </div>
+    </nav>
+  </div>
