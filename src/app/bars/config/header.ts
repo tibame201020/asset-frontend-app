@@ -25,7 +25,7 @@ export const HEADER: Bar = {
       {
         name: 'Setting',
         link: '/setting',
-        icon: 'build',
+        icon: 'settings',
       },
     ],
   };
