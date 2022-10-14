@@ -1,0 +1,22 @@
+<div class="calcform">
+    <form [formGroup]="formGroup">
+        <mat-form-field appearance="fill" style="width: 10%;">
+            <mat-label>loop cycle</mat-label>
+            <mat-select formControlName="key">
+                <mat-option value="month">每月</mat-option>
+                <mat-option value="week">每周</mat-option>
+                <mat-option value="day">每日</mat-option>
+            </mat-select>
+        </mat-form-field>
+        |
+        <mat-form-field appearance="fill" style="width: 25%;">
+            <mat-label>Enter value</mat-label>
+            <input matInput placeholder="若無負值則當income" formControlName="value" type="number">
+        </mat-form-field>
+        |
+        <mat-form-field appearance="fill" style="width: 45%;">
+            <mat-label>Enter Description</mat-label>
+            <input matInput placeholder="描述" formControlName="description" type="text">
+        </mat-form-field>
+    </form>
+</div>

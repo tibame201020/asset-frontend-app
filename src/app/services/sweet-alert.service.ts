@@ -27,7 +27,7 @@ export class SweetAlertService {
       icon: 'error',
       title: title ? title : 'Oops...',
       text: message ? message : 'default error message',
-      footer: footer ? footer : '<a href="">Why do I have this issue?</a>'
+      footer: footer ? footer : ''
     })
   }
 

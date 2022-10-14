@@ -1,1 +1,77 @@
-<p>config works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h2>常態性支出 收入</h2>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col">
+            <i *ngIf="!this.addConfigStatus" class="material-icons" #tooltip="matTooltip"
+                matTooltip="新增每月固定支出參數or預計收入等設定" matTooltipHideDelay="100" (click)="changeAddConfigStatus()">note_add</i>
+            <i *ngIf="this.addConfigStatus" class="material-icons" #tooltip="matTooltip" matTooltip="add new config"
+                matTooltipHideDelay="100" (click)="addCalcForm()">add</i>
+            <i *ngIf="this.addConfigStatus" class="material-icons" #tooltip="matTooltip" matTooltip="reset"
+                matTooltipHideDelay="100" (click)="resetCalcForms()">settings_backup_restore</i>
+            <i *ngIf="this.addConfigStatus" class="material-icons" #tooltip="matTooltip" matTooltip="back"
+                matTooltipHideDelay="100" (click)="changeAddConfigStatus()">chevron_left</i>
+            <span *ngIf="this.addConfigStatus">　</span>
+            <i *ngIf="this.addConfigStatus" class="material-icons" #tooltip="matTooltip"
+                matTooltip="insert these configs" matTooltipHideDelay="100"
+                (click)="saveAllCalcConfig()">done_all</i>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div *ngIf="this.addConfigStatus">
+                <div class="container-fluid">
+                    <div *ngFor="let calc of this.calcForm; let i=index">
+                        <div class="row">
+                            <div class="col-0.5">
+                                <i class="material-icons" #tooltip="matTooltip" matTooltip="copy this config"
+                                    matTooltipHideDelay="100" (click)="copyCalcForm(i)">bookmark</i>
+                                <i class="material-icons" #tooltip="matTooltip" matTooltip="delete this config"
+                                    matTooltipHideDelay="100" (click)="deleteCalcForm(i)">close</i>
+                            </div>
+                            <div class="col">
+                                <app-calc-form [calc]="calc" (newItemEvent)="updateCalc(i, $event)"></app-calc-form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<hr>
+    <div class="row">
+        <div class="col">
+            <table *ngIf="this.configs.length" class="table table-borderless table-dark table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>cycle</th>
+                    <th>category</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let calcConfig of this.configs">
+                    <td style="width:3%;">
+                        <i class="material-icons" #tooltip="matTooltip" matTooltip="edit this config"
+                        matTooltipHideDelay="100" (click)="editCalcConfig(calcConfig.id)">edit_square</i>
+                        <i class="material-icons" #tooltip="matTooltip" matTooltip="delete this config"
+                        matTooltipHideDelay="100" (click)="removeCalcConfig(calcConfig.id)">credit_card_off</i>
+                    </td>
+                    <td style="width:5%;">{{calcConfig.key}}</td>
+                    <td style="width:5%;">{{calcConfig.value > 0 ? 'Income' : 'Expenditure'}}</td>
+                    <td style="width:10%;">{{calcConfig.value}}</td>
+                    <td style="width:30%;">{{calcConfig.description}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+</div>
