@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SideBarService } from './bars/side-bar.service';
+import { SideBarService } from './services/side-bar.service';
 
 @Component({
   selector: 'app-root',

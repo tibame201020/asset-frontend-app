@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CALC_SIDE_BAR, CALENDAR_SIDE_BAR, DEPOSIT_SIDE_BAR, HOME_SIDE_BAR, SETTING_SIDE_BAR } from './config/side-bar';
+import { CALC_SIDE_BAR, CALENDAR_SIDE_BAR, DEPOSIT_SIDE_BAR, HOME_SIDE_BAR, SETTING_SIDE_BAR } from '../bars/config/side-bar';
 import { Bar } from '../model/bar';
 
 @Injectable({
