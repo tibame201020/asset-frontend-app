@@ -33,11 +33,6 @@ export const DEPOSIT_SIDE_BAR: Bar = {
 export const CALC_SIDE_BAR: Bar = {
   alink: [
     {
-      name: 'home',
-      link: 'calc/home',
-      icon: '',
-    },
-    {
       name: 'config',
       link: 'calc/config',
       icon: '',
