@@ -26,4 +26,8 @@ export class CalcService {
   deleteById(id:number):Observable<boolean> {
     return this.http.post<boolean>(environment.apiUrl + 'calc/deleteById', id);
   }
+
+  updateCalc(calc:Calc):Observable<boolean> {
+    return this.http.post<boolean>(environment.apiUrl + 'calc/update', calc);
+  }
 }

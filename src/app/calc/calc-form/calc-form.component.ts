@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Calc } from 'src/app/model/calc';
+import { CALC_KEYS, CALC_PURPOSES } from '../config/calc-config';
 
 @Component({
   selector: 'app-calc-form',
@@ -14,6 +15,9 @@ export class CalcFormComponent implements OnInit {
   formGroup: FormGroup = this.formBuilder.group({});
 
   @Output() newItemEvent = new EventEmitter<Calc>();
+
+  keySelects = CALC_KEYS;
+  purposeSelects=CALC_PURPOSES;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -35,6 +39,7 @@ export class CalcFormComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       key: [this.calc ? this.calc.key : '', Validators.required],
       value: [this.calc ? this.calc.value : '', Validators.required],
+      purpose: [this.calc ? this.calc.purpose : '', Validators.required],
       description: [this.calc ? this.calc.description : '', Validators.required]
     });
   }

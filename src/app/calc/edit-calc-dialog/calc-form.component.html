@@ -1,10 +1,10 @@
-<div>
+<div class="calcform">
     <form [formGroup]="formGroup">
         <mat-form-field appearance="fill" style="width: 10%;">
             <mat-label>loop cycle</mat-label>
             <mat-select formControlName="key">
                 <div *ngFor="let keySelect of this.keySelects">
-                    <mat-option value="{{keySelect.key}}">{{keySelect.text}}</mat-option>
+                    <mat-option value="keySelect.key">{{keySelect.text}}</mat-option>
                 </div>
             </mat-select>
         </mat-form-field>
@@ -18,7 +18,7 @@
             <mat-label>Purpose</mat-label>
             <mat-select formControlName="purpose">
                 <div *ngFor="let purposeSelect of this.purposeSelects">
-                    <mat-option value="{{purposeSelect.key}}">{{purposeSelect.text}}</mat-option>
+                    <mat-option value="purpose.key">{{purposeSelect.text}}</mat-option>
                 </div>
             </mat-select>
         </mat-form-field>

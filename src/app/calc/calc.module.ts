@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { ShareModule } from '../share/share.module';
-import { HomeComponent } from './home/home.component';
 import { ConfigComponent } from './config/config.component';
 import { CalcFormComponent } from './calc-form/calc-form.component';
+import { EditCalcDialogComponent } from './edit-calc-dialog/edit-calc-dialog.component';
 
 
 
 @NgModule({
   declarations: [
-    HomeComponent,
     ConfigComponent,
-    CalcFormComponent
+    CalcFormComponent,
+    EditCalcDialogComponent
   ],
   imports: [
     ShareModule

@@ -14,7 +14,7 @@ export class SweetAlertService {
 
   autoClose(message?: string, icon?: SweetAlertIcon, position?: SweetAlertPosition, timer?: number) {
     Swal.fire({
-      position: position ? position : 'top-end',
+      position: position ? position : 'center',
       icon: icon ? icon : 'success',
       title: message ? message : 'default message',
       showConfirmButton: false,
