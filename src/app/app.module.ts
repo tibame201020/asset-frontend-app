@@ -7,6 +7,7 @@ import { SettingModule } from './setting/setting.module';
 import { CalcModule } from './calc/calc.module';
 import { CommonModule } from '@angular/common';
 import { FrontIndexComponent } from './front-index/front-index.component';
+import { CalendarModule } from './calendar/calendar.module';
 
 @NgModule({
   declarations: [AppComponent, FrontIndexComponent],

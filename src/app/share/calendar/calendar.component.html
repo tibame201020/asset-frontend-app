@@ -1,2 +1,17 @@
-<p>calendar works!</p>
-<full-calendar [options]='calendarOptions'></full-calendar>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-9 calendar">
+            <full-calendar [options]='calendarOptions'></full-calendar>
+        </div>
+        <div class="col-3">
+            <div class="container-fluid">
+                <div class="row">
+                </div>
+                <div class="col-12">
+                    <mat-slide-toggle [(ngModel)]="this.calendarEventService.addEventOption">addEvent</mat-slide-toggle>
+                </div>
+                <div class="col-12">list</div>
+                </div>
+        </div>
+    </div>
+</div>

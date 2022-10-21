@@ -10,6 +10,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { AngularMaterialModule } from './angular-material.module';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ChartsComponent } from './charts/charts.component';
+import { CalendarEventFormComponent } from './calendar-event-form/calendar-event-form.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,9 @@ import { ChartsComponent } from './charts/charts.component';
       echarts: () => import('echarts'),
     }),
   ],
-  declarations: [CalendarComponent, ChartsComponent],
+  declarations: [
+    CalendarComponent, ChartsComponent, CalendarEventFormComponent
+  ],
   exports: [
     CommonModule,
     BrowserModule,
@@ -33,8 +36,9 @@ import { ChartsComponent } from './charts/charts.component';
     FlexLayoutModule,
     AngularMaterialModule,
     CalendarComponent,
-    ChartsComponent
+    ChartsComponent,
+    CalendarEventFormComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ShareModule {}
+export class ShareModule { }
