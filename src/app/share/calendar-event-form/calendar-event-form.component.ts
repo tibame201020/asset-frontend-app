@@ -5,6 +5,7 @@ import { SweetAlertService } from 'src/app/services/sweet-alert.service';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { CalendarEventService } from 'src/app/services/calendar-event.service';
 import { timeRangeValidator } from '../validators/time.directive';
+import { CalendarEvent } from 'src/app/model/calendar-event';
 
 @Component({
   selector: 'app-calendar-event-form',
@@ -32,7 +33,7 @@ export class CalendarEventFormComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<CalendarEventFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public dateStr: string,
+    @Inject(MAT_DIALOG_DATA) public calendarEvent: CalendarEvent,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private sweetAlertService: SweetAlertService,
@@ -41,33 +42,43 @@ export class CalendarEventFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      dateStr: [this.dateStr, Validators.required],
-      title: ['', Validators.required],
-      start: ['', Validators.required],
-      end: ['', Validators.required],
+      dateStr: [this.calendarEvent.dateStr, Validators.required],
+      title: [this.calendarEvent.title?this.calendarEvent.title:'', Validators.required],
+      start: [this.calendarEvent.start?this.calendarEvent.start:'', Validators.required],
+      end: [this.calendarEvent.end?this.calendarEvent.end:'', Validators.required],
+      id: [this.calendarEvent.id?this.calendarEvent.id:null],
     }, { validators: timeRangeValidator })
   }
 
   public addCalendarEvent(formGroup: FormGroup): void {
-    let fullYearMonthDay = formGroup.value.dateStr.toLocaleString('zh-TW', { year: "numeric", month: "2-digit", day: "2-digit" }).replaceAll("-", "").replaceAll("/", "");
-    let month = fullYearMonthDay.substring(4, 6);
+    let fullYearMonthDay = formGroup.value.dateStr.toLocaleString('zh-TW', { year: "numeric", month: "2-digit", day: "2-digit" });
+    let month = fullYearMonthDay.replaceAll("-", "").replaceAll("/", "").substring(0, 6);
     formGroup.value.month = parseInt(month);
+    formGroup.value.startText = formGroup.value.start
+    formGroup.value.endText = formGroup.value.end
 
-    let start = this.transTime(formGroup.value.start, parseInt(fullYearMonthDay));
-    let end = this.transTime(formGroup.value.end, parseInt(fullYearMonthDay));
+    formGroup.value.start = this.transTime(formGroup.value.start, fullYearMonthDay);
+    formGroup.value.end = this.transTime(formGroup.value.end, fullYearMonthDay);
+    formGroup.value.logTime = new Date();
+    if (this.calendarEvent.id == -1) {
+      formGroup.value.id = null;
+    }
 
-    console.log(formGroup.errors)
     this.calendarEventService.addEvent(formGroup.value).subscribe(
       res => {
-        console.log(res);
+        if (res) {
+          this.sweetAlertService.autoClose('successful change')
+          this.dialogRef.close();
+        } else {
+          this.sweetAlertService.error('backend server error, plz try later or try fix that')
+        }
       }
     )
 
   }
 
-  transTime(time: string, dateStr:number) {
-    let date = new Date();
-    date.setDate(dateStr);
+  transTime(time: string, dateStr:string) {
+    let date = new Date(dateStr);
     let where = time.substring(time.length - 2, time.length);
     time = time.replace(':', '').replace(' AM', '').replace(' PM', '');
     let timeNum;
@@ -86,7 +97,7 @@ export class CalendarEventFormComponent implements OnInit {
       date.setHours(parseInt(timeNum.toString().substring(0, 2)));
       date.setMinutes(parseInt(timeNum.toString().substring(2)));
     }
-    console.log("date = ", date);
+    return date;
   }
 
   transAmPm(time: string) {

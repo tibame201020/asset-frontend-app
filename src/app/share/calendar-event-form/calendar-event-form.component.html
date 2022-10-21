@@ -54,18 +54,16 @@
                     </span>
                 </div>
 
-
-
-
-
                 <div *ngIf="!formGroup.valid">
                     <button id="requiredMsg" type="submit" class="btn btn-default submit" [disabled]="true">plz check
                         the all
                         required fileds</button>
                 </div>
                 <div *ngIf="formGroup.valid">
-                    <button id="submit" type="submit" class="btn btn-default submit" [disabled]="!formGroup.valid">add
+                    <button *ngIf="!this.calendarEvent.id" id="submit" type="submit" class="btn btn-default submit" [disabled]="!formGroup.valid">add
                         event</button>
+                    <button *ngIf="this.calendarEvent.id" id="submit" type="submit" class="btn btn-default submit" [disabled]="!formGroup.valid">save
+                            event</button>
                 </div>
             </form>
         </div>

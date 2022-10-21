@@ -3,12 +3,14 @@ import { Component, OnInit, SimpleChanges } from '@angular/core';
 import {
   CalendarOptions,
   defineFullCalendarElement,
+  EventSourceInput,
 } from '@fullcalendar/web-component';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarEventService } from 'src/app/services/calendar-event.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarEventFormComponent } from '../calendar-event-form/calendar-event-form.component';
+import { CalendarEvent } from 'src/app/model/calendar-event';
 
 defineFullCalendarElement();
 
@@ -19,6 +21,13 @@ defineFullCalendarElement();
 })
 export class CalendarComponent implements OnInit {
   calendarOptions!: CalendarOptions;
+  events:any[] = [];
+
+  start:any;
+  end:any;
+  selectedDate:any;
+
+  daylist:CalendarEvent[] = [];
   
   constructor(public calendarEventService:CalendarEventService, public dialog: MatDialog) { }
 
@@ -42,6 +51,7 @@ export class CalendarComponent implements OnInit {
       },
       height: window.innerHeight - 100,
       windowResize: this.resizeCalendar.bind(this),
+      events:this.events
     };
   }
 
@@ -50,33 +60,112 @@ export class CalendarComponent implements OnInit {
   }
 
   dateClick(arg: any) {
-    console.log('dateClick =', arg);
     if (this.calendarEventService.addEventOption) {
       this.addCalendarEvent(arg.dateStr)
     }
-
-    console.log('dateClick =', arg);
+    this.selectedDate = arg.date;
+    this.getUpdateDayList();
+    
   }
 
   handleDatesRender(arg: any) {
-    console.log('handleDatesRender =', arg);
+    this.start = arg.start;
+    this.end = arg.end
+    this.getUpdateRender();
+  }
+
+  getUpdateDayList() {
+    let calendarEvent:CalendarEvent = {
+      start: this.selectedDate,
+      end: this.selectedDate,
+      id: 0,
+      title: '',
+      month: 0,
+      dateStr: '',
+      logTime: new Date(),
+      startText: '',
+      endText: ''
+    }
+    this.calendarEventService.queryEventsByRange(calendarEvent).subscribe(
+      res => {
+        if (res) {
+          this.daylist = res;
+        }
+      }
+    )
+  }
+
+  getUpdateRender() {
+    let calendarEvent:CalendarEvent = {
+      start: this.start,
+      end: this.end,
+      id: 0,
+      title: '',
+      month: 0,
+      dateStr: '',
+      logTime: new Date(),
+      startText: '',
+      endText: ''
+    }
+    this.calendarEventService.queryEventsByRange(calendarEvent).subscribe(
+      res => {
+        if (res) {
+          let events: any[] = [];
+          res.forEach(function(calendarEvent){
+            let event = {
+              title: calendarEvent.title,
+              start: new Date(calendarEvent.start),
+              end: new Date(calendarEvent.end),
+              id:calendarEvent.id,
+              extendedProps:calendarEvent,
+            }
+            events.push(event);
+          })
+          this.events = events;
+          this.setOption();
+        }
+      }
+    )
   }
 
   eventClick(arg: any) {
-    console.log('eventClick =', arg);
-  }
+    let calendarEvent = {
+      dateStr:arg.event.start,
+      id:arg.event.id,
+      title:arg.event.title,
+      start:arg.event.extendedProps.startText,
+      end:arg.event.extendedProps.endText
+    };
 
-  addCalendarEvent(dateStr:string) {
     const dialogRef = this.dialog.open(CalendarEventFormComponent, {
       width: '600px',
       minHeight: '530px',
       maxHeight: '900px',
-      data: dateStr
+      data: calendarEvent
     })
 
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('dialog close~')
+      this.getUpdateRender();
+      this.getUpdateDayList();
+    });
+  }
+
+  addCalendarEvent(dateStr:string) {
+    let calendarEvent = {
+      dateStr:dateStr
+    };
+    const dialogRef = this.dialog.open(CalendarEventFormComponent, {
+      width: '600px',
+      minHeight: '530px',
+      maxHeight: '900px',
+      data: calendarEvent
+    })
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getUpdateRender();
+      this.getUpdateDayList();
     });
   }
 }

@@ -16,4 +16,10 @@ export class CalendarEventService {
   addEvent(calendarEvent:CalendarEvent):Observable<boolean> {
     return this.http.post<boolean>(environment.apiUrl + 'calendar/add', calendarEvent);
   }
+
+  queryEventsByRange(calendarEvent:CalendarEvent):Observable<CalendarEvent[]> {
+    return this.http.post<CalendarEvent[]>(environment.apiUrl + 'calendar/queryEventsByRange', calendarEvent);
+  }
+
+
 }

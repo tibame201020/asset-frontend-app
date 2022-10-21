@@ -10,7 +10,9 @@
                 <div class="col-12">
                     <mat-slide-toggle [(ngModel)]="this.calendarEventService.addEventOption">addEvent</mat-slide-toggle>
                 </div>
-                <div class="col-12">list</div>
+                <div class="col-12">daylist
+                    {{this.daylist | json}}
+                </div>
                 </div>
         </div>
     </div>
