@@ -48,7 +48,7 @@
                         </span>
                     </span>
                     <span class="glyphicon form-control-feedback"
-                        *ngIf="formGroup.errors && (formGroup.controls['end'].dirty || formGroup.controls['end'].touched)">
+                        *ngIf="formGroup.errors">
                         <pre
                             *ngIf="formGroup.errors['timeRangeValidErr']"> {{formGroup.errors['timeRangeValidErr']}}</pre>
                     </span>
