@@ -21,10 +21,10 @@ export class SideBarService {
         return true;
       case path.includes('/calc'):
         this.sidebar = CALC_SIDE_BAR;
-        return true;
+        return false;
       case path.includes('/calendar'):
         this.sidebar = CALENDAR_SIDE_BAR;
-        return true;
+        return false;
       case path.includes('/setting'):
         this.sidebar = SETTING_SIDE_BAR;
         return true;

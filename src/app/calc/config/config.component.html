@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col">
             <i *ngIf="!this.addConfigStatus" class="material-icons" #tooltip="matTooltip"
-                matTooltip="新增每月固定支出參數or預計收入等設定" matTooltipHideDelay="100" (click)="changeAddConfigStatus()">note_add</i>
+                matTooltip="新增每月固定支出參數or預計收入等設定" matTooltipHideDelay="100"
+                (click)="changeAddConfigStatus()">note_add</i>
             <i *ngIf="this.addConfigStatus" class="material-icons" #tooltip="matTooltip" matTooltip="add new config"
                 matTooltipHideDelay="100" (click)="addCalcForm()">add</i>
             <i *ngIf="this.addConfigStatus" class="material-icons" #tooltip="matTooltip" matTooltip="reset"
@@ -11,8 +12,7 @@
                 matTooltipHideDelay="100" (click)="changeAddConfigStatus()">chevron_left</i>
             <span *ngIf="this.addConfigStatus">　</span>
             <i *ngIf="this.addConfigStatus" class="material-icons" #tooltip="matTooltip"
-                matTooltip="insert these configs" matTooltipHideDelay="100"
-                (click)="saveAllCalcConfig()">done_all</i>
+                matTooltip="insert these configs" matTooltipHideDelay="100" (click)="saveAllCalcConfig()">done_all</i>
         </div>
     </div>
 
@@ -37,56 +37,57 @@
             </div>
         </div>
     </div>
-<hr>
-<div class="row">
-    <div class="col-11">
-        <mat-tab-group>
-            <mat-tab label="可動用金額" *ngIf="this.assets.length">
-                <app-charts [data]="this.assets"></app-charts>
-            </mat-tab>
-            <mat-tab label="常態總支出" *ngIf="this.outputs.length">
-                <app-charts [data]="this.outputs"></app-charts>
-            </mat-tab>
-            <mat-tab label="固定deposit" *ngIf="this.deposits.length">
-                <app-charts [data]="this.deposits"></app-charts>
-            </mat-tab>
-            <mat-tab label="常態總收入" *ngIf="this.incomes.length">
-                <app-charts [data]="this.incomes"></app-charts>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
-</div>
-<hr>
+    <hr>
     <div class="row">
-        <div class="col">
-            <table *ngIf="this.configs.length" class="table table-borderless table-dark table-hover">
+        <div class="col-6">
+            <mat-tab-group>
+                <mat-tab label="可動用金額" *ngIf="this.assets.length">
+                    <app-charts [data]="this.assets"></app-charts>
+                </mat-tab>
+                <mat-tab label="常態總支出" *ngIf="this.outputs.length">
+                    <app-charts [data]="this.outputs"></app-charts>
+                </mat-tab>
+                <mat-tab label="固定deposit" *ngIf="this.deposits.length">
+                    <app-charts [data]="this.deposits"></app-charts>
+                </mat-tab>
+                <mat-tab label="常態總收入" *ngIf="this.incomes.length">
+                    <app-charts [data]="this.incomes"></app-charts>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <div class="col-6" *ngIf="this.configs.length">
+            <br>
+            <br>
+            <table class="table table-borderless table-dark table-hover">
                 <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>cycle</th>
-                    <th>category</th>
-                    <th>purpose</th>
-                    <th>Value</th>
-                    <th>Description</th>
-                  </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>cycle</th>
+                        <th>category</th>
+                        <th>purpose</th>
+                        <th>Value</th>
+                        <th>MonthCost</th>
+                        <th>Description</th>
+                    </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let calcConfig of this.configs">
-                    <td style="width:3%;">
-                        <i class="material-icons" #tooltip="matTooltip" matTooltip="edit this config"
-                        matTooltipHideDelay="100" (click)="editCalcConfig(calcConfig)">edit_square</i>
-                        <i class="material-icons" #tooltip="matTooltip" matTooltip="delete this config"
-                        matTooltipHideDelay="100" (click)="removeCalcConfig(calcConfig.id, calcConfig.description)">credit_card_off</i>
-                    </td>
-                    <td style="width:5%;">{{calcConfig.key}}</td>
-                    <td style="width:5%;">{{calcConfig.value > 0 ? '收入' : '支出'}}</td>
-                    <td style="width:5%;">{{calcConfig.purpose}}</td>
-                    <td style="width:10%;">{{calcConfig.value}}</td>
-                    <td style="width:30%;">{{calcConfig.description}}</td>
-                  </tr>
+                    <tr *ngFor="let calcConfig of this.configs">
+                        <td style="width:7%;">
+                            <i class="material-icons" #tooltip="matTooltip" matTooltip="edit this config"
+                                matTooltipHideDelay="100" (click)="editCalcConfig(calcConfig)">edit_square</i>
+                            <i class="material-icons" #tooltip="matTooltip" matTooltip="delete this config"
+                                matTooltipHideDelay="100"
+                                (click)="removeCalcConfig(calcConfig.id, calcConfig.description)">credit_card_off</i>
+                        </td>
+                        <td style="width:5%;">{{calcConfig.key}}</td>
+                        <td style="width:5%;">{{calcConfig.value > 0 ? '收入' : '支出'}}</td>
+                        <td style="width:5%;">{{calcConfig.purpose}}</td>
+                        <td style="width:10%;">{{calcConfig.value}}</td>
+                        <td style="width:10%;">{{this.monthCost(calcConfig)}}</td>
+                        <td style="width:20%;">{{calcConfig.description}}</td>
+                    </tr>
                 </tbody>
-              </table>
+            </table>
         </div>
     </div>
-
 </div>

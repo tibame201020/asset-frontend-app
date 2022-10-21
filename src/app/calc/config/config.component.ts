@@ -5,6 +5,7 @@ import { SweetAlertService } from 'src/app/services/sweet-alert.service';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { EditCalcDialogComponent } from '../edit-calc-dialog/edit-calc-dialog.component';
+import { TimeUtilService } from 'src/app/services/time-util.service';
 
 @Component({
   selector: 'app-config',
@@ -22,7 +23,7 @@ export class ConfigComponent implements OnInit {
   outputs: { total: number; category: string; }[] = [];
   deposits: { total: number; category: string; }[] = [];
 
-  constructor(private calcService: CalcService, private sweetAlertService: SweetAlertService, public dialog: MatDialog) {
+  constructor(private calcService: CalcService, private sweetAlertService: SweetAlertService, public dialog: MatDialog, private timeUtilService: TimeUtilService) {
   }
 
   ngOnInit(): void {
@@ -40,7 +41,8 @@ export class ConfigComponent implements OnInit {
     this.addConfigStatus = !this.addConfigStatus;
     if (this.addConfigStatus && this.calcForm.length == 0) {
       let calc = new Calc();
-      calc.key = 'month';
+      calc.key = '每月';
+      calc.purpose = '飲食';
       this.calcForm.push(calc);
       this.saveCalcForm.push(calc);
     }
@@ -212,21 +214,22 @@ export class ConfigComponent implements OnInit {
   }
 
   genereatIncomeArray(calConfigs: Calc[]) {
+    let dayInMonths = this.timeUtilService.daysInMonth();
+
     let array: { total: number; category: string; }[] = [];
     calConfigs.forEach(function (value) {
       let val = Math.abs(value.value);
       switch (value.key) {
         case '每日':
-          val = val * 30;
+          val = val * dayInMonths;
           break;
         case '每周':
-          val = val * 4;
+          val = parseInt(((val / 7) * dayInMonths).toFixed(2));
           break;
         default:
           val = val;
           break;
       }
-
       let obj = {
         total: val,
         category: value.description
@@ -237,21 +240,22 @@ export class ConfigComponent implements OnInit {
   }
 
   genereatDepositArray(calConfigs: Calc[]) {
+    let dayInMonths = this.timeUtilService.daysInMonth();
+
     let array: { total: number; category: string; }[] = [];
     calConfigs.forEach(function (value) {
       let val = Math.abs(value.value);
       switch (value.key) {
         case '每日':
-          val = val * 30;
+          val = val * dayInMonths;
           break;
         case '每周':
-          val = val * 4;
+          val = parseInt(((val / 7) * dayInMonths).toFixed(2));
           break;
         default:
           val = val;
           break;
       }
-
       let obj = {
         total: val,
         category: value.description
@@ -262,15 +266,17 @@ export class ConfigComponent implements OnInit {
   }
 
   generateOutputArray(calConfigs: Calc[]) {
+    let dayInMonths = this.timeUtilService.daysInMonth();
+
     let array: { total: number; category: string; }[] = [];
     calConfigs.forEach(function (value) {
       let val = Math.abs(value.value);
       switch (value.key) {
         case '每日':
-          val = val * 30;
+          val = val * dayInMonths;
           break;
         case '每周':
-          val = val * 4;
+          val = parseInt(((val / 7) * dayInMonths).toFixed(2));
           break;
         default:
           val = val;
@@ -304,7 +310,7 @@ export class ConfigComponent implements OnInit {
     })
 
     let canUseMoney = {
-      total: totalMoney - totalCost,
+      total: totalMoney - totalCost > 0 ? totalMoney - totalCost : 0,
       category: 'canUseMoney'
     }
 
@@ -313,4 +319,25 @@ export class ConfigComponent implements OnInit {
 
   }
 
+  monthCost(calc: Calc) {
+
+    if (calc.value > 0) {
+      return '';
+    }
+
+    let dayInMonths = this.timeUtilService.daysInMonth();
+    switch (calc.key) {
+      case '每日':
+        return '$' + Math.abs(calc.value * dayInMonths);
+      case '每周':
+        return '$' + Math.abs(parseInt(((calc.value / 7) * dayInMonths).toFixed(2)));
+      default:
+        return '$' + Math.abs(calc.value);
+    }
+  }
+
+
+
 }
+
+

@@ -19,16 +19,9 @@ export class ChartsComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     this.setOption();
   }
+  
 
   setOption() {
-
-    if (!this.data) {
-      this.data = [
-        {total:0, category:'default'}
-      ]
-    }
-
-
     const data: { value: number; name: string; }[] = [];
     this.data.forEach((element: { total: any; category: any; }) => {
       data.push({
@@ -46,7 +39,7 @@ export class ChartsComponent implements OnInit {
         {
           name: 'composition',
           type: 'pie',
-          radius: '120%',
+          radius: '75%',
           center: ['35%', '50%'],
           data: data,
           itemStyle: {
@@ -55,7 +48,7 @@ export class ChartsComponent implements OnInit {
               label: {
                 show: true,
                 formatter: '{b} : {d}%',
-                distance: 0.95
+                distance: 0.7
               }
             }
           }
