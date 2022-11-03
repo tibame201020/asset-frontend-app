@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ValidationErrors, FormControl } fro
 import { SweetAlertService } from 'src/app/services/sweet-alert.service';
 import { DEPOSIT_EXPAND_CATEGORY, DEPOSIT_SELECT_TYPE, DEPOSIT_INCOME_CATEGORY } from '../config/deposit-config';
 import { TransLogService } from 'src/app/services/trans-log.service';
+import { TimeUtilService } from 'src/app/services/time-util.service';
 
 @Component({
   selector: 'app-deposit-form',
@@ -19,7 +20,8 @@ export class DepositFormComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private sweetAlertService: SweetAlertService,
-    private transLogService:TransLogService) { }
+    private transLogService:TransLogService,
+    private timeUtilService:TimeUtilService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -60,6 +62,8 @@ export class DepositFormComponent implements OnInit {
     } else {
       successfullyMsg = 'trans log add successfully';
     }
+
+    formGroup.value.transDate = this.timeUtilService.removeTime(formGroup.value.transDate);
 
     this.transLogService.saveTransLog(formGroup.value).subscribe(
       res => {

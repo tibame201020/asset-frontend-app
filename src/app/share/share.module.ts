@@ -11,6 +11,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ChartsComponent } from './charts/charts.component';
 import { CalendarEventFormComponent } from './calendar-event-form/calendar-event-form.component';
+import { ChartsLineComponent } from './charts-line/charts-line.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { CalendarEventFormComponent } from './calendar-event-form/calendar-event
     }),
   ],
   declarations: [
-    CalendarComponent, ChartsComponent, CalendarEventFormComponent
+    CalendarComponent, ChartsComponent, CalendarEventFormComponent, ChartsLineComponent
   ],
   exports: [
     CommonModule,
@@ -37,7 +38,8 @@ import { CalendarEventFormComponent } from './calendar-event-form/calendar-event
     AngularMaterialModule,
     CalendarComponent,
     ChartsComponent,
-    CalendarEventFormComponent
+    CalendarEventFormComponent,
+    ChartsLineComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

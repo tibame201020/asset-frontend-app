@@ -1,79 +1,103 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-2">
-            <mat-form-field appearance="fill">
-                <mat-label>Date Range</mat-label>
-                <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-                  <input matStartDate formControlName="start" placeholder="Start date" readonly>
-                  <input matEndDate formControlName="end" placeholder="End date" readonly>
-                </mat-date-range-input>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>              
-                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-              </mat-form-field>              
-        </div>
-        <div class="col-1" [formGroup]="range">
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="all" formControlName="type">
-                <label class="form-check-label" for="exampleRadios1">
-                  ALL
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="type" id="exampleRadios2" value="expand" formControlName="type">
-                <label class="form-check-label" for="exampleRadios2">
-                  EXPAND
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="type" id="exampleRadios3" value="income" formControlName="type">
-                <label class="form-check-label" for="exampleRadios3">
-                  INCOME
-                </label>
-              </div>
-        </div>
-        <div class="col">
-            <button type="button" class="btn btn-light" (click)="openDepositForm()">add trans log</button>
-        </div>
-
-        <div class="col-12" *ngIf="this.transLogArray.length">
-            <mat-tab-group>
-                <mat-tab label="LIST"> 
-                    <table class="table table-borderless table-dark table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>date</th>
-                                <th>type</th>
-                                <th>category</th>
-                                <th>name</th>
-                                <th>value</th>
-                                <th>ps</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let transLog of this.transLogArray">
-                                <td style="width:2%;">
-                                    <i class="material-icons" #tooltip="matTooltip" matTooltip="edit this transLog"
-                                        matTooltipHideDelay="100" (click)="editTransLog(transLog)">edit_square</i>
-                                    <i class="material-icons" #tooltip="matTooltip" matTooltip="delete this transLog"
-                                        matTooltipHideDelay="100"
-                                        (click)="removeConfirm(transLog.id)">credit_card_off</i>
-                                </td>
-                                <td style="width:3%;">{{transLog.transDate | date:'mediumDate'}}</td>
-                                <td style="width:3%;">{{transLog.type}}</td>
-                                <td style="width:3%;">{{transLog.category}}</td>
-                                <td style="width:5%;">{{transLog.name}}</td>
-                                <td style="width:5%;">{{transLog.value}}</td>
-                                <td style="width:10%;">{{transLog.ps}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </mat-tab>
-                <mat-tab label="IN-LINE"> Content 2 </mat-tab>
-                <mat-tab label="CHART"> Content 3 </mat-tab>
-              </mat-tab-group>
-        </div>
+  <div class="row">
+    <div class="col-2">
+      <mat-form-field appearance="fill">
+        <mat-label>Date Range</mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Start date" readonly>
+          <input matEndDate formControlName="end" placeholder="End date" readonly>
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+      </mat-form-field>
     </div>
+    <div class="col-1" [formGroup]="range">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="all" formControlName="type">
+        <label class="form-check-label" for="exampleRadios1">
+          ALL
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="type" id="exampleRadios2" value="expand"
+          formControlName="type">
+        <label class="form-check-label" for="exampleRadios2">
+          EXPAND
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="type" id="exampleRadios3" value="income"
+          formControlName="type">
+        <label class="form-check-label" for="exampleRadios3">
+          INCOME
+        </label>
+      </div>
+    </div>
+    <div class="col-1.5">
+      <button type="button" class="btn btn-light" (click)="openDepositForm()">add trans log</button>
+    </div>
+    <div class="col">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">此時段總開銷 : ${{this.totalExpands | number}}</div>
+          <div class="col-12">此時段總收入 : ${{this.totalIncomes | number}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <mat-tab-group>
+        <mat-tab label="LIST">
+          <table class="table table-borderless table-dark table-hover" *ngIf="this.transLogArray.length">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>date</th>
+                <th>type</th>
+                <th>category</th>
+                <th>name</th>
+                <th>value</th>
+                <th>ps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let transLog of this.transLogArray">
+                <td style="width:3%;">
+                  <i class="material-icons" #tooltip="matTooltip" matTooltip="edit this transLog"
+                    matTooltipHideDelay="100" (click)="editTransLog(transLog)">edit_square</i>
+                  |
+                  <i class="material-icons" #tooltip="matTooltip" matTooltip="delete this transLog"
+                    matTooltipHideDelay="100" (click)="removeConfirm(transLog.id)">delete</i>
+                  |
+                  <i class="material-icons" #tooltip="matTooltip" matTooltip="quick copy this transLog"
+                    matTooltipHideDelay="100" (click)="quickCopy(transLog)">star</i>
+                </td>
+                <td style="width:3%;">{{transLog.transDate | date:'mediumDate'}}</td>
+                <td style="width:3%;">{{transLog.type}}</td>
+                <td style="width:3%;">{{transLog.category}}</td>
+                <td style="width:5%;">{{transLog.name}}</td>
+                <td style="width:5%;">{{transLog.value | number }}</td>
+                <td style="width:10%;">{{transLog.ps}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-tab>
+        <mat-tab label="IN-LINE">
+          <app-charts-line [data]="this.dateArrays"></app-charts-line>
+        </mat-tab>
+        <mat-tab label="CHART">
+          <mat-tab-group>
+            <mat-tab label="expand" *ngIf="this.range.value.type == 'all' || this.range.value.type == 'expand'">
+              <app-charts [data]="this.expands"></app-charts>
+            </mat-tab>
+            <mat-tab label="income" *ngIf="this.range.value.type == 'all' || this.range.value.type == 'income'">
+              <app-charts [data]="this.incomes"></app-charts>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
 </div>
