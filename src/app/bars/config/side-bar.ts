@@ -24,7 +24,7 @@ export const DEPOSIT_SIDE_BAR: Bar = {
     },
     {
       name: 'deposit',
-      link: '/home',
+      link: 'deposit/deposit',
       icon: '',
     },
   ],
