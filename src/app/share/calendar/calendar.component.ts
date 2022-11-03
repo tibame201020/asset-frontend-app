@@ -21,22 +21,24 @@ defineFullCalendarElement();
 })
 export class CalendarComponent implements OnInit {
   calendarOptions!: CalendarOptions;
-  events:any[] = [];
+  events: any[] = [];
 
-  start:any;
-  end:any;
-  selectedDate:any;
+  start: any;
+  end: any;
+  selectedDate: any;
 
-  daylist:CalendarEvent[] = [];
-  
-  constructor(public calendarEventService:CalendarEventService, public dialog: MatDialog) { }
+  daylist: CalendarEvent[] = [];
+
+  constructor(
+    public calendarEventService: CalendarEventService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.setOption();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   setOption() {
     this.calendarOptions = {
@@ -49,9 +51,9 @@ export class CalendarComponent implements OnInit {
         center: 'title',
         right: 'dayGridMonth,dayGridWeek',
       },
-      height: window.innerHeight - 100,
+      height: window.innerHeight - 200,
       windowResize: this.resizeCalendar.bind(this),
-      events:this.events
+      events: this.events,
     };
   }
 
@@ -61,21 +63,20 @@ export class CalendarComponent implements OnInit {
 
   dateClick(arg: any) {
     if (this.calendarEventService.addEventOption) {
-      this.addCalendarEvent(arg.dateStr)
+      this.addCalendarEvent(arg.dateStr);
     }
     this.selectedDate = arg.date;
     this.getUpdateDayList();
-    
   }
 
   handleDatesRender(arg: any) {
     this.start = arg.start;
-    this.end = arg.end
+    this.end = arg.end;
     this.getUpdateRender();
   }
 
   getUpdateDayList() {
-    let calendarEvent:CalendarEvent = {
+    let calendarEvent: CalendarEvent = {
       start: this.selectedDate,
       end: this.selectedDate,
       id: 0,
@@ -84,19 +85,19 @@ export class CalendarComponent implements OnInit {
       dateStr: '',
       logTime: new Date(),
       startText: '',
-      endText: ''
-    }
-    this.calendarEventService.queryEventsByRange(calendarEvent).subscribe(
-      res => {
+      endText: '',
+    };
+    this.calendarEventService
+      .queryEventsByRange(calendarEvent)
+      .subscribe((res) => {
         if (res) {
           this.daylist = res;
         }
-      }
-    )
+      });
   }
 
   getUpdateRender() {
-    let calendarEvent:CalendarEvent = {
+    let calendarEvent: CalendarEvent = {
       start: this.start,
       end: this.end,
       id: 0,
@@ -105,65 +106,63 @@ export class CalendarComponent implements OnInit {
       dateStr: '',
       logTime: new Date(),
       startText: '',
-      endText: ''
-    }
-    this.calendarEventService.queryEventsByRange(calendarEvent).subscribe(
-      res => {
+      endText: '',
+    };
+    this.calendarEventService
+      .queryEventsByRange(calendarEvent)
+      .subscribe((res) => {
         if (res) {
           let events: any[] = [];
-          res.forEach(function(calendarEvent){
+          res.forEach(function (calendarEvent) {
             let event = {
               title: calendarEvent.title,
               start: new Date(calendarEvent.start),
               end: new Date(calendarEvent.end),
-              id:calendarEvent.id,
-              extendedProps:calendarEvent,
-            }
+              id: calendarEvent.id,
+              extendedProps: calendarEvent,
+            };
             events.push(event);
-          })
+          });
           this.events = events;
           this.setOption();
         }
-      }
-    )
+      });
   }
 
   eventClick(arg: any) {
     let calendarEvent = {
-      dateStr:arg.event.start,
-      id:arg.event.id,
-      title:arg.event.title,
-      start:arg.event.extendedProps.startText,
-      end:arg.event.extendedProps.endText
+      dateStr: arg.event.start,
+      id: arg.event.id,
+      title: arg.event.title,
+      start: arg.event.extendedProps.startText,
+      end: arg.event.extendedProps.endText,
     };
 
     const dialogRef = this.dialog.open(CalendarEventFormComponent, {
       width: '600px',
       minHeight: '530px',
       maxHeight: '900px',
-      data: calendarEvent
-    })
+      data: calendarEvent,
+    });
 
-
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.getUpdateRender();
       this.getUpdateDayList();
     });
   }
 
-  addCalendarEvent(dateStr:string) {
+  addCalendarEvent(dateStr: string) {
     let calendarEvent = {
-      dateStr:dateStr
+      dateStr: dateStr,
     };
     const dialogRef = this.dialog.open(CalendarEventFormComponent, {
       width: '600px',
       minHeight: '530px',
       maxHeight: '900px',
-      data: calendarEvent
-    })
+      data: calendarEvent,
+    });
 
-
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.getUpdateRender();
       this.getUpdateDayList();
     });
