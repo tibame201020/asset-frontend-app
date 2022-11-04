@@ -18,7 +18,7 @@ export class SideBarService {
         return false;
       case path.includes('/deposit'):
         this.sidebar = DEPOSIT_SIDE_BAR;
-        return true;
+        return false;
       case path.includes('/calc'):
         this.sidebar = CALC_SIDE_BAR;
         return false;
@@ -27,7 +27,7 @@ export class SideBarService {
         return false;
       case path.includes('/setting'):
         this.sidebar = SETTING_SIDE_BAR;
-        return true;
+        return false;
       default:
         return false;
     }

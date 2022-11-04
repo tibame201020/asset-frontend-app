@@ -39,27 +39,62 @@ export class ChartsLineComponent implements OnInit {
       legend: {
         data: ['expands','expands-line', 'incomes', 'incomes-line'],
         align: 'left',
-        selected: { 'expands': true, 'expands-line': false, 'incomes': false, 'incomes-line': false }
+        selected: { 'expands': true, 'expands-line': true, 'incomes': false, 'incomes-line': false }
       },
       tooltip: {},
       xAxis: {
+        type: 'category',
         data: xAxisData,
-        silent: false,
+        silent: true,
         splitLine: {
           show: false,
         },
       },
-      yAxis: {},
+      yAxis: { 
+        scale: true,
+        splitArea: {
+          show: true
+        }
+      },
+      dataZoom: [
+        {
+          type: 'inside',
+          xAxisIndex: [0, 1],
+          start: 0,
+          end: 100
+        },
+        {
+          show: true,
+          xAxisIndex: [0, 1],
+          type: 'slider',
+          y: '90%',
+          start: 0,
+          end: 100
+        }
+      ],
       series: [
         {
           name: 'expands',
           type: 'bar',
           data: expands,
           animationDelay: (idx: number) => idx * 10,
+          itemStyle: {
+            normal: {
+              shadowColor: 'rgba(0, 0, 0, 0.5)',
+              label: {
+                show: true,
+                position: "top",
+                formatter: function (param: { value: number; } | null) {
+                  return param != null && param.value > 0? Math.round(param.value) : '';
+                }
+              }
+            }
+          }
         },
         {
           name: 'expands-line',
           type: 'line',
+          smooth: true,
           data: expands,
           animationDelay: (idx: number) => idx * 10,
         },
@@ -68,10 +103,23 @@ export class ChartsLineComponent implements OnInit {
           type: 'bar',
           data: incomes,
           animationDelay: (idx: number) => idx * 10 + 100,
+          itemStyle: {
+            normal: {
+              shadowColor: 'rgba(0, 0, 0, 0.5)',
+              label: {
+                show: true,
+                position: "top",
+                formatter: function (param: { value: number; } | null) {
+                  return param != null && param.value > 0? Math.round(param.value) : '';
+                }
+              }
+            }
+          }
         },
         {
           name: 'incomes-line',
           type: 'line',
+          smooth: true,
           data: incomes,
           animationDelay: (idx: number) => idx * 10 + 100,
         },

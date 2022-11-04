@@ -6,6 +6,7 @@ import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { CalendarEventService } from 'src/app/services/calendar-event.service';
 import { timeRangeValidator } from '../validators/time.directive';
 import { CalendarEvent } from 'src/app/model/calendar-event';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-calendar-event-form',
@@ -103,12 +104,51 @@ export class CalendarEventFormComponent implements OnInit {
   transAmPm(time: string) {
     let where = time.substring(time.length - 2, time.length);
     time = time.replace(':', '').replace(' AM', '').replace(' PM', '');
+
+    console.log(where)
+    console.log(time)
     switch (where) {
       case 'PM':
         return parseInt(time) + 1200;
+      case 'AM':
+        if (parseInt(time) == 1200) {
+          return 0;
+        } else {
+          return parseInt(time);
+        }
       default:
         return parseInt(time);
     }
+  }
+
+  deleteConfirm(id:number) {
+    Swal.fire({
+      title: '<strong>Delete this Event?</strong>',
+      icon: 'info',
+      html:
+        'delete this event and <b>no recv chance</b>',
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteCalendarEvent(id);
+      }
+    })
+  }
+
+  deleteCalendarEvent(id:number) {
+    this.calendarEventService.deleteById(id).subscribe(
+      res => {
+        if (res) {
+          this.sweetAlertService.autoClose('the calendar-event was already deleted')
+          this.dialogRef.close();
+        } else {
+          this.sweetAlertService.error('something broken in backend')
+        }
+      }
+    )
   }
 
 }

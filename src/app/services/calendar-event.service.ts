@@ -21,5 +21,9 @@ export class CalendarEventService {
     return this.http.post<CalendarEvent[]>(environment.apiUrl + 'calendar/queryEventsByRange', calendarEvent);
   }
 
+  deleteById(id:number):Observable<boolean> {
+    return this.http.post<boolean>(environment.apiUrl + 'calendar/delete', parseInt(id+''));
+  }
+
 
 }

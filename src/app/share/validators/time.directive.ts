@@ -8,19 +8,16 @@ export const timeRangeValidator: ValidatorFn = (
 
   let startWhere = start.substring(start.length - 2, start.length);
   start = start.replace(':', '').replace(' AM', '').replace(' PM', '');
-  let startNum = startWhere == 'PM' ? parseInt(start) + 1200 : parseInt(start);
+  let startNum = startWhere == 'PM' ? parseInt(start) + 1200 : start == 1200 ? 0 : parseInt(start);
 
   let endWhere = end.substring(end.length - 2, end.length);
   end = end.replace(':', '').replace(' AM', '').replace(' PM', '');
-  let endNum = endWhere == 'PM' ? parseInt(end) + 1200 : parseInt(end);
+  let endNum = endWhere == 'PM' ? parseInt(end) + 1200 : end == 1200 ? 0 : parseInt(end);
 
-
-  if (!endNum) {
+  if (!endNum && endNum != 0) {
     return null;
   }
-  if (!startNum || !endNum) {
-    return { timeRangeValidErr: `end time can not before start time` };
-  } else if (startNum > endNum) {
+  if (startNum > endNum) {
     return { timeRangeValidErr: `end time can not before start time` };
   } else {
     return null;
