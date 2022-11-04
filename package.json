@@ -1,6 +1,7 @@
 {
   "name": "asset-frontend-app",
   "version": "0.0.0",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +10,9 @@
     "test": "ng test",
     "build_linux": "lectron-packager . LinuxApp --platform=linux --arch=x64",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "electron": "ng build && electron .",
+    "start_ele": "electron main.js"
   },
   "private": true,
   "dependencies": {
