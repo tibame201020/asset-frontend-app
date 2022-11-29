@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, shell } = require("electron");
 const path = require("path");
 
 function createWindow() {
@@ -38,6 +38,7 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on("window-all-closed", function () {
+  shell.openPath(path.resolve() + '\\stop-jar.bat')
   if (process.platform !== "darwin") app.quit();
 });
 
