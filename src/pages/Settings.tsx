@@ -47,12 +47,6 @@ const Settings: React.FC = () => {
 
     return (
         <div className="max-w-5xl mx-auto pb-20 p-6 space-y-8 animate-in fade-in duration-500">
-            {/* Header */}
-            <div className="flex flex-col gap-1 pb-4 border-b border-base-300">
-                <h1 className="text-3xl font-bold tracking-tight text-base-content">Settings</h1>
-                <p className="text-base-content/60 font-medium">Manage your preferences and system data.</p>
-            </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                 {/* Main Settings Column */}
                 <div className="lg:col-span-8 space-y-12">
