@@ -45,7 +45,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: "tw", // Default to Traditional Chinese as per user preference (implied by "繁體中文" rule)
+        lng: "en", // Default to English
         fallbackLng: "en",
         interpolation: {
             escapeValue: false // react already safes from xss

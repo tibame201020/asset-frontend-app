@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     Calendar, Wallet, Calculator, Settings,
-    Menu, X, ChevronRight, GraduationCap
+    Menu, X, ChevronRight, Landmark
 } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
@@ -25,7 +25,7 @@ const Sidebar: React.FC = () => {
         >
             <div className="p-6 flex items-center gap-3 overflow-hidden whitespace-nowrap">
                 <div className="bg-primary p-2 rounded-lg text-primary-content shadow-lg shadow-primary/20">
-                    <GraduationCap size={24} />
+                    <Landmark size={24} />
                 </div>
                 {isSidebarOpen && (
                     <span className="text-xl font-bold tracking-tight text-base-content">Asset App</span>

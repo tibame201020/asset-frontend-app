@@ -7,6 +7,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        sans: ['var(--theme-font)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         outfit: ['Outfit', 'sans-serif'],
       },
       colors: {
