@@ -1,23 +1,35 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-// import { useTranslation } from 'react-i18next'; // Unused
+import zhTwLocale from '@fullcalendar/core/locales/zh-tw';
+import { useTranslation } from 'react-i18next';
 import { calendarService } from '../services/calendarService';
 import type { CalendarEvent } from '../types';
 import CalendarEventModal from '../components/CalendarEventModal';
 import { format } from 'date-fns';
+import {
+    Calendar as CalendarIcon,
+    Plus,
+    ChevronLeft,
+    ChevronRight,
+    Clock,
+    List,
+    PlusCircle,
+    Info
+} from 'lucide-react';
 
 const CalendarHome: React.FC = () => {
-    // const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const calendarRef = useRef<FullCalendar>(null);
 
     // State
     const [events, setEvents] = useState<any[]>([]);
     const [dayEvents, setDayEvents] = useState<CalendarEvent[]>([]);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [currentTitle, setCurrentTitle] = useState<string>('');
 
-    // Toggle for "Add Event" mode (Legacy logic)
+    // Toggle for "Add Event" mode
     const [isAddMode, setIsAddMode] = useState(false);
 
     // Modal
@@ -29,14 +41,14 @@ const CalendarHome: React.FC = () => {
     const fetchEvents = async (start: Date, end: Date) => {
         try {
             const data = await calendarService.queryEventsByRange(start, end);
-
-            // Transform for FullCalendar
             const fcEvents = data.map(evt => ({
                 id: evt.id?.toString(),
                 title: evt.title,
-                start: evt.start, // FullCalendar handles ISO strings
+                start: evt.start,
                 end: evt.end,
-                extendedProps: evt
+                extendedProps: evt,
+                backgroundColor: 'oklch(var(--p))',
+                borderColor: 'oklch(var(--p))'
             }));
             setEvents(fcEvents);
         } catch (e) {
@@ -44,12 +56,8 @@ const CalendarHome: React.FC = () => {
         }
     };
 
-    // Fetch events for specific day (Sidebar list)
     const fetchDayEvents = async (date: Date) => {
         try {
-            // Query range for just this day
-            // Or reuse the main query logic but stricter? 
-            // Legacy call 'queryEventsByRange' with start=selectedDate, end=selectedDate
             const data = await calendarService.queryEventsByRange(date, date);
             setDayEvents(data || []);
         } catch (e) {
@@ -60,6 +68,7 @@ const CalendarHome: React.FC = () => {
     // Handlers
     const handleDatesSet = (arg: any) => {
         fetchEvents(arg.start, arg.end);
+        setCurrentTitle(arg.view.title);
     };
 
     const handleDateClick = (arg: any) => {
@@ -67,7 +76,6 @@ const CalendarHome: React.FC = () => {
         setSelectedDate(clickedDate);
         fetchDayEvents(clickedDate);
 
-        // Legacy: If "Add Event" toggle is on, open modal
         if (isAddMode) {
             setModalSelectedDateStr(arg.dateStr);
             setModalInitialData({});
@@ -78,14 +86,12 @@ const CalendarHome: React.FC = () => {
     const handleEventClick = (arg: any) => {
         const evt = arg.event;
         const originalData = evt.extendedProps;
-
         setModalInitialData(originalData);
         setModalSelectedDateStr(format(new Date(originalData.start), 'yyyy-MM-dd'));
         setIsModalOpen(true);
     };
 
     const handleModalSuccess = () => {
-        // Refresh current view
         if (calendarRef.current) {
             const api = calendarRef.current.getApi();
             fetchEvents(api.view.currentStart, api.view.currentEnd);
@@ -93,68 +99,154 @@ const CalendarHome: React.FC = () => {
         fetchDayEvents(selectedDate);
     };
 
+    // Toolbar Actions
+    const goPrev = () => calendarRef.current?.getApi().prev();
+    const goNext = () => calendarRef.current?.getApi().next();
+    const goToday = () => calendarRef.current?.getApi().today();
+    const setView = (view: string) => calendarRef.current?.getApi().changeView(view);
+
+    useEffect(() => {
+        fetchDayEvents(selectedDate);
+    }, []);
+
     return (
-        <div className="flex flex-col lg:flex-row h-[calc(100vh-100px)] gap-4">
-            {/* Calendar Area */}
-            <div className="flex-grow bg-base-100 p-4 rounded-lg shadow h-full overflow-hidden flex flex-col">
-                <div className="flex-grow overflow-auto calendar-container">
-                    <FullCalendar
-                        ref={calendarRef}
-                        plugins={[dayGridPlugin, interactionPlugin]}
-                        initialView="dayGridMonth"
-                        headerToolbar={{
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'dayGridMonth,dayGridWeek'
-                        }}
-                        events={events}
-                        dateClick={handleDateClick}
-                        eventClick={handleEventClick}
-                        datesSet={handleDatesSet}
-                        height="100%"
-                    />
-                </div>
-            </div>
-
-            {/* Sidebar Area (Day Details) */}
-            <div className="w-full lg:w-80 bg-base-100 p-4 rounded-lg shadow flex-shrink-0 flex flex-col gap-4">
-
-                {/* Toggle Add Mode */}
-                <div className="form-control">
-                    <label className="label cursor-pointer justify-start gap-4">
-                        <span className="label-text font-bold">Quick Add Mode</span>
-                        <input
-                            type="checkbox"
-                            className="toggle toggle-primary"
-                            checked={isAddMode}
-                            onChange={(e) => setIsAddMode(e.target.checked)}
-                        />
-                    </label>
-                    <div className="text-xs opacity-70">
-                        {isAddMode ? "Click a date to add event" : "Select date to view details"}
+        <div className="h-full flex flex-col gap-6 animate-in fade-in duration-500">
+            {/* Header / Toolbar */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-base-300">
+                <div className="flex items-center gap-4">
+                    <div className="p-3 bg-primary/10 rounded-2xl text-primary shadow-sm">
+                        <CalendarIcon size={24} />
+                    </div>
+                    <div>
+                        <h1 className="text-2xl font-bold tracking-tight text-base-content">{currentTitle || t('nav.calendar')}</h1>
+                        <p className="text-sm font-medium opacity-50 uppercase tracking-widest">{t('calendar.subtitle')}</p>
                     </div>
                 </div>
 
-                <div className="divider my-0"></div>
+                <div className="flex items-center gap-2 bg-base-100 p-1.5 rounded-2xl border border-base-300 shadow-sm">
+                    <div className="join join-horizontal">
+                        <button onClick={goPrev} className="btn btn-ghost btn-sm join-item"><ChevronLeft size={18} /></button>
+                        <button onClick={goToday} className="btn btn-ghost btn-sm join-item text-xs font-bold uppercase tracking-widest">{t('calendar.today')}</button>
+                        <button onClick={goNext} className="btn btn-ghost btn-sm join-item"><ChevronRight size={18} /></button>
+                    </div>
+                    <div className="divider divider-horizontal mx-0 h-6 opacity-30"></div>
+                    <div className="join join-horizontal">
+                        <button onClick={() => setView('dayGridMonth')} className="btn btn-ghost btn-sm join-item text-xs font-bold uppercase tracking-widest">{t('calendar.month')}</button>
+                        <button onClick={() => setView('dayGridWeek')} className="btn btn-ghost btn-sm join-item text-xs font-bold uppercase tracking-widest">{t('calendar.week')}</button>
+                    </div>
+                </div>
+            </div>
 
-                {/* Selected Date Info */}
-                <div className="text-xl font-bold text-center">
-                    {selectedDate.toDateString()}
+            <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-220px)] overflow-hidden">
+                {/* Calendar Area */}
+                <div className="flex-grow bg-base-100 p-6 rounded-3xl border border-base-300 shadow-xl overflow-hidden flex flex-col">
+                    <div className="flex-grow overflow-auto scroll-modern calendar-container">
+                        <FullCalendar
+                            ref={calendarRef}
+                            plugins={[dayGridPlugin, interactionPlugin]}
+                            locales={[zhTwLocale]}
+                            locale={i18n.language === 'tw' ? 'zh-tw' : 'en'}
+                            initialView="dayGridMonth"
+                            headerToolbar={false} // Custom toolbar handled above
+                            events={events}
+                            dateClick={handleDateClick}
+                            eventClick={handleEventClick}
+                            datesSet={handleDatesSet}
+                            height="100%"
+                        />
+                    </div>
                 </div>
 
-                {/* Event List for Day */}
-                <div className="flex-col gap-2 overflow-y-auto hidden md:flex">
-                    {dayEvents.length === 0 && <div className="text-center opacity-50">No events</div>}
-                    {dayEvents.map(evt => (
-                        <div key={evt.id} className="card bg-base-200 p-3 shadow-sm cursor-pointer hover:bg-base-300" onClick={() => {
-                            setModalInitialData(evt);
-                            setModalSelectedDateStr(evt.dateStr);
-                            setIsModalOpen(true);
-                        }}>
-                            <div className="font-bold">{evt.title}</div>
-                            <div className="text-sm">{evt.startText} - {evt.endText}</div>
+                {/* Sidebar Area (Day Details) */}
+                <div className="w-full lg:w-96 flex flex-col gap-6">
+                    {/* Selected Date Card */}
+                    <div className="card bg-primary text-primary-content shadow-2xl relative overflow-hidden ring-4 ring-primary/20">
+                        <div className="card-body p-6">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h2 className="text-sm font-black uppercase tracking-[0.2em] opacity-80">{t('calendar.selectedDate')}</h2>
+                                    <p className="text-3xl font-bold mt-1">{format(selectedDate, i18n.language === 'tw' ? 'yyyy年MM月dd日' : 'MMM dd, yyyy')}</p>
+                                    <p className="text-xs font-medium opacity-70 mt-1 uppercase tracking-widest">{format(selectedDate, 'eeee')}</p>
+                                </div>
+                                <CalendarIcon className="opacity-20" size={60} />
+                            </div>
                         </div>
-                    ))}
+                    </div>
+
+                    {/* Mode Toggle */}
+                    <div className={`card transition-all duration-300 border-2 ${isAddMode ? 'bg-secondary/10 border-secondary shadow-lg' : 'bg-base-100 border-base-300 shadow-sm'}`}>
+                        <div className="card-body p-4 flex flex-row items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className={`p-2 rounded-lg ${isAddMode ? 'bg-secondary text-secondary-content' : 'bg-base-300 text-base-content/50'}`}>
+                                    <PlusCircle size={20} />
+                                </div>
+                                <div>
+                                    <p className="text-sm font-bold uppercase tracking-tight">{t('calendar.quickAddMode')}</p>
+                                    <p className="text-[10px] opacity-60">{t('calendar.quickAddHint')}</p>
+                                </div>
+                            </div>
+                            <input
+                                type="checkbox"
+                                className="toggle toggle-secondary"
+                                checked={isAddMode}
+                                onChange={(e) => setIsAddMode(e.target.checked)}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Agenda List */}
+                    <div className="flex-grow bg-base-100 rounded-3xl border border-base-300 shadow-lg flex flex-col overflow-hidden">
+                        <div className="p-4 border-b border-base-200 bg-base-200/50 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <List size={16} className="text-primary" />
+                                <span className="text-xs font-black uppercase tracking-widest opacity-70">{t('calendar.agenda')}</span>
+                            </div>
+                            <div className="badge badge-sm font-bold">{dayEvents.length} {t('calendar.eventsCount')}</div>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto scroll-modern p-4 space-y-3">
+                            {dayEvents.length === 0 ? (
+                                <div className="flex flex-col items-center justify-center h-full opacity-30 gap-2">
+                                    <Info size={40} strokeWidth={1} />
+                                    <span className="text-xs font-bold uppercase tracking-widest">{t('calendar.noEvents')}</span>
+                                </div>
+                            ) : (
+                                dayEvents.map(evt => (
+                                    <button
+                                        key={evt.id}
+                                        className="w-full text-left group card bg-base-200 hover:bg-primary hover:text-primary-content transition-all duration-300 border border-base-300 hover:border-primary shadow-sm hover:shadow-lg scale-100 active:scale-95"
+                                        onClick={() => {
+                                            setModalInitialData(evt);
+                                            setModalSelectedDateStr(evt.dateStr);
+                                            setIsModalOpen(true);
+                                        }}
+                                    >
+                                        <div className="card-body p-4 gap-1">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-2 h-2 rounded-full bg-primary group-hover:bg-primary-content"></div>
+                                                <h4 className="font-bold text-sm truncate">{evt.title}</h4>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-xs opacity-60 group-hover:opacity-90 font-mono">
+                                                <Clock size={12} />
+                                                {evt.startText} — {evt.endText}
+                                            </div>
+                                        </div>
+                                    </button>
+                                ))
+                            )}
+                        </div>
+
+                        <button
+                            onClick={() => {
+                                setModalSelectedDateStr(format(selectedDate, 'yyyy-MM-dd'));
+                                setModalInitialData({});
+                                setIsModalOpen(true);
+                            }}
+                            className="btn btn-primary btn-sm m-4 gap-2 shadow-lg"
+                        >
+                            <Plus size={16} /> {t('calendar.newEvent')}
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -165,13 +257,6 @@ const CalendarHome: React.FC = () => {
                 initialData={modalInitialData}
                 selectedDateStr={modalSelectedDateStr}
             />
-
-            {/* CSS Override for FullCalendar to match DaisyUI/Subtle Theme */}
-            <style>{`
-        .fc-toolbar-title { font-size: 1.25rem !important; }
-        .fc-button { background-color: var(--fallback-p,oklch(var(--p)/1)) !important; border: none !important; }
-        .fc-daygrid-day.fc-day-today { background-color: var(--fallback-b2,oklch(var(--b2)/0.3)) !important; }
-      `}</style>
         </div>
     );
 };

@@ -40,4 +40,54 @@
         font-family: var(--theme-font);
         -webkit-font-smoothing: antialiased;
     }
+
+    /* FullCalendar Professional Overrides */
+    .fc {
+        --fc-border-color: oklch(var(--bc) / 0.1);
+        --fc-button-bg-color: oklch(var(--p));
+        --fc-button-border-color: oklch(var(--p));
+        --fc-button-hover-bg-color: oklch(var(--pc));
+        --fc-button-active-bg-color: oklch(var(--pc));
+        --fc-today-bg-color: oklch(var(--p) / 0.05);
+        --fc-page-bg-color: oklch(var(--b1));
+        --fc-list-event-hover-bg-color: oklch(var(--b2));
+    }
+
+    .fc .fc-toolbar-title {
+        @apply text-xl font-bold tracking-tight text-base-content;
+    }
+
+    .fc .fc-button {
+        @apply btn btn-sm btn-primary capitalize px-4 border-none shadow-sm;
+    }
+
+    .fc .fc-button-primary:not(:disabled).fc-button-active,
+    .fc .fc-button-primary:not(:disabled):active {
+        @apply btn-neutral;
+    }
+
+    .fc .fc-daygrid-day-number {
+        @apply p-2 text-xs font-bold opacity-70;
+    }
+
+    .fc .fc-col-header-cell-cushion {
+        @apply py-3 text-xs font-black uppercase tracking-widest text-base-content/40;
+    }
+
+    .fc-theme-standard td,
+    .fc-theme-standard th {
+        @apply border-base-content/10;
+    }
+
+    .fc-daygrid-event {
+        @apply rounded-md px-1.5 py-0.5 text-xs font-medium border-none shadow-sm transition-transform active:scale-95;
+    }
+
+    .fc-v-event {
+        @apply bg-primary text-primary-content;
+    }
+
+    .fc-h-event {
+        @apply bg-primary text-primary-content;
+    }
 }

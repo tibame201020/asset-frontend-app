@@ -3,12 +3,20 @@ import { useTranslation } from 'react-i18next';
 import type { CalendarEvent } from '../types';
 import { calendarService } from '../services/calendarService';
 import { format } from 'date-fns';
+import {
+    X,
+    Calendar as CalendarIcon,
+    Clock,
+    Type,
+    Trash2,
+    Save,
+    AlertCircle
+} from 'lucide-react';
 
 interface CalendarEventModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
-    // If editing, provide event. If adding new, provide initial dateStr
     initialData?: Partial<CalendarEvent>;
     selectedDateStr?: string;
 }
@@ -18,26 +26,21 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
-        startText: '09:00', // Default start time
-        endText: '10:00',   // Default end time
+        startText: '09:00',
+        endText: '10:00',
         dateStr: format(new Date(), 'yyyy-MM-dd')
     });
 
     useEffect(() => {
         if (isOpen) {
             if (initialData && initialData.id) {
-                // Edit Mode
                 setFormData({
                     title: initialData.title || '',
-                    // Assuming startText/endText are stored or need to be derived. 
-                    // Legacy backend stores them as string "HH:mm" or similar? 
-                    // Legacy model has startText/endText strings.
                     startText: initialData.startText || '09:00',
                     endText: initialData.endText || '10:00',
                     dateStr: initialData.dateStr || format(new Date(initialData.start!), 'yyyy-MM-dd')
                 });
             } else {
-                // Add Mode
                 setFormData({
                     title: '',
                     startText: '09:00',
@@ -52,33 +55,24 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
         e.preventDefault();
         setLoading(true);
         try {
-            // Construct payload matching legacy logic
-            // Need to combine dateStr + time to create Date objects for start/end
-            const baseDate = formData.dateStr; // yyyy-MM-dd
-
-            // Helper to create date object from dateStr + timeStr (HH:mm)
-            const createDateTime = (date: string, time: string) => {
-                const d = new Date(date + 'T' + time);
-                return d;
-            };
+            const baseDate = formData.dateStr;
+            const createDateTime = (date: string, time: string) => new Date(date + 'T' + time);
 
             const startDate = createDateTime(baseDate, formData.startText);
             const endDate = createDateTime(baseDate, formData.endText);
 
-            // Calculate 'month' field as YYYYMM integer (legacy requirement)
             const monthStr = baseDate.replace(/-/g, '').substring(0, 6);
             const monthInt = parseInt(monthStr);
 
             const payload: Partial<CalendarEvent> = {
-                id: initialData?.id || 0, // 0 for new
+                id: initialData?.id || 0,
                 title: formData.title,
-                start: startDate.toISOString(), // Convert to string
+                start: startDate.toISOString(),
                 end: endDate.toISOString(),
                 startText: formData.startText,
                 endText: formData.endText,
                 dateStr: formData.dateStr,
                 month: monthInt,
-                // legacy used Date, but interface might be string. Let's omit or format
                 logTime: new Date().toISOString()
             };
 
@@ -87,7 +81,6 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
             onClose();
         } catch (error) {
             console.error('Failed to save event', error);
-            alert('Failed to save event');
         } finally {
             setLoading(false);
         }
@@ -95,7 +88,6 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
 
     const handleDelete = async () => {
         if (!initialData?.id) return;
-        if (!confirm('Delete this event?')) return;
         setLoading(true);
         try {
             await calendarService.deleteById(initialData.id);
@@ -103,7 +95,6 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
             onClose();
         } catch (error) {
             console.error(error);
-            alert('Failed to delete');
         } finally {
             setLoading(false);
         }
@@ -113,73 +104,135 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
 
     return (
         <div className="modal modal-open">
-            <div className="modal-box">
-                <h3 className="font-bold text-lg">
-                    {initialData?.id ? 'Edit Event' : 'Add Event'}
-                </h3>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
+            <div className="modal-box p-0 max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-3xl overflow-hidden">
+                {/* Modal Header */}
+                <div className="bg-primary p-6 text-primary-content relative overflow-hidden">
+                    <div className="relative z-10 flex justify-between items-center">
+                        <div className="flex items-center gap-3">
+                            <CalendarIcon size={24} />
+                            <h3 className="font-bold text-xl uppercase tracking-tight">
+                                {initialData?.id ? t('calendar.modal.editTitle') : t('calendar.modal.newTitle')}
+                            </h3>
+                        </div>
+                        <button
+                            type="button"
+                            className="btn btn-circle btn-sm btn-ghost hover:bg-white/10"
+                            onClick={onClose}
+                        >
+                            <X size={18} />
+                        </button>
+                    </div>
+                    {/* Background Pattern */}
+                    <CalendarIcon className="absolute -bottom-4 -right-4 opacity-10" size={120} />
+                </div>
 
-                    {/* Date - Readonly as per legacy mostly, but lets allow edit if needed or stay strict */}
-                    <div className="form-control">
-                        <label className="label"><span className="label-text">Date</span></label>
+                <form onSubmit={handleSubmit} className="p-8 space-y-6">
+                    {/* Title Input */}
+                    <div className="form-control w-full">
+                        <label className="label py-1">
+                            <span className="label-text text-xs font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
+                                <Type size={14} className="text-primary" /> {t('calendar.modal.eventTitle')}
+                            </span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder={t('calendar.modal.placeholder')}
+                            className="input input-bordered focus:input-primary w-full bg-base-200/50 font-medium"
+                            value={formData.title}
+                            onChange={e => setFormData({ ...formData, title: e.target.value })}
+                            required
+                            autoFocus
+                        />
+                    </div>
+
+                    {/* Date Input */}
+                    <div className="form-control w-full">
+                        <label className="label py-1">
+                            <span className="label-text text-xs font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
+                                <CalendarIcon size={14} className="text-secondary" /> {t('calendar.modal.date')}
+                            </span>
+                        </label>
                         <input
                             type="date"
-                            className="input input-bordered"
+                            className="input input-bordered focus:input-secondary w-full bg-base-200/50 font-mono"
                             value={formData.dateStr}
                             onChange={e => setFormData({ ...formData, dateStr: e.target.value })}
                             required
                         />
                     </div>
 
-                    {/* Title */}
-                    <div className="form-control">
-                        <label className="label"><span className="label-text">Event Title</span></label>
-                        <input
-                            type="text"
-                            className="input input-bordered"
-                            value={formData.title}
-                            onChange={e => setFormData({ ...formData, title: e.target.value })}
-                            required
-                            placeholder="Please enter the event"
-                        />
-                    </div>
-
-                    {/* Start Time */}
-                    <div className="form-control">
-                        <label className="label"><span className="label-text">Start Time</span></label>
-                        <input
-                            type="time"
-                            className="input input-bordered"
-                            value={formData.startText}
-                            onChange={e => setFormData({ ...formData, startText: e.target.value })}
-                            required
-                        />
-                    </div>
-
-                    {/* End Time */}
-                    <div className="form-control">
-                        <label className="label"><span className="label-text">End Time</span></label>
-                        <input
-                            type="time"
-                            className="input input-bordered"
-                            value={formData.endText}
-                            onChange={e => setFormData({ ...formData, endText: e.target.value })}
-                            required
-                        />
-                    </div>
-
-                    <div className="modal-action justify-between">
-                        <div>
-                            {initialData?.id && (
-                                <button type="button" className="btn btn-error" onClick={handleDelete} disabled={loading}>
-                                    Delete
-                                </button>
-                            )}
+                    {/* Time Grid */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="form-control">
+                            <label className="label py-1">
+                                <span className="label-text text-xs font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
+                                    <Clock size={14} className="text-accent" /> {t('calendar.modal.start')}
+                                </span>
+                            </label>
+                            <input
+                                type="time"
+                                className="input input-bordered focus:input-accent w-full bg-base-200/50 font-mono"
+                                value={formData.startText}
+                                onChange={e => setFormData({ ...formData, startText: e.target.value })}
+                                required
+                            />
                         </div>
+                        <div className="form-control">
+                            <label className="label py-1">
+                                <span className="label-text text-xs font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
+                                    <Clock size={14} className="text-accent" /> {t('calendar.modal.end')}
+                                </span>
+                            </label>
+                            <input
+                                type="time"
+                                className="input input-bordered focus:input-accent w-full bg-base-200/50 font-mono"
+                                value={formData.endText}
+                                onChange={e => setFormData({ ...formData, endText: e.target.value })}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    {/* Action Bar */}
+                    <div className="flex items-center justify-between pt-4 border-t border-base-200">
+                        {initialData?.id ? (
+                            <button
+                                type="button"
+                                className="btn btn-ghost btn-sm text-error hover:bg-error/10 gap-2 font-bold px-4"
+                                onClick={handleDelete}
+                                disabled={loading}
+                            >
+                                <Trash2 size={16} /> {t('common.delete')}
+                            </button>
+                        ) : (
+                            <div className="flex items-center gap-2 text-warning opacity-70">
+                                <AlertCircle size={14} />
+                                <span className="text-[10px] font-bold uppercase tracking-wider italic">{t('calendar.modal.newRecord')}</span>
+                            </div>
+                        )}
+
                         <div className="flex gap-2">
-                            <button type="button" className="btn" onClick={onClose} disabled={loading}>{t('common.cancel')}</button>
-                            <button type="submit" className="btn btn-primary" disabled={loading}>
-                                {loading ? <span className="loading loading-spinner"></span> : t('common.save')}
+                            <button
+                                type="button"
+                                className="btn btn-ghost btn-sm font-bold uppercase tracking-widest text-xs"
+                                onClick={onClose}
+                                disabled={loading}
+                            >
+                                {t('common.cancel')}
+                            </button>
+                            <button
+                                type="submit"
+                                className="btn btn-primary btn-sm px-6 shadow-lg shadow-primary/20 gap-2 font-bold uppercase tracking-widest text-xs group"
+                                disabled={loading}
+                            >
+                                {loading ? (
+                                    <span className="loading loading-spinner loading-xs"></span>
+                                ) : (
+                                    <>
+                                        <Save size={16} className="group-hover:scale-110 transition-transform" />
+                                        {t('common.save')}
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
