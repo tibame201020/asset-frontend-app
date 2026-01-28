@@ -41,6 +41,59 @@ const resources = {
                     "end": "End",
                     "newRecord": "New Record"
                 }
+            },
+            "deposit": {
+                "subtitle": "Transaction Tracking & Analysis",
+                "stats": {
+                    "totalIncome": "Total Income",
+                    "totalExpense": "Total Expense"
+                },
+                "filter": {
+                    "dateRange": "Date Range",
+                    "type": "Type",
+                    "keyword": "Search transactions...",
+                    "all": "All",
+                    "income": "Income",
+                    "expense": "Expense",
+                    "add": "Add Log"
+                },
+                "tabs": {
+                    "list": "List View",
+                    "inline": "Daily Timeline",
+                    "chart": "Analysis"
+                },
+                "table": {
+                    "actions": "Actions",
+                    "date": "Date",
+                    "type": "Type",
+                    "category": "Category",
+                    "name": "Name",
+                    "value": "Value",
+                    "ps": "Note",
+                    "noRecords": "No records found"
+                },
+                "modal": {
+                    "title": "Transaction Details",
+                    "fields": {
+                        "date": "Transaction Date",
+                        "type": "Type",
+                        "category": "Category",
+                        "name": "Item Name",
+                        "value": "Amount",
+                        "ps": "Note (PS)"
+                    },
+                    "placeholders": {
+                        "category": "Select Category",
+                        "name": "What did you buy?"
+                    }
+                },
+                "confirm": {
+                    "deleteTitle": "Confirm Delete",
+                    "deleteMessage": "Are you sure you want to delete this record?",
+                    "success": "Saved successfully",
+                    "deleted": "Deleted successfully",
+                    "error": "Operation failed"
+                }
             }
         }
     },
@@ -81,6 +134,59 @@ const resources = {
                     "start": "開始",
                     "end": "結束",
                     "newRecord": "新增記錄"
+                }
+            },
+            "deposit": {
+                "subtitle": "交易追蹤與分析",
+                "stats": {
+                    "totalIncome": "總收入",
+                    "totalExpense": "總支出"
+                },
+                "filter": {
+                    "dateRange": "日期範圍",
+                    "type": "類型",
+                    "keyword": "搜尋交易記錄...",
+                    "all": "全部",
+                    "income": "收入",
+                    "expense": "支出",
+                    "add": "新增記錄"
+                },
+                "tabs": {
+                    "list": "清單檢視",
+                    "inline": "每日趨勢",
+                    "chart": "分類分析"
+                },
+                "table": {
+                    "actions": "操作",
+                    "date": "日期",
+                    "type": "類型",
+                    "category": "類別",
+                    "name": "名稱",
+                    "value": "金額",
+                    "ps": "備註",
+                    "noRecords": "沒有找到相關記錄"
+                },
+                "modal": {
+                    "title": "交易詳情",
+                    "fields": {
+                        "date": "交易日期",
+                        "type": "類型",
+                        "category": "類別",
+                        "name": "項目名稱",
+                        "value": "金額",
+                        "ps": "備註 (PS)"
+                    },
+                    "placeholders": {
+                        "category": "請選擇類別",
+                        "name": "您買了什麼？"
+                    }
+                },
+                "confirm": {
+                    "deleteTitle": "確認刪除",
+                    "deleteMessage": "您確定要刪除這筆記錄嗎？",
+                    "success": "儲存成功",
+                    "deleted": "刪除成功",
+                    "error": "操作失敗"
                 }
             }
         }

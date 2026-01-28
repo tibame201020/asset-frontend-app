@@ -31,50 +31,80 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
     };
 
     return (
-        <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart
-                data={data}
-                margin={{
-                    top: 20, right: 20, bottom: 20, left: 20,
-                }}
-            >
-                <CartesianGrid stroke="#f5f5f5" />
-                <XAxis dataKey="date" scale="band" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
+        <div className="h-full w-full bg-base-100/30 rounded-[2rem] p-8 border border-base-300 shadow-inner flex flex-col">
+            <div className="flex-grow min-h-0">
+                <ResponsiveContainer width="100%" height="100%">
+                    <ComposedChart
+                        data={data}
+                        margin={{
+                            top: 40, right: 10, bottom: 20, left: 10,
+                        }}
+                    >
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                        <XAxis
+                            dataKey="date"
+                            scale="band"
+                            axisLine={false}
+                            tickLine={false}
+                            tick={{ fontSize: 10, fontWeight: 700, opacity: 0.4 }}
+                            dy={10}
+                        />
+                        <YAxis
+                            axisLine={false}
+                            tickLine={false}
+                            tick={{ fontSize: 10, fontWeight: 700, opacity: 0.4 }}
+                        />
+                        <Tooltip
+                            contentStyle={{
+                                borderRadius: '1.5rem',
+                                border: 'none',
+                                boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.15)',
+                                background: 'rgba(255, 255, 255, 0.95)',
+                                backdropFilter: 'blur(12px)',
+                                padding: '1rem'
+                            }}
+                        />
+                        <Legend
+                            verticalAlign="top"
+                            align="right"
+                            iconType="circle"
+                            wrapperStyle={{ paddingBottom: '30px', fontWeight: 'bold', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.6 }}
+                        />
 
-                {/* Expense Stack */}
-                {expenseCategories.map((cat) => (
-                    <Bar
-                        key={`exp-${cat}`}
-                        dataKey={cat}
-                        stackId="expense"
-                        fill={getColor(cat + 'exp')}
-                        name={cat}
-                    />
-                ))}
-                {/* Total Expense Line */}
-                <Line type="monotone" dataKey="expenseTotal" stroke="#b91c1c" strokeWidth={2} dot={false} name="Total Expense" />
+                        {/* Expense Stack */}
+                        {expenseCategories.map((cat) => (
+                            <Bar
+                                key={`exp-${cat}`}
+                                dataKey={cat}
+                                stackId="expense"
+                                fill={getColor(cat + 'exp')}
+                                name={cat}
+                                barSize={16}
+                            />
+                        ))}
+                        {/* Total Expense Line */}
+                        <Line type="monotone" dataKey="expenseTotal" stroke="#b91c1c" strokeWidth={2} dot={false} name="Total Expense" />
 
 
-                {/* Income Stack - Rendered as separate stack group or same? Usually separate for comparison */}
-                {/* Using valid stackId to group them. 'expense' vs 'income' */}
-                {incomeCategories.map((cat) => (
-                    <Bar
-                        key={`inc-${cat}`}
-                        dataKey={cat}
-                        stackId="income"
-                        fill={getColor(cat + 'inc')}
-                        name={cat}
-                    />
-                ))}
-                {/* Total Income Line */}
-                <Line type="monotone" dataKey="incomeTotal" stroke="#15803d" strokeWidth={2} dot={false} name="Total Income" />
+                        {/* Income Stack */}
+                        {incomeCategories.map((cat) => (
+                            <Bar
+                                key={`inc-${cat}`}
+                                dataKey={cat}
+                                stackId="income"
+                                fill={getColor(cat + 'inc')}
+                                name={cat}
+                                barSize={16}
+                            />
+                        ))}
+                        {/* Total Income Line */}
+                        <Line type="monotone" dataKey="incomeTotal" stroke="#15803d" strokeWidth={2} dot={false} name="Total Income" />
 
-                <Brush dataKey="date" height={30} stroke="#8884d8" />
-            </ComposedChart>
-        </ResponsiveContainer>
+                        <Brush dataKey="date" height={30} stroke="#8884d8" />
+                    </ComposedChart>
+                </ResponsiveContainer>
+            </div>
+        </div>
     );
 };
 
