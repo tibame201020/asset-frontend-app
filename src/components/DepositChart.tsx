@@ -79,7 +79,7 @@ const DepositChart: React.FC<DepositChartProps> = ({ data }) => {
                 </div>
 
                 <div className="flex-grow overflow-y-auto scroll-modern pr-4 py-2 flex flex-col gap-6">
-                    {data.sort((a, b) => b.value - a.value).map((item, index) => {
+                    {[...data].sort((a, b) => b.value - a.value).map((item, index) => {
                         const percentage = ((item.value / totalValue) * 100).toFixed(1);
                         const color = COLORS[data.indexOf(item) % COLORS.length];
 

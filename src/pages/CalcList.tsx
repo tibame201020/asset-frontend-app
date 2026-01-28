@@ -124,8 +124,8 @@ const CalcList: React.FC = () => {
             { name: 'Disposable', value: disposable }
         ].filter(i => i.value > 0);
 
-        setIncomes(inc.sort((a, b) => b.value - a.value));
-        setOutputs(out.sort((a, b) => b.value - a.value));
+        setIncomes([...inc].sort((a, b) => b.value - a.value));
+        setOutputs([...out].sort((a, b) => b.value - a.value));
         setAssets(assetData);
         setSummary({
             totalIncome,
@@ -289,35 +289,37 @@ const CalcList: React.FC = () => {
                     </div>
 
                     <div className="flex-grow overflow-y-auto scroll-modern pr-4 py-2 flex flex-col gap-6">
-                        {currentData.length > 0 ? currentData.sort((a, b) => b.value - a.value).map((item, index) => {
-                            const percentage = currentTotal > 0 ? ((item.value / currentTotal) * 100).toFixed(1) : '0.0';
-                            const color = COLORS[index % COLORS.length];
+                        {currentData.length > 0 ? (
+                            [...currentData].sort((a, b) => b.value - a.value).map((item, index) => {
+                                const percentage = currentTotal > 0 ? ((item.value / currentTotal) * 100).toFixed(1) : '0.0';
+                                const color = COLORS[index % COLORS.length];
 
-                            return (
-                                <div key={index} className="flex flex-col gap-2 group hover:translate-x-1 transition-transform cursor-default">
-                                    <div className="flex justify-between items-end">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: color }}></div>
-                                            <span className="text-sm font-bold opacity-80 group-hover:opacity-100 transition-opacity">{item.name}</span>
+                                return (
+                                    <div key={index} className="flex flex-col gap-2 group hover:translate-x-1 transition-transform cursor-default">
+                                        <div className="flex justify-between items-end">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: color }}></div>
+                                                <span className="text-sm font-bold opacity-80 group-hover:opacity-100 transition-opacity">{item.name}</span>
+                                            </div>
+                                            <div className="text-right">
+                                                <span className="text-xs font-mono font-bold opacity-50 block leading-none mb-1">{percentage}%</span>
+                                                <span className="text-sm font-mono font-black border-b-2" style={{ borderColor: `${color}40` }}>${item.value.toLocaleString()}</span>
+                                            </div>
                                         </div>
-                                        <div className="text-right">
-                                            <span className="text-xs font-mono font-bold opacity-50 block leading-none mb-1">{percentage}%</span>
-                                            <span className="text-sm font-mono font-black border-b-2" style={{ borderColor: `${color}40` }}>${item.value.toLocaleString()}</span>
+                                        <div className="w-full h-1.5 bg-base-content/5 rounded-full overflow-hidden">
+                                            <div
+                                                className="h-full rounded-full transition-all duration-1000 ease-out"
+                                                style={{
+                                                    width: `${percentage}%`,
+                                                    backgroundColor: color,
+                                                    boxShadow: `0 0 10px ${color}40`
+                                                }}
+                                            ></div>
                                         </div>
                                     </div>
-                                    <div className="w-full h-1.5 bg-base-content/5 rounded-full overflow-hidden">
-                                        <div
-                                            className="h-full rounded-full transition-all duration-1000 ease-out"
-                                            style={{
-                                                width: `${percentage}%`,
-                                                backgroundColor: color,
-                                                boxShadow: `0 0 10px ${color}40`
-                                            }}
-                                        ></div>
-                                    </div>
-                                </div>
-                            );
-                        }) : (
+                                );
+                            })
+                        ) : (
                             <div className="text-center opacity-30 py-10 font-bold uppercase text-xs tracking-wider">No Data Available</div>
                         )}
                     </div>

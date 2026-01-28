@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -25,9 +25,11 @@ const CalendarHome: React.FC = () => {
 
     // State
     const [events, setEvents] = useState<any[]>([]);
+    const [rawEvents, setRawEvents] = useState<CalendarEvent[]>([]);
     const [dayEvents, setDayEvents] = useState<CalendarEvent[]>([]);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [currentTitle, setCurrentTitle] = useState<string>('');
+    const currentRangeRef = useRef<{ start: number; end: number } | null>(null);
 
     // Toggle for "Add Event" mode
     const [isAddMode, setIsAddMode] = useState(false);
@@ -38,9 +40,11 @@ const CalendarHome: React.FC = () => {
     const [modalSelectedDateStr, setModalSelectedDateStr] = useState<string>('');
 
     // Fetch events for range
-    const fetchEvents = async (start: Date, end: Date) => {
+    const fetchEvents = useCallback(async (start: Date, end: Date) => {
         try {
             const data = await calendarService.queryEventsByRange(start, end);
+            setRawEvents(data || []);
+
             const fcEvents = data.map(evt => ({
                 id: evt.id?.toString(),
                 title: evt.title,
@@ -51,30 +55,47 @@ const CalendarHome: React.FC = () => {
                 borderColor: 'oklch(var(--p))'
             }));
             setEvents(fcEvents);
-        } catch (e) {
-            console.error(e);
-        }
-    };
 
-    const fetchDayEvents = async (date: Date) => {
-        try {
-            const data = await calendarService.queryEventsByRange(date, date);
-            setDayEvents(data || []);
+            // Update range ref
+            currentRangeRef.current = { start: start.getTime(), end: end.getTime() };
+
+            // Sync current day events if data just arrived
+            updateDayEvents(selectedDate, data);
         } catch (e) {
             console.error(e);
         }
+    }, [selectedDate]);
+
+    // Helper to update side list based on selected date
+    const updateDayEvents = (date: Date, allEvents: CalendarEvent[]) => {
+        const dateStr = format(date, 'yyyy-MM-dd');
+        const filtered = allEvents.filter(evt => {
+            // Check if it's the same day (comparing by YYYY-MM-DD string is safest)
+            return format(new Date(evt.start), 'yyyy-MM-dd') === dateStr;
+        });
+        setDayEvents(filtered);
     };
 
     // Handlers
-    const handleDatesSet = (arg: any) => {
-        fetchEvents(arg.start, arg.end);
+    const handleDatesSet = useCallback((arg: any) => {
+        const newStart = arg.start.getTime();
+        const newEnd = arg.end.getTime();
+
+        // Check if range actually changed to prevent infinite loop
+        if (
+            !currentRangeRef.current ||
+            currentRangeRef.current.start !== newStart ||
+            currentRangeRef.current.end !== newEnd
+        ) {
+            fetchEvents(arg.start, arg.end);
+        }
         setCurrentTitle(arg.view.title);
-    };
+    }, [fetchEvents]);
 
     const handleDateClick = (arg: any) => {
         const clickedDate = arg.date;
         setSelectedDate(clickedDate);
-        fetchDayEvents(clickedDate);
+        updateDayEvents(clickedDate, rawEvents);
 
         if (isAddMode) {
             setModalSelectedDateStr(arg.dateStr);
@@ -96,7 +117,6 @@ const CalendarHome: React.FC = () => {
             const api = calendarRef.current.getApi();
             fetchEvents(api.view.currentStart, api.view.currentEnd);
         }
-        fetchDayEvents(selectedDate);
     };
 
     // Toolbar Actions
@@ -106,7 +126,7 @@ const CalendarHome: React.FC = () => {
     const setView = (view: string) => calendarRef.current?.getApi().changeView(view);
 
     useEffect(() => {
-        fetchDayEvents(selectedDate);
+        // Initial day events will be set when fetchEvents is called by datesSet
     }, []);
 
     return (
