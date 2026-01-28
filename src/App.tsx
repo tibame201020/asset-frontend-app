@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import Layout from './layouts/Layout';
 import './i18n';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -10,32 +10,40 @@ import DepositList from './pages/DepositList';
 import CalcList from './pages/CalcList';
 import Settings from './pages/Settings';
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/calendar/home" replace />
+      },
+      {
+        path: "calendar/home",
+        element: <CalendarHome />
+      },
+      {
+        path: "deposit/list",
+        element: <DepositList />
+      },
+      {
+        path: "calc/list",
+        element: <CalcList />
+      },
+      {
+        path: "setting",
+        element: <Settings />
+      }
+    ]
+  }
+]);
+
 function App() {
   return (
     <ThemeProvider>
       <NotificationProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              {/* Redirect root to calendar/home */}
-              <Route index element={<Navigate to="/calendar/home" replace />} />
-
-              <Route path="calendar">
-                <Route path="home" element={<CalendarHome />} />
-              </Route>
-
-              <Route path="deposit">
-                <Route path="list" element={<DepositList />} />
-              </Route>
-
-              <Route path="calc">
-                <Route path="list" element={<CalcList />} />
-              </Route>
-
-              <Route path="setting" element={<Settings />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </NotificationProvider>
     </ThemeProvider>
   );
