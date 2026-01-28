@@ -327,7 +327,7 @@ const CalcList: React.FC = () => {
     };
 
     return (
-        <div className="h-[calc(100vh-theme(spacing.24))] flex flex-col gap-6 p-1 md:p-6 max-w-[1920px] mx-auto animate-in fade-in duration-700">
+        <div className="h-full flex flex-col gap-6 animate-in fade-in duration-700">
             {/* Top Unified Dashboard Bar */}
             <div className="bg-base-100/50 backdrop-blur-md p-6 rounded-3xl border border-base-200/50 shadow-xl flex flex-col xl:flex-row items-center gap-8 shrink-0 transition-all">
                 {/* Left: Tabs */}
@@ -453,7 +453,7 @@ const CalcList: React.FC = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex-grow flex flex-col">
+                    <div className="flex-grow flex flex-col min-h-0 overflow-hidden">
                         {renderDetailedAnalysis()}
                     </div>
                 )}
