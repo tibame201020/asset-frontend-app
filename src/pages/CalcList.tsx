@@ -212,7 +212,7 @@ const CalcList: React.FC = () => {
             case 'EXPENSE':
                 currentData = outputs;
                 currentTotal = summary.totalExpense - (summary.totalIncome - summary.totalExpense - summary.balance); // Just Expense total
-                currentTotal = outputs.reduce((acc, curr) => acc + curr.value, 0);
+                currentTotal = outputs.reduce((acc: number, curr: any) => acc + curr.value, 0);
                 title = "Expense Breakdown";
                 break;
             case 'INCOME':
@@ -223,7 +223,7 @@ const CalcList: React.FC = () => {
         }
 
         // Fallback for visual Total calculation if not preset
-        if (currentTotal === 0) currentTotal = currentData.reduce((acc, c) => acc + c.value, 0);
+        if (currentTotal === 0) currentTotal = currentData.reduce((acc: number, c: any) => acc + c.value, 0);
 
         return (
             <div className="h-full w-full bg-base-100/30 rounded-3xl p-6 xl:p-10 border border-base-300 shadow-inner flex flex-col xl:flex-row gap-8 xl:gap-12 items-stretch overflow-hidden backdrop-blur-sm">
