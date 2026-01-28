@@ -1,73 +1,94 @@
-# React + TypeScript + Vite
+# Asset Frontend App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive financial asset management dashboard built with React, TypeScript, and Vite. This application provides tools for tracking deposits, calculating recurring expenses, and visualizing financial data.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   **Dashboard Overview**: Visualize income, expenses, and net assets.
+-   **Deposit Management**: Track daily transactions with detailed list, inline, and chart views.
+-   **Calculation**: Manage recurring payments/earnings with immediate monthly estimates and visualizations.
+-   **Notification System**: Global toast notifications and confirmation modals (configurable position).
+-   **Theming**: Multiple built-in themes (Light, Dark, Cyberpunk, Corporate, etc.) via DaisyUI.
+-   **Internationalization**: Support for English and Traditional Chinese (Tw).
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-   **Framework**: React 18+ (Hooks, Context API)
+-   **Language**: TypeScript
+-   **Build Tool**: Vite
+-   **UI Library**: DaisyUI + TailwindCSS
+-   **Icons**: Lucide React
+-   **Charts**: Recharts
+-   **State Management**: React Context (Theme, Notification)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+-   Node.js (v18 or higher recommended)
+-   npm or yarn
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/your-repo/asset-frontend-app.git
+    cd asset-frontend-app
+    ```
+
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+### Development
+
+Start the development server with HMR:
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app will be available at `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Production Build
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Build the project for production:
+```bash
+npm run build
+```
+
+Preview the production build locally:
+```bash
+npm run preview
+```
+
+## Docker Deployment
+
+This project includes a `Dockerfile` and `nginx.conf` for containerized deployment.
+
+### Build Image
+```bash
+docker build -t asset-frontend-app .
+```
+
+### Run Container
+Run the container on port 80:
+```bash
+docker run -d -p 80:80 asset-frontend-app
+```
+
+Access the application at `http://localhost`.
+
+## Project Structure
+
+```
+src/
+├── assets/         # Static assets
+├── components/     # Reusable UI components (Modals, Charts)
+├── contexts/       # Global State (Theme, Notification)
+├── hooks/          # Custom Hooks (useDepositFilter)
+├── pages/          # Main route pages (Home, DepositList, CalcList, Settings)
+├── services/       # API integration
+├── types/          # TypeScript definitions
+└── utils/          # Helper functions
 ```
