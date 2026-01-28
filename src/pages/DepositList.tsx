@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { TransLog, DateRange } from '../types';
 import { useDepositFilter } from '../hooks/useDepositFilter';
+import { useNotification } from '../contexts/NotificationContext';
 import DepositChart from '../components/DepositChart';
 import DepositLineChart from '../components/DepositLineChart';
 import DepositFormModal from '../components/DepositFormModal';
@@ -24,6 +25,7 @@ import {
 
 const DepositList: React.FC = () => {
     const { t } = useTranslation();
+    const { notify, confirm } = useNotification();
 
     // Data State
     const [logs, setLogs] = useState<TransLog[]>([]);
@@ -42,19 +44,7 @@ const DepositList: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingLog, setEditingLog] = useState<TransLog | null>(null);
 
-    // Confirmation Modal State
-    const [confirmOpen, setConfirmOpen] = useState(false);
-    const [deleteId, setDeleteId] = useState<number | null>(null);
 
-    // Toast State
-    const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' } | null>(null);
-
-    useEffect(() => {
-        if (toast) {
-            const timer = setTimeout(() => setToast(null), 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [toast]);
 
     // Fetch Data
     const fetchLogs = async () => {
@@ -69,7 +59,7 @@ const DepositList: React.FC = () => {
             setLogs(data || []);
         } catch (e) {
             console.error(e);
-            setToast({ message: t('deposit.confirm.error'), type: 'error' });
+            notify('error', t('deposit.confirm.error'));
         } finally {
             setLoading(false);
         }
@@ -101,27 +91,26 @@ const DepositList: React.FC = () => {
     };
 
     const confirmDelete = (id: number) => {
-        setDeleteId(id);
-        setConfirmOpen(true);
-    };
-
-    const handleDelete = async () => {
-        if (!deleteId) return;
-        try {
-            await depositService.delete(deleteId);
-            setToast({ message: t('deposit.confirm.deleted'), type: 'success' });
-            fetchLogs();
-        } catch (e) {
-            console.error(e);
-            setToast({ message: t('deposit.confirm.error'), type: 'error' });
-        } finally {
-            setConfirmOpen(false);
-            setDeleteId(null);
-        }
+        confirm({
+            title: t('deposit.confirm.deleteTitle'),
+            message: t('deposit.confirm.deleteMessage'),
+            confirmText: t('common.delete'),
+            cancelText: t('common.cancel'),
+            onConfirm: async () => {
+                try {
+                    await depositService.delete(id);
+                    notify('success', t('deposit.confirm.deleted'));
+                    fetchLogs();
+                } catch (e) {
+                    console.error(e);
+                    notify('error', t('deposit.confirm.error'));
+                }
+            }
+        });
     };
 
     const handleModalSuccess = () => {
-        setToast({ message: t('deposit.confirm.success'), type: 'success' });
+        notify('success', t('deposit.confirm.success'));
         fetchLogs();
     };
 
@@ -221,7 +210,7 @@ const DepositList: React.FC = () => {
             </div>
 
             {/* Content Tabs */}
-            <div className="flex-grow flex flex-col min-h-0 bg-base-100/30 rounded-[2.5rem] border border-base-300 shadow-2xl overflow-hidden backdrop-blur-sm">
+            <div className="flex-grow flex flex-col min-h-0 bg-base-100/30 rounded-3xl border border-base-300 shadow-2xl overflow-hidden backdrop-blur-sm">
                 <div className="px-6 py-4 border-b border-base-300 bg-base-100/50 flex flex-col sm:flex-row justify-between items-center gap-4">
                     <div className="join join-horizontal bg-base-300/50 p-1 rounded-2xl">
                         <button
@@ -397,43 +386,7 @@ const DepositList: React.FC = () => {
                 initialData={editingLog}
             />
 
-            {/* Confirmation Modal */}
-            {confirmOpen && (
-                <div className="modal modal-open">
-                    <div className="modal-box bg-base-100 rounded-3xl border border-base-300 shadow-2xl p-0 overflow-hidden max-w-sm">
-                        <div className="bg-error p-6 text-error-content relative overflow-hidden">
-                            <div className="relative z-10 flex items-center gap-3">
-                                <AlertCircle size={24} />
-                                <h3 className="font-bold text-xl uppercase tracking-tight">{t('deposit.confirm.deleteTitle')}</h3>
-                            </div>
-                            <Trash2 className="absolute -bottom-4 -right-4 opacity-10" size={100} />
-                        </div>
-                        <div className="p-8">
-                            <p className="text-sm font-medium opacity-70 leading-relaxed">
-                                {t('deposit.confirm.deleteMessage')}
-                            </p>
-                            <div className="mt-8 flex gap-3">
-                                <button className="btn btn-ghost flex-1 rounded-2xl font-bold uppercase tracking-widest text-xs" onClick={() => setConfirmOpen(false)}>
-                                    {t('common.cancel')}
-                                </button>
-                                <button className="btn btn-error flex-1 rounded-2xl shadow-lg shadow-error/20 font-bold uppercase tracking-widest text-xs" onClick={handleDelete}>
-                                    {t('common.delete')}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
 
-            {/* Toast System */}
-            {toast && (
-                <div className="toast toast-end toast-bottom z-[9999]">
-                    <div className={`alert rounded-2xl shadow-2xl border-none gap-3 font-bold px-6 py-4 animate-in slide-in-from-right duration-300 ${toast.type === 'success' ? 'bg-success text-success-content' : 'bg-error text-error-content'}`}>
-                        {toast.type === 'success' ? <TrendingUp size={18} /> : <AlertCircle size={18} />}
-                        <span className="text-xs uppercase tracking-widest">{toast.message}</span>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

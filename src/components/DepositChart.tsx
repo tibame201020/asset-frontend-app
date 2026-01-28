@@ -24,7 +24,7 @@ const DepositChart: React.FC<DepositChartProps> = ({ data }) => {
     const totalValue = data.reduce((acc, curr) => acc + curr.value, 0);
 
     return (
-        <div className="h-full w-full bg-base-100/30 rounded-[3rem] p-6 xl:p-10 border border-base-300 shadow-inner flex flex-col xl:flex-row gap-8 xl:gap-12 items-stretch overflow-hidden">
+        <div className="h-full w-full bg-base-100/30 rounded-3xl p-6 xl:p-10 border border-base-300 shadow-inner flex flex-col xl:flex-row gap-8 xl:gap-12 items-stretch overflow-hidden">
             {/* Visual Pane */}
             <div className="w-full xl:w-3/5 flex-grow relative flex items-center justify-center min-h-[300px] xl:min-h-0">
                 <ResponsiveContainer width="100%" height="100%">

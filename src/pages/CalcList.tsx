@@ -183,7 +183,7 @@ const CalcList: React.FC = () => {
         const colorClass = type === 'success' ? 'text-success' : type === 'error' ? 'text-error' : 'text-primary';
         return (
             <div className="flex items-center gap-4 min-w-[200px]">
-                <div className={`p-3 rounded-2xl bg-base-100 shadow-sm ${colorClass} bg-opacity-10`}>
+                <div className={`p-3 rounded-xl bg-base-100 shadow-sm ${colorClass} bg-opacity-10`}>
                     {icon}
                 </div>
                 <div className="flex flex-col">
@@ -226,7 +226,7 @@ const CalcList: React.FC = () => {
         if (currentTotal === 0) currentTotal = currentData.reduce((acc, c) => acc + c.value, 0);
 
         return (
-            <div className="h-full w-full bg-base-100/30 rounded-[3rem] p-6 xl:p-10 border border-base-300 shadow-inner flex flex-col xl:flex-row gap-8 xl:gap-12 items-stretch overflow-hidden backdrop-blur-sm">
+            <div className="h-full w-full bg-base-100/30 rounded-3xl p-6 xl:p-10 border border-base-300 shadow-inner flex flex-col xl:flex-row gap-8 xl:gap-12 items-stretch overflow-hidden backdrop-blur-sm">
                 {/* Left: Chart Pane */}
                 <div className="w-full xl:w-3/5 flex-grow relative flex items-center justify-center min-h-[300px] xl:min-h-0">
                     <ResponsiveContainer width="100%" height="100%">
@@ -329,7 +329,7 @@ const CalcList: React.FC = () => {
     return (
         <div className="h-[calc(100vh-theme(spacing.24))] flex flex-col gap-6 p-1 md:p-6 max-w-[1920px] mx-auto animate-in fade-in duration-700">
             {/* Top Unified Dashboard Bar */}
-            <div className="bg-base-100/50 backdrop-blur-md p-6 rounded-[2.5rem] border border-base-200/50 shadow-xl flex flex-col xl:flex-row items-center gap-8 shrink-0 transition-all">
+            <div className="bg-base-100/50 backdrop-blur-md p-6 rounded-3xl border border-base-200/50 shadow-xl flex flex-col xl:flex-row items-center gap-8 shrink-0 transition-all">
                 {/* Left: Tabs */}
                 <div className="join join-horizontal bg-base-300/50 p-1.5 rounded-full shrink-0">
                     <button
@@ -362,7 +362,7 @@ const CalcList: React.FC = () => {
             {/* Main Content Area */}
             <div className="flex-grow min-h-0 flex flex-col">
                 {activeTab === 'RECORD' ? (
-                    <div className="card bg-base-100/30 backdrop-blur-sm shadow-xl border border-base-300 flex-grow flex flex-col overflow-hidden rounded-[2.5rem]">
+                    <div className="card bg-base-100/30 backdrop-blur-sm shadow-xl border border-base-300 flex-grow flex flex-col overflow-hidden rounded-3xl">
                         <div className="p-6 border-b border-base-200/50 flex flex-col sm:flex-row justify-between items-center bg-base-100/50 sticky top-0 z-20 gap-4">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 bg-primary/10 text-primary rounded-lg">

@@ -31,7 +31,7 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
     };
 
     return (
-        <div className="h-full w-full bg-base-100/30 rounded-[2rem] p-8 border border-base-300 shadow-inner flex flex-col">
+        <div className="h-full w-full bg-base-100/30 rounded-3xl p-8 border border-base-300 shadow-inner flex flex-col">
             <div className="flex-grow min-h-0">
                 <ResponsiveContainer width="100%" height="100%">
                     <ComposedChart

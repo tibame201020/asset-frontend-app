@@ -90,7 +90,7 @@ const DepositFormModal: React.FC<DepositFormModalProps> = ({ isOpen, onClose, on
 
     return (
         <div className="modal modal-open">
-            <div className="modal-box p-0 max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-[2.5rem] overflow-hidden">
+            <div className="modal-box p-0 max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-3xl overflow-hidden">
                 {/* Modal Header */}
                 <div className={`p-8 relative overflow-hidden transition-colors duration-500 ${isIncome ? 'bg-success text-success-content' : 'bg-error text-error-content'}`}>
                     <div className="relative z-10 flex justify-between items-center">
