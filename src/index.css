@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Orbitron:wght@400..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Share+Tech+Mono&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --theme-font: 'Outfit', sans-serif;
+    }
+
+    /* Cyber/Tech Themes */
+    [data-theme="cyberpunk"],
+    [data-theme="synthwave"],
+    [data-theme="aqua"],
+    [data-theme="night"] {
+        --theme-font: 'Orbitron', sans-serif;
+    }
+
+    /* Elegant/Serif Themes */
+    [data-theme="luxury"],
+    [data-theme="dracula"],
+    [data-theme="halloween"],
+    [data-theme="forest"],
+    [data-theme="business"],
+    [data-theme="coffee"] {
+        --theme-font: 'Playfair Display', serif;
+    }
+
+    /* Retro/Mono Themes */
+    [data-theme="retro"],
+    [data-theme="lofi"],
+    [data-theme="wireframe"],
+    [data-theme="black"] {
+        --theme-font: 'Share Tech Mono', monospace;
+    }
+
+    body {
+        @apply text-base-content bg-base-100;
+        font-family: var(--theme-font);
+        -webkit-font-smoothing: antialiased;
+    }
+}
