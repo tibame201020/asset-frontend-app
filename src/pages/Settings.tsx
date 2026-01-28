@@ -31,8 +31,12 @@ const Settings: React.FC = () => {
             cancelText: 'Cancel',
             onConfirm: async () => {
                 try {
-                    await api.post('/setting/del', target);
-                    notify('success', `All ${displayName} data deleted successfully.`);
+                    const res = await api.post('/setting/del', { target });
+                    if (res.data === true) {
+                        notify('success', `All ${displayName} data deleted successfully.`);
+                    } else {
+                        notify('error', `Failed to delete ${displayName} data (Backend returned false).`);
+                    }
                 } catch (e) {
                     console.error(e);
                     notify('error', `Failed to delete ${displayName} data.`);
