@@ -104,9 +104,9 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
 
     return (
         <div className="modal modal-open">
-            <div className="modal-box p-0 max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-3xl overflow-hidden">
+            <div className="modal-box p-0 max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-3xl flex flex-col max-h-[85vh]">
                 {/* Modal Header */}
-                <div className="bg-primary p-6 text-primary-content relative overflow-hidden">
+                <div className="flex-none bg-primary p-6 text-primary-content relative overflow-hidden">
                     <div className="relative z-10 flex justify-between items-center">
                         <div className="flex items-center gap-3">
                             <CalendarIcon size={24} />
@@ -126,75 +126,80 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
                     <CalendarIcon className="absolute -bottom-4 -right-4 opacity-10" size={120} />
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-6">
-                    {/* Title Input */}
-                    <div className="form-control w-full">
-                        <label className="label py-1">
-                            <span className="label-text text-xs font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                <Type size={14} className="text-primary" /> {t('calendar.modal.eventTitle')}
-                            </span>
-                        </label>
-                        <input
-                            type="text"
-                            placeholder={t('calendar.modal.placeholder')}
-                            className="input input-bordered focus:input-primary w-full bg-base-200/50 font-medium"
-                            value={formData.title}
-                            onChange={e => setFormData({ ...formData, title: e.target.value })}
-                            required
-                            autoFocus
-                        />
-                    </div>
-
-                    {/* Date Input */}
-                    <div className="form-control w-full">
-                        <label className="label py-1">
-                            <span className="label-text text-xs font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                <CalendarIcon size={14} className="text-secondary" /> {t('calendar.modal.date')}
-                            </span>
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered focus:input-secondary w-full bg-base-200/50 font-mono"
-                            value={formData.dateStr}
-                            onChange={e => setFormData({ ...formData, dateStr: e.target.value })}
-                            required
-                        />
-                    </div>
-
-                    {/* Time Grid */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="form-control">
+                {/* Modal Content - Scrollable */}
+                <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+                    <form id="calendar-form" onSubmit={handleSubmit} className="space-y-6">
+                        {/* Title Input */}
+                        <div className="form-control w-full">
                             <label className="label py-1">
                                 <span className="label-text text-xs font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                    <Clock size={14} className="text-accent" /> {t('calendar.modal.start')}
+                                    <Type size={14} className="text-primary" /> {t('calendar.modal.eventTitle')}
                                 </span>
                             </label>
                             <input
-                                type="time"
-                                className="input input-bordered focus:input-accent w-full bg-base-200/50 font-mono"
-                                value={formData.startText}
-                                onChange={e => setFormData({ ...formData, startText: e.target.value })}
+                                type="text"
+                                placeholder={t('calendar.modal.placeholder')}
+                                className="input input-bordered focus:input-primary w-full bg-base-200/50 font-medium"
+                                value={formData.title}
+                                onChange={e => setFormData({ ...formData, title: e.target.value })}
                                 required
+                                autoFocus
                             />
                         </div>
-                        <div className="form-control">
+
+                        {/* Date Input */}
+                        <div className="form-control w-full">
                             <label className="label py-1">
                                 <span className="label-text text-xs font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                    <Clock size={14} className="text-accent" /> {t('calendar.modal.end')}
+                                    <CalendarIcon size={14} className="text-secondary" /> {t('calendar.modal.date')}
                                 </span>
                             </label>
                             <input
-                                type="time"
-                                className="input input-bordered focus:input-accent w-full bg-base-200/50 font-mono"
-                                value={formData.endText}
-                                onChange={e => setFormData({ ...formData, endText: e.target.value })}
+                                type="date"
+                                className="input input-bordered focus:input-secondary w-full bg-base-200/50 font-mono"
+                                value={formData.dateStr}
+                                onChange={e => setFormData({ ...formData, dateStr: e.target.value })}
                                 required
                             />
                         </div>
-                    </div>
 
-                    {/* Action Bar */}
-                    <div className="flex items-center justify-between pt-4 border-t border-base-200">
+                        {/* Time Grid */}
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="form-control">
+                                <label className="label py-1">
+                                    <span className="label-text text-xs font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
+                                        <Clock size={14} className="text-accent" /> {t('calendar.modal.start')}
+                                    </span>
+                                </label>
+                                <input
+                                    type="time"
+                                    className="input input-bordered focus:input-accent w-full bg-base-200/50 font-mono"
+                                    value={formData.startText}
+                                    onChange={e => setFormData({ ...formData, startText: e.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div className="form-control">
+                                <label className="label py-1">
+                                    <span className="label-text text-xs font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
+                                        <Clock size={14} className="text-accent" /> {t('calendar.modal.end')}
+                                    </span>
+                                </label>
+                                <input
+                                    type="time"
+                                    className="input input-bordered focus:input-accent w-full bg-base-200/50 font-mono"
+                                    value={formData.endText}
+                                    onChange={e => setFormData({ ...formData, endText: e.target.value })}
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                {/* Modal Footer - Fixed Action Bar */}
+                <div className="flex-none p-4 bg-base-100 border-t border-base-200 z-20">
+                    <div className="flex items-center justify-between">
                         {initialData?.id ? (
                             <button
                                 type="button"
@@ -211,7 +216,7 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
                             </div>
                         )}
 
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 ml-auto">
                             <button
                                 type="button"
                                 className="btn btn-ghost btn-sm font-bold uppercase tracking-widest text-xs"
@@ -222,6 +227,7 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
                             </button>
                             <button
                                 type="submit"
+                                form="calendar-form"
                                 className="btn btn-primary btn-sm px-6 shadow-lg shadow-primary/20 gap-2 font-bold uppercase tracking-widest text-xs group"
                                 disabled={loading}
                             >
@@ -236,7 +242,7 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
                             </button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );

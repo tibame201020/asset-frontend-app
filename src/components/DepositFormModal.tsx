@@ -90,9 +90,9 @@ const DepositFormModal: React.FC<DepositFormModalProps> = ({ isOpen, onClose, on
 
     return (
         <div className="modal modal-open">
-            <div className="modal-box p-0 max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-3xl overflow-hidden">
+            <div className="modal-box p-0 max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-3xl flex flex-col max-h-[85vh]">
                 {/* Modal Header */}
-                <div className={`p-8 relative overflow-hidden transition-colors duration-500 ${isIncome ? 'bg-success text-success-content' : 'bg-error text-error-content'}`}>
+                <div className={`flex-none p-8 relative overflow-hidden transition-colors duration-500 ${isIncome ? 'bg-success text-success-content' : 'bg-error text-error-content'}`}>
                     <div className="relative z-10 flex justify-between items-center">
                         <div className="flex items-center gap-4">
                             <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl shadow-sm">
@@ -119,118 +119,123 @@ const DepositFormModal: React.FC<DepositFormModalProps> = ({ isOpen, onClose, on
                     <Banknote className="absolute -bottom-6 -right-6 opacity-10 rotate-12" size={150} />
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {/* Date */}
+                {/* Modal Content - Scrollable */}
+                <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+                    <form id="deposit-form" onSubmit={handleSubmit} className="space-y-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            {/* Date */}
+                            <div className="form-control w-full">
+                                <label className="label py-1">
+                                    <span className="label-text text-[10px] font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
+                                        <Calendar size={14} className="text-primary" /> {t('deposit.modal.fields.date')}
+                                    </span>
+                                </label>
+                                <input
+                                    type="date"
+                                    className="input input-bordered focus:input-primary w-full bg-base-200/50 font-mono text-sm"
+                                    value={formData.transDate}
+                                    onChange={e => setFormData({ ...formData, transDate: e.target.value })}
+                                    required
+                                />
+                            </div>
+
+                            {/* Type */}
+                            <div className="form-control w-full">
+                                <label className="label py-1">
+                                    <span className="label-text text-[10px] font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
+                                        <Filter size={14} className="text-secondary" /> {t('deposit.modal.fields.type')}
+                                    </span>
+                                </label>
+                                <select
+                                    className="select select-bordered focus:select-secondary w-full bg-base-200/50 font-bold text-sm"
+                                    value={formData.type}
+                                    onChange={e => setFormData({ ...formData, type: e.target.value, category: '' })}
+                                >
+                                    {DEPOSIT_SELECT_TYPE.map(type => (
+                                        <option key={type} value={type}>{type}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            {/* Category */}
+                            <div className="form-control w-full">
+                                <label className="label py-1">
+                                    <span className="label-text text-[10px] font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
+                                        <Tag size={14} className="text-accent" /> {t('deposit.modal.fields.category')}
+                                    </span>
+                                </label>
+                                <select
+                                    className="select select-bordered focus:select-accent w-full bg-base-200/50 font-bold text-sm"
+                                    value={formData.category}
+                                    onChange={e => setFormData({ ...formData, category: e.target.value })}
+                                    required
+                                >
+                                    <option value="" disabled>{t('deposit.modal.placeholders.category')}</option>
+                                    {categoryOptions.map(cat => (
+                                        <option key={cat} value={cat}>{cat}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Value */}
+                            <div className="form-control w-full">
+                                <label className="label py-1">
+                                    <span className="label-text text-[10px] font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
+                                        <DollarSign size={14} className="text-success" /> {t('deposit.modal.fields.value')}
+                                    </span>
+                                </label>
+                                <div className="relative">
+                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold opacity-30">$</span>
+                                    <input
+                                        type="number"
+                                        className="input input-bordered focus:input-success w-full bg-base-200/50 pl-10 font-mono font-black text-lg"
+                                        value={formData.value}
+                                        onChange={e => setFormData({ ...formData, value: Number(e.target.value) })}
+                                        required
+                                        min="0"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Name */}
                         <div className="form-control w-full">
                             <label className="label py-1">
                                 <span className="label-text text-[10px] font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                    <Calendar size={14} className="text-primary" /> {t('deposit.modal.fields.date')}
+                                    <Type size={14} className="text-primary" /> {t('deposit.modal.fields.name')}
                                 </span>
                             </label>
                             <input
-                                type="date"
-                                className="input input-bordered focus:input-primary w-full bg-base-200/50 font-mono text-sm"
-                                value={formData.transDate}
-                                onChange={e => setFormData({ ...formData, transDate: e.target.value })}
+                                type="text"
+                                placeholder={t('deposit.modal.placeholders.name')}
+                                className="input input-bordered focus:input-primary w-full bg-base-200/50 font-bold"
+                                value={formData.name}
+                                onChange={e => setFormData({ ...formData, name: e.target.value })}
                                 required
                             />
                         </div>
 
-                        {/* Type */}
+                        {/* PS */}
                         <div className="form-control w-full">
                             <label className="label py-1">
                                 <span className="label-text text-[10px] font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                    <Filter size={14} className="text-secondary" /> {t('deposit.modal.fields.type')}
+                                    <FileText size={14} className="opacity-40" /> {t('deposit.modal.fields.ps')}
                                 </span>
                             </label>
-                            <select
-                                className="select select-bordered focus:select-secondary w-full bg-base-200/50 font-bold text-sm"
-                                value={formData.type}
-                                onChange={e => setFormData({ ...formData, type: e.target.value, category: '' })}
-                            >
-                                {DEPOSIT_SELECT_TYPE.map(type => (
-                                    <option key={type} value={type}>{type}</option>
-                                ))}
-                            </select>
+                            <textarea
+                                className="textarea textarea-bordered focus:textarea-primary w-full bg-base-200/50 min-h-[80px] leading-relaxed"
+                                value={formData.ps}
+                                onChange={e => setFormData({ ...formData, ps: e.target.value })}
+                            />
                         </div>
-                    </div>
+                    </form>
+                </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {/* Category */}
-                        <div className="form-control w-full">
-                            <label className="label py-1">
-                                <span className="label-text text-[10px] font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                    <Tag size={14} className="text-accent" /> {t('deposit.modal.fields.category')}
-                                </span>
-                            </label>
-                            <select
-                                className="select select-bordered focus:select-accent w-full bg-base-200/50 font-bold text-sm"
-                                value={formData.category}
-                                onChange={e => setFormData({ ...formData, category: e.target.value })}
-                                required
-                            >
-                                <option value="" disabled>{t('deposit.modal.placeholders.category')}</option>
-                                {categoryOptions.map(cat => (
-                                    <option key={cat} value={cat}>{cat}</option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Value */}
-                        <div className="form-control w-full">
-                            <label className="label py-1">
-                                <span className="label-text text-[10px] font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                    <DollarSign size={14} className="text-success" /> {t('deposit.modal.fields.value')}
-                                </span>
-                            </label>
-                            <div className="relative">
-                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold opacity-30">$</span>
-                                <input
-                                    type="number"
-                                    className="input input-bordered focus:input-success w-full bg-base-200/50 pl-10 font-mono font-black text-lg"
-                                    value={formData.value}
-                                    onChange={e => setFormData({ ...formData, value: Number(e.target.value) })}
-                                    required
-                                    min="0"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Name */}
-                    <div className="form-control w-full">
-                        <label className="label py-1">
-                            <span className="label-text text-[10px] font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                <Type size={14} className="text-primary" /> {t('deposit.modal.fields.name')}
-                            </span>
-                        </label>
-                        <input
-                            type="text"
-                            placeholder={t('deposit.modal.placeholders.name')}
-                            className="input input-bordered focus:input-primary w-full bg-base-200/50 font-bold"
-                            value={formData.name}
-                            onChange={e => setFormData({ ...formData, name: e.target.value })}
-                            required
-                        />
-                    </div>
-
-                    {/* PS */}
-                    <div className="form-control w-full">
-                        <label className="label py-1">
-                            <span className="label-text text-[10px] font-black uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                <FileText size={14} className="opacity-40" /> {t('deposit.modal.fields.ps')}
-                            </span>
-                        </label>
-                        <textarea
-                            className="textarea textarea-bordered focus:textarea-primary w-full bg-base-200/50 min-h-[80px] leading-relaxed"
-                            value={formData.ps}
-                            onChange={e => setFormData({ ...formData, ps: e.target.value })}
-                        />
-                    </div>
-
-                    {/* Action Bar */}
-                    <div className="flex items-center justify-between pt-6 border-t border-base-200">
+                {/* Modal Footer - Fixed Action Bar */}
+                <div className="flex-none p-4 bg-base-100 border-t border-base-200 z-20">
+                    <div className="flex items-center justify-between">
                         {(!initialData || initialData.id === 0) && (
                             <div className="flex items-center gap-2 text-warning opacity-70">
                                 {initialData?.id === 0 ? <Copy size={14} /> : <AlertCircle size={14} />}
@@ -251,6 +256,7 @@ const DepositFormModal: React.FC<DepositFormModalProps> = ({ isOpen, onClose, on
                             </button>
                             <button
                                 type="submit"
+                                form="deposit-form"
                                 className={`btn btn-sm px-8 rounded-xl shadow-lg gap-2 font-bold uppercase tracking-widest text-xs group transition-all duration-300 ${isIncome ? 'btn-success shadow-success/20' : 'btn-error shadow-error/20'}`}
                                 disabled={loading}
                             >
@@ -265,7 +271,7 @@ const DepositFormModal: React.FC<DepositFormModalProps> = ({ isOpen, onClose, on
                             </button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );
