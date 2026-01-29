@@ -189,17 +189,11 @@ const CalcList: React.FC = () => {
     const renderStatItem = (title: string, value: number, icon: React.ReactNode, type: 'success' | 'error' | 'primary') => {
         const colorClass = type === 'success' ? 'text-success' : type === 'error' ? 'text-error' : 'text-primary';
         return (
-            <div className="flex items-center gap-4 min-w-[200px]">
-                <div className={`p-3 rounded-xl bg-base-100 shadow-sm ${colorClass} bg-opacity-10`}>
-                    {icon}
-                </div>
+            <div className="flex items-center gap-3">
+                <div className={colorClass}>{icon}</div>
                 <div className="flex flex-col">
-                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-40">{title}</span>
-                    <div className="flex items-baseline gap-2">
-                        <span className={`text-2xl font-black font-mono tracking-tight ${colorClass}`}>
-                            ${value.toLocaleString()}
-                        </span>
-                    </div>
+                    <span className="text-[9px] font-black uppercase tracking-tighter opacity-40 leading-none">{title}</span>
+                    <span className={`text-sm font-mono font-bold ${colorClass}`}>${value.toLocaleString()}</span>
                 </div>
             </div>
         );
@@ -239,7 +233,7 @@ const CalcList: React.FC = () => {
         return (
             <div className="min-h-full h-auto lg:h-full w-full bg-base-100/30 rounded-3xl p-4 lg:p-10 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch overflow-visible lg:overflow-hidden backdrop-blur-sm">
                 {/* Left: Chart Pane */}
-                <div className="w-full lg:w-3/5 h-[300px] lg:h-auto lg:flex-grow relative flex items-center justify-center min-h-0">
+                <div className="hidden lg:flex w-full lg:w-3/5 lg:h-full lg:flex-grow relative items-center justify-center min-h-0">
                     <ResponsiveContainer width="100%" height="100%" key={activeChartTab}>
                         <PieChart>
                             <Pie
@@ -291,6 +285,21 @@ const CalcList: React.FC = () => {
 
                 {/* Right: Data Breakdown Pane */}
                 <div className="w-full lg:w-2/5 flex flex-col h-auto lg:h-full overflow-visible lg:overflow-hidden border-t lg:border-t-0 lg:border-l border-base-content/5 pt-4 lg:pt-0 lg:pl-6">
+                    {/* Mobile Tab Switcher */}
+                    <div className="lg:hidden mb-4 flex justify-center">
+                        <div className="join bg-base-200/50 p-1 rounded-2xl border border-base-300 w-full justify-center">
+                            {(['ASSETS', 'EXPENSE', 'INCOME'] as const).map(tab => (
+                                <button
+                                    key={tab}
+                                    onClick={() => setActiveChartTab(tab)}
+                                    className={`join-item btn btn-sm flex-1 border-none ${activeChartTab === tab ? 'btn-primary shadow-lg' : 'btn-ghost opacity-60'}`}
+                                >
+                                    {tab[0] + tab.slice(1).toLowerCase()}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
                     <div className="flex flex-col gap-1 border-b border-base-300 pb-3 mb-4 shrink-0">
                         <h3 className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30">{title}</h3>
                         <div className="flex items-baseline gap-2">
@@ -363,12 +372,13 @@ const CalcList: React.FC = () => {
                 <div className="hidden xl:block w-px h-12 bg-base-content/10 mx-2"></div>
 
                 {/* Right: Stats Stats */}
-                <div className="flex flex-col md:flex-row gap-8 xl:gap-12 w-full xl:w-auto items-center xl:items-center justify-start md:justify-around flex-grow bg-base-100/30 xl:bg-transparent p-4 xl:p-0 rounded-2xl xl:rounded-none overflow-x-auto pb-2 custom-scrollbar">
-                    {renderStatItem("Est. Income", summary.totalIncome, <TrendingUp size={20} />, 'success')}
-                    <div className="hidden md:block w-px h-10 bg-base-content/10 flex-shrink-0"></div>
-                    {renderStatItem("Est. Expense", summary.totalExpense, <TrendingDown size={20} />, 'error')}
-                    <div className="hidden md:block w-px h-10 bg-base-content/10 flex-shrink-0"></div>
-                    {renderStatItem("Net Balance", summary.balance, <Wallet size={20} />, 'primary')}
+                {/* Right: Stats Stats */}
+                <div className="flex items-center gap-6 px-4 py-2 bg-base-200/30 rounded-2xl border border-base-300/50 w-full xl:w-auto justify-between xl:justify-start overflow-x-auto custom-scrollbar">
+                    {renderStatItem("Est. Income", summary.totalIncome, <TrendingUp size={16} />, 'success')}
+                    <div className="w-px h-6 bg-base-content/10 flex-shrink-0"></div>
+                    {renderStatItem("Est. Expense", summary.totalExpense, <TrendingDown size={16} />, 'error')}
+                    <div className="w-px h-6 bg-base-content/10 flex-shrink-0"></div>
+                    {renderStatItem("Net Balance", summary.balance, <Wallet size={16} />, 'primary')}
                 </div>
             </div>
 

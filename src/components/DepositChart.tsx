@@ -34,7 +34,7 @@ const DepositChart: React.FC<DepositChartProps> = ({ data }) => {
     return (
         <div className="min-h-full h-auto lg:h-full w-full bg-base-100/30 rounded-3xl p-4 lg:p-8 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch overflow-visible lg:overflow-hidden">
             {/* Visual Pane */}
-            <div className="w-full lg:w-3/5 h-[300px] lg:h-auto lg:flex-grow relative flex items-center justify-center min-h-0">
+            <div className="hidden lg:flex w-full lg:w-3/5 lg:h-full lg:flex-grow relative items-center justify-center min-h-0">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie

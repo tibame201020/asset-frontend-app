@@ -118,8 +118,9 @@ const DepositList: React.FC = () => {
     const { filteredLogs, chartData, lineChartData, incomeCategories, expenseCategories } = useDepositFilter(logs, keyword, dateRange);
 
     // Calculate Totals for Display
-    const totalIncome = logs.filter(l => l.type === '收入' || l.type === 'Income').reduce((acc, c) => acc + c.value, 0);
-    const totalExpense = logs.filter(l => l.type === '支出' || l.type === 'Expense').reduce((acc, c) => acc + c.value, 0);
+    // Calculate Totals for Display
+    const totalIncome = filteredLogs.filter(l => l.type === '收入' || l.type === 'Income').reduce((acc, c) => acc + c.value, 0);
+    const totalExpense = filteredLogs.filter(l => l.type === '支出' || l.type === 'Expense').reduce((acc, c) => acc + c.value, 0);
 
     return (
         <div className="h-full flex flex-col gap-6 animate-in fade-in duration-500">
