@@ -226,9 +226,9 @@ const CalcList: React.FC = () => {
         if (currentTotal === 0) currentTotal = currentData.reduce((acc: number, c: any) => acc + c.value, 0);
 
         return (
-            <div className="h-full w-full bg-base-100/30 rounded-3xl p-6 xl:p-10 border border-base-300 shadow-inner flex flex-col xl:flex-row gap-8 xl:gap-12 items-stretch overflow-hidden backdrop-blur-sm">
+            <div className="h-full w-full bg-base-100/30 rounded-3xl p-4 lg:p-10 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch overflow-hidden backdrop-blur-sm">
                 {/* Left: Chart Pane */}
-                <div className="w-full xl:w-3/5 flex-grow relative flex items-center justify-center min-h-[300px] xl:min-h-0">
+                <div className="w-full lg:w-3/5 flex-grow relative flex items-center justify-center min-h-[300px] lg:min-h-0">
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie
@@ -279,7 +279,7 @@ const CalcList: React.FC = () => {
                 </div>
 
                 {/* Right: Data Breakdown Pane */}
-                <div className="w-full xl:w-2/5 flex flex-col h-full overflow-hidden">
+                <div className="w-full lg:w-2/5 flex flex-col h-full overflow-hidden border-t lg:border-t-0 lg:border-l border-base-content/5 pt-4 lg:pt-0 lg:pl-6">
                     <div className="flex flex-col gap-1 border-b border-base-300 pb-3 mb-4 shrink-0">
                         <h3 className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30">{title}</h3>
                         <div className="flex items-baseline gap-2">
