@@ -8,8 +8,24 @@ import {
 
 const Sidebar: React.FC = () => {
     const { t } = useTranslation();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1280);
     const location = useLocation();
+
+    React.useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 1280) {
+                setIsSidebarOpen(false);
+            } else {
+                setIsSidebarOpen(true);
+            }
+        };
+
+        // Initial check
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const menuItems = [
         { path: '/calendar/home', name: t('nav.calendar'), icon: Calendar },

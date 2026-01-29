@@ -57,6 +57,13 @@ const CalcList: React.FC = () => {
     const [incomes, setIncomes] = useState<{ name: string; value: number }[]>([]);
     const [outputs, setOutputs] = useState<{ name: string; value: number }[]>([]); // Expenses
     const [summary, setSummary] = useState({ totalIncome: 0, totalExpense: 0, balance: 0 });
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
+
+    useEffect(() => {
+        const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         fetchConfigs();
@@ -223,22 +230,26 @@ const CalcList: React.FC = () => {
         }
 
         // Fallback for visual Total calculation if not preset
+        // Fallback for visual Total calculation if not preset
         if (currentTotal === 0) currentTotal = currentData.reduce((acc: number, c: any) => acc + c.value, 0);
 
+        // Sort data for consistent rendering and color assignment (Biggest slice first)
+        currentData = [...currentData].sort((a, b) => b.value - a.value);
+
         return (
-            <div className="h-full w-full bg-base-100/30 rounded-3xl p-4 lg:p-10 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch overflow-hidden backdrop-blur-sm">
+            <div className="min-h-full h-auto lg:h-full w-full bg-base-100/30 rounded-3xl p-4 lg:p-10 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch overflow-visible lg:overflow-hidden backdrop-blur-sm">
                 {/* Left: Chart Pane */}
-                <div className="w-full lg:w-3/5 flex-grow relative flex items-center justify-center min-h-[300px] lg:min-h-0">
-                    <ResponsiveContainer width="100%" height="100%">
+                <div className="w-full lg:w-3/5 h-[300px] lg:h-auto lg:flex-grow relative flex items-center justify-center min-h-0">
+                    <ResponsiveContainer width="100%" height="100%" key={activeChartTab}>
                         <PieChart>
                             <Pie
                                 data={currentData}
                                 cx="50%"
                                 cy="50%"
-                                labelLine={{ stroke: 'hsl(var(--bc))', strokeWidth: 1, opacity: 0.3 }}
-                                label={({ name, percent }: any) => `${name} ${(percent * 100).toFixed(1)}%`}
-                                innerRadius="60%"
-                                outerRadius="80%"
+                                labelLine={isLargeScreen ? { stroke: 'hsl(var(--bc))', strokeWidth: 1, opacity: 0.3 } : false}
+                                label={isLargeScreen ? ({ name, percent }: any) => `${name} ${(percent * 100).toFixed(1)}%` : false}
+                                innerRadius={isLargeScreen ? "60%" : "55%"}
+                                outerRadius={isLargeScreen ? "80%" : "75%"}
                                 paddingAngle={4}
                                 cornerRadius={6}
                                 dataKey="value"
@@ -279,7 +290,7 @@ const CalcList: React.FC = () => {
                 </div>
 
                 {/* Right: Data Breakdown Pane */}
-                <div className="w-full lg:w-2/5 flex flex-col h-full overflow-hidden border-t lg:border-t-0 lg:border-l border-base-content/5 pt-4 lg:pt-0 lg:pl-6">
+                <div className="w-full lg:w-2/5 flex flex-col h-auto lg:h-full overflow-visible lg:overflow-hidden border-t lg:border-t-0 lg:border-l border-base-content/5 pt-4 lg:pt-0 lg:pl-6">
                     <div className="flex flex-col gap-1 border-b border-base-300 pb-3 mb-4 shrink-0">
                         <h3 className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30">{title}</h3>
                         <div className="flex items-baseline gap-2">
@@ -288,9 +299,9 @@ const CalcList: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="flex-grow overflow-y-auto scroll-modern pr-4 py-2 flex flex-col gap-6">
+                    <div className="flex-grow overflow-visible lg:overflow-y-auto scroll-modern pr-4 py-2 flex flex-col gap-6">
                         {currentData.length > 0 ? (
-                            [...currentData].sort((a, b) => b.value - a.value).map((item, index) => {
+                            currentData.map((item, index) => {
                                 const percentage = currentTotal > 0 ? ((item.value / currentTotal) * 100).toFixed(1) : '0.0';
                                 const color = COLORS[index % COLORS.length];
 
@@ -352,11 +363,11 @@ const CalcList: React.FC = () => {
                 <div className="hidden xl:block w-px h-12 bg-base-content/10 mx-2"></div>
 
                 {/* Right: Stats Stats */}
-                <div className="flex flex-col md:flex-row gap-8 xl:gap-12 w-full xl:w-auto items-center xl:items-center justify-around flex-grow bg-base-100/30 xl:bg-transparent p-4 xl:p-0 rounded-2xl xl:rounded-none">
+                <div className="flex flex-col md:flex-row gap-8 xl:gap-12 w-full xl:w-auto items-center xl:items-center justify-start md:justify-around flex-grow bg-base-100/30 xl:bg-transparent p-4 xl:p-0 rounded-2xl xl:rounded-none overflow-x-auto pb-2 custom-scrollbar">
                     {renderStatItem("Est. Income", summary.totalIncome, <TrendingUp size={20} />, 'success')}
-                    <div className="hidden md:block w-px h-10 bg-base-content/10"></div>
+                    <div className="hidden md:block w-px h-10 bg-base-content/10 flex-shrink-0"></div>
                     {renderStatItem("Est. Expense", summary.totalExpense, <TrendingDown size={20} />, 'error')}
-                    <div className="hidden md:block w-px h-10 bg-base-content/10"></div>
+                    <div className="hidden md:block w-px h-10 bg-base-content/10 flex-shrink-0"></div>
                     {renderStatItem("Net Balance", summary.balance, <Wallet size={20} />, 'primary')}
                 </div>
             </div>
@@ -455,7 +466,7 @@ const CalcList: React.FC = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex-grow flex flex-col min-h-0 overflow-hidden">
+                    <div className="flex-grow flex flex-col min-h-0 overflow-y-auto lg:overflow-hidden">
                         {renderDetailedAnalysis()}
                     </div>
                 )}

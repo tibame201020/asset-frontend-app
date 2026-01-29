@@ -240,7 +240,7 @@ const DepositList: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="flex-grow min-h-0 overflow-hidden p-6 gap-6 flex flex-col">
+                <div className={`flex-grow min-h-0 p-6 gap-6 flex flex-col ${activeTab === 'LIST' ? 'overflow-hidden' : 'overflow-y-auto lg:overflow-hidden'}`}>
                     {/* LIST VIEW */}
                     {activeTab === 'LIST' && (
                         <div className="h-full flex flex-col">
@@ -251,7 +251,7 @@ const DepositList: React.FC = () => {
                                 </div>
                             ) : (
                                 <>
-                                    <div className="hidden md:block flex-grow overflow-auto scroll-modern rounded-2xl border border-base-300 shadow-inner bg-base-100/30">
+                                    <div className="hidden lg:block flex-grow overflow-auto scroll-modern rounded-2xl border border-base-300 shadow-inner bg-base-100/30">
                                         <table className="table table-zebra w-full border-separate border-spacing-0">
                                             <thead className="sticky top-0 z-20">
                                                 <tr className="bg-base-100 shadow-sm border-b border-base-300">
@@ -322,7 +322,7 @@ const DepositList: React.FC = () => {
                                     </div>
 
                                     {/* Mobile List View */}
-                                    <div className="md:hidden flex flex-col gap-4">
+                                    <div className="lg:hidden flex-grow overflow-y-auto scroll-modern flex flex-col gap-4 p-1">
                                         {filteredLogs.map(log => {
                                             const isIncome = log.type === '收入' || log.type === 'Income';
                                             return (
@@ -361,7 +361,7 @@ const DepositList: React.FC = () => {
 
                     {/* IN-LINE CHART VIEW */}
                     {activeTab === 'INLINE' && (
-                        <div className="h-full w-full p-2">
+                        <div className="min-h-full h-auto lg:h-full w-full p-2">
                             <DepositLineChart
                                 data={lineChartData}
                                 incomeCategories={incomeCategories}
@@ -372,7 +372,7 @@ const DepositList: React.FC = () => {
 
                     {/* CHART VIEW */}
                     {activeTab === 'CHART' && (
-                        <div className="h-full w-full p-2">
+                        <div className="min-h-full h-auto lg:h-full w-full p-2">
                             <DepositChart data={chartData} />
                         </div>
                     )}

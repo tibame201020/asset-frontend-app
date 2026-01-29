@@ -14,6 +14,14 @@ interface DepositChartProps {
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658', '#8dd1e1', '#a4de6c', '#d0ed57'];
 
 const DepositChart: React.FC<DepositChartProps> = ({ data }) => {
+    const [isLargeScreen, setIsLargeScreen] = React.useState(window.innerWidth >= 1024);
+
+    React.useEffect(() => {
+        const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     if (!data || data.length === 0) return (
         <div className="flex flex-col items-center justify-center h-full gap-4 opacity-30 py-20">
             <AlertCircle size={48} strokeWidth={1} />
@@ -24,21 +32,21 @@ const DepositChart: React.FC<DepositChartProps> = ({ data }) => {
     const totalValue = data.reduce((acc: number, curr: any) => acc + curr.value, 0);
 
     return (
-        <div className="h-full w-full bg-base-100/30 rounded-3xl p-4 lg:p-8 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch overflow-hidden">
+        <div className="min-h-full h-auto lg:h-full w-full bg-base-100/30 rounded-3xl p-4 lg:p-8 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch overflow-visible lg:overflow-hidden">
             {/* Visual Pane */}
-            <div className="w-full lg:w-3/5 flex-grow relative flex items-center justify-center min-h-[300px] lg:min-h-0">
+            <div className="w-full lg:w-3/5 h-[300px] lg:h-auto lg:flex-grow relative flex items-center justify-center min-h-0">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie
                             data={data}
                             cx="50%"
                             cy="50%"
-                            labelLine={true}
-                            label={({ name, percent = 0 }) => `${name} (${(percent * 100).toFixed(1)}%)`}
-                            innerRadius="70%"
-                            outerRadius="85%"
+                            labelLine={isLargeScreen}
+                            label={isLargeScreen ? ({ name, percent = 0 }) => `${name} (${(percent * 100).toFixed(1)}%)` : false}
+                            innerRadius={isLargeScreen ? "70%" : "60%"} // Slightly thicker donut on mobile
+                            outerRadius={isLargeScreen ? "85%" : "80%"}
                             paddingAngle={8}
-                            cornerRadius={0}
+                            cornerRadius={4}
                             fill="#8884d8"
                             dataKey="value"
                             stroke="none"
@@ -69,7 +77,7 @@ const DepositChart: React.FC<DepositChartProps> = ({ data }) => {
             </div>
 
             {/* Data Pane: Rich Legend */}
-            <div className="w-full lg:w-2/5 flex flex-col h-full overflow-hidden border-t lg:border-t-0 lg:border-l border-base-content/5 pt-4 lg:pt-0 lg:pl-6">
+            <div className="w-full lg:w-2/5 flex flex-col h-auto lg:h-full overflow-visible lg:overflow-hidden border-t lg:border-t-0 lg:border-l border-base-content/5 pt-4 lg:pt-0 lg:pl-6">
                 <div className="flex flex-col gap-1 border-b border-base-300 pb-3 mb-4 shrink-0">
                     <h3 className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30">Category Breakdown</h3>
                     <div className="flex items-baseline gap-2">
@@ -78,7 +86,7 @@ const DepositChart: React.FC<DepositChartProps> = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="flex-grow overflow-y-auto scroll-modern pr-4 py-2 flex flex-col gap-6">
+                <div className="flex-grow overflow-visible lg:overflow-y-auto scroll-modern pr-4 py-2 flex flex-col gap-6">
                     {[...data].sort((a, b) => b.value - a.value).map((item, index) => {
                         const percentage = ((item.value / totalValue) * 100).toFixed(1);
                         const color = COLORS[data.indexOf(item) % COLORS.length];
