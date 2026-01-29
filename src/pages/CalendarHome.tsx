@@ -157,9 +157,9 @@ const CalendarHome: React.FC = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-220px)] overflow-hidden">
+            <div className="flex flex-col lg:flex-row gap-6 lg:h-[calc(100vh-220px)] h-auto lg:overflow-hidden">
                 {/* Calendar Area */}
-                <div className="flex-grow bg-base-100 p-6 rounded-3xl border border-base-300 shadow-xl overflow-hidden flex flex-col">
+                <div className="flex-grow bg-base-100 p-4 lg:p-6 rounded-3xl border border-base-300 shadow-xl overflow-hidden flex flex-col min-h-[500px] lg:min-h-0">
                     <div className="flex-grow overflow-auto scroll-modern calendar-container">
                         <FullCalendar
                             ref={calendarRef}

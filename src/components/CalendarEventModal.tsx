@@ -104,7 +104,7 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
 
     return (
         <div className="modal modal-open">
-            <div className="modal-box p-0 max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-3xl flex flex-col max-h-[85vh]">
+            <div className="modal-box p-0 w-[95%] max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-3xl flex flex-col max-h-[85vh]">
                 {/* Modal Header */}
                 <div className="flex-none bg-primary p-6 text-primary-content relative overflow-hidden">
                     <div className="relative z-10 flex justify-between items-center">
@@ -127,7 +127,7 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
                 </div>
 
                 {/* Modal Content - Scrollable */}
-                <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+                <div className="flex-1 overflow-y-auto p-6 lg:p-8 custom-scrollbar">
                     <form id="calendar-form" onSubmit={handleSubmit} className="space-y-6">
                         {/* Title Input */}
                         <div className="form-control w-full">
