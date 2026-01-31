@@ -249,7 +249,7 @@ const HealthDashboard: React.FC = () => {
                                 <TrendingUp size={28} className={balance > 0 ? 'text-accent' : 'text-success'} />
                                 <button
                                     onClick={() => setIsGoalModalOpen(true)}
-                                    className={`absolute -top-1 -right-5 w-5 h-5 ${balanceGoal ? 'bg-accent text-accent-content' : 'bg-base-300 text-base-content'} rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md z-10`}
+                                    className={`absolute -top-1 -right-5 w-5 h-5 ${balance > 0 ? 'bg-accent text-accent-content' : 'bg-success text-success-content'} rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md z-10`}
                                 >
                                     <Settings size={12} />
                                 </button>
