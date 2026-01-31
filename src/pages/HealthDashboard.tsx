@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Activity, Utensils, TrendingUp, Plus, Calendar as CalendarIcon } from 'lucide-react';
+import { Activity, Utensils, TrendingUp, Plus, Calendar as CalendarIcon, Settings } from 'lucide-react';
 import { mealService, type MealLog, type MealType } from '../services/mealService';
 import { exerciseService, type ExerciseLog, type ExerciseType } from '../services/exerciseService';
 
@@ -251,8 +251,7 @@ const HealthDashboard: React.FC = () => {
                                     onClick={() => setIsGoalModalOpen(true)}
                                     className={`absolute -top-1 -right-5 w-5 h-5 ${balanceGoal ? 'bg-accent text-accent-content' : 'bg-base-300 text-base-content'} rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md z-10`}
                                 >
-                                    {/* Use a cog icon or a different visual indicator for settings */}
-                                    <span className="text-[10px] font-bold">set</span>
+                                    <Settings size={12} />
                                 </button>
                             </div>
                             <div className="flex flex-col">
