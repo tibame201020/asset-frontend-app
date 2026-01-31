@@ -93,16 +93,17 @@ const MealModal: React.FC<MealModalProps> = ({ isOpen, onClose, onSave, initialD
                             <label className="label">
                                 <span className="label-text font-black text-[10px] uppercase opacity-40 tracking-widest">{t('meal.modal.fields.name')}</span>
                             </label>
-                            <select
+                            <input
                                 {...register('mealName', { required: true })}
-                                className="select select-bordered w-full bg-base-200/50 focus:bg-base-100 transition-colors rounded"
-                            >
+                                list="meal-types"
+                                placeholder={t('meal.modal.fields.name')} // Optional: Add placeholder
+                                className="input input-bordered w-full bg-base-200/50 focus:bg-base-100 transition-colors rounded"
+                            />
+                            <datalist id="meal-types">
                                 {mealTypes.map((t) => (
-                                    <option key={t.id} value={t.name}>
-                                        {t.icon} {t.name}
-                                    </option>
+                                    <option key={t.id} value={t.name} />
                                 ))}
-                            </select>
+                            </datalist>
                         </div>
 
                         <div className="form-control">
