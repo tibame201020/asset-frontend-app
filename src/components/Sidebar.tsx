@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     Calendar, Wallet, Calculator, Settings,
-    Menu, X, ChevronRight, Landmark, Activity, Heart, Utensils
+    Menu, ChevronRight, Landmark, Activity, Heart, Utensils, ChevronLeft
 } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
@@ -81,7 +81,7 @@ const Sidebar: React.FC = () => {
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                     className="w-full flex items-center justify-center p-3 rounded hover:bg-base-200 text-base-content/40 transition-colors"
                 >
-                    {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+                    {isSidebarOpen ? <ChevronLeft size={20} /> : <Menu size={20} />}
                 </button>
             </div>
         </aside>

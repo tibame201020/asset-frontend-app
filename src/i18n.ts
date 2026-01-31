@@ -135,11 +135,11 @@ const resources = {
                     },
                     "dashboard": {
                         "title": "Health Dashboard",
-                        "intake": "Calorie Intake",
-                        "burned": "Calorie Burned",
+                        "intake": "Intake",
+                        "burned": "Burned",
                         "balance": "Balance",
                         "target": "Recommended Goal",
-                        "weeklyTitle": "Weekly Calorie Trend",
+                        "weeklyTitle": "Weekly Trend",
                         "recentLogs": "Recent Logs",
                         "overview": "Daily Overview",
                         "total": "Total"
@@ -165,11 +165,11 @@ const resources = {
                 },
                 "dashboard": {
                     "title": "Health Dashboard",
-                    "intake": "Calorie Intake",
-                    "burned": "Calories Burned",
-                    "balance": "Calorie Balance",
+                    "intake": "Intake",
+                    "burned": "Burned",
+                    "balance": "Balance",
                     "target": "Recommended Target",
-                    "weeklyTitle": "Weekly Calorie Trend",
+                    "weeklyTitle": "Weekly Trend",
                     "recentLogs": "Recent Logs",
                     "overview": "Daily Overview",
                     "total": "Total"

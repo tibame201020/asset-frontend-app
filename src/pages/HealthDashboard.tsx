@@ -125,7 +125,7 @@ const HealthDashboard: React.FC = () => {
                     <div className="flex items-center gap-12 px-8 py-5 bg-base-200/40 rounded border border-base-300/50 shadow-inner">
                         {/* Intake */}
                         <div className="flex items-center gap-6">
-                            <div className="relative mr-3">
+                            <div className="relative">
                                 <Utensils size={28} className="text-secondary" />
                                 <button
                                     onClick={() => { setEditingMeal(null); setIsMealModalOpen(true); }}
@@ -137,8 +137,8 @@ const HealthDashboard: React.FC = () => {
                             <div className="flex flex-col">
                                 <span className="text-xs font-black uppercase tracking-widest opacity-40 mb-1">{t('meal.dashboard.intake')}</span>
                                 <div className="flex items-baseline gap-4">
-                                    <span className="text-2xl font-mono font-black text-secondary leading-none">{totalIntake} <span className="text-[10px] opacity-30">SUM</span></span>
-                                    <span className="text-base font-mono font-bold text-secondary/60 leading-none">{avgIntake} <span className="text-[10px] opacity-30">/DAY</span></span>
+                                    <span className="text-xl font-mono font-black text-secondary leading-none">{totalIntake} <span className="text-[10px] opacity-90">SUM</span></span>
+                                    <span className="text-base font-mono font-bold text-secondary leading-none">{avgIntake} <span className="text-[10px] opacity-90">/DAY</span></span>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@ const HealthDashboard: React.FC = () => {
 
                         {/* Burned */}
                         <div className="flex items-center gap-6">
-                            <div className="relative mr-3">
+                            <div className="relative">
                                 <Activity size={28} className="text-primary" />
                                 <button
                                     onClick={() => { setEditingExercise(null); setIsExerciseModalOpen(true); }}
@@ -159,8 +159,8 @@ const HealthDashboard: React.FC = () => {
                             <div className="flex flex-col">
                                 <span className="text-xs font-black uppercase tracking-widest opacity-40 mb-1">{t('meal.dashboard.burned')}</span>
                                 <div className="flex items-baseline gap-4">
-                                    <span className="text-2xl font-mono font-black text-primary leading-none">{totalBurned} <span className="text-[10px] opacity-30">SUM</span></span>
-                                    <span className="text-base font-mono font-bold text-primary/60 leading-none">{avgBurned} <span className="text-[10px] opacity-30">/DAY</span></span>
+                                    <span className="text-xl font-mono font-black text-primary leading-none">{totalBurned} <span className="text-[10px] opacity-90">SUM</span></span>
+                                    <span className="text-base font-mono font-bold text-primary leading-none">{avgBurned} <span className="text-[10px] opacity-90">/DAY</span></span>
                                 </div>
                             </div>
                         </div>
@@ -173,11 +173,11 @@ const HealthDashboard: React.FC = () => {
                             <div className="flex flex-col">
                                 <span className="text-xs font-black uppercase tracking-widest opacity-40 mb-1">{t('meal.dashboard.balance')}</span>
                                 <div className="flex items-baseline gap-4">
-                                    <span className={`text-2xl font-mono font-black leading-none ${balance > 0 ? 'text-accent' : 'text-success'}`}>
-                                        {balance} <span className="text-[10px] opacity-30">SUM</span>
+                                    <span className={`text-xl font-mono font-black leading-none ${balance > 0 ? 'text-accent' : 'text-success'}`}>
+                                        {balance} <span className="text-[10px] opacity-90">SUM</span>
                                     </span>
-                                    <span className={`text-base font-mono font-bold leading-none ${balance > 0 ? 'text-accent/60' : 'text-success/60'}`}>
-                                        {avgBalance} <span className="text-[10px] opacity-30">/DAY</span>
+                                    <span className={`text-base font-mono font-bold leading-none ${balance > 0 ? 'text-accent' : 'text-success'}`}>
+                                        {avgBalance} <span className="text-[10px] opacity-90">/DAY</span>
                                     </span>
                                 </div>
                             </div>
