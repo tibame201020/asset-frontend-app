@@ -242,73 +242,97 @@ const MealList: React.FC = () => {
                 <div className="flex-grow min-h-0 p-4 gap-4 flex flex-col overflow-hidden">
                     {activeTab === 'LIST' && (
                         <div className="h-full flex flex-col overflow-hidden">
-                            {loading ? (
-                                <div className="flex flex-col justify-center items-center h-64 gap-4 opacity-50">
-                                    <span className="loading loading-spinner loading-lg text-secondary"></span>
-                                    <p className="text-xs font-black uppercase tracking-widest">Gathering Data...</p>
-                                </div>
-                            ) : (
-                                <div className="flex-grow overflow-auto scroll-modern rounded border border-base-300 shadow-inner bg-base-100/30">
-                                    <table className="table table-zebra w-full border-separate border-spacing-0">
-                                        <thead className="sticky top-0 z-20">
-                                            <tr className="bg-base-100 shadow-sm border-b border-base-300">
-                                                <th className="pl-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('exercise.table.actions')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('exercise.table.date')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 min-w-[200px]">{t('exercise.table.item')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-28">{t('exercise.table.calories')}</th>
-                                                <th className="pr-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('exercise.table.ps')}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-base-content/5">
-                                            {filteredLogs.map(log => {
-                                                const type = mealTypes.find(t => t.name === log.mealName);
-                                                return (
-                                                    <tr key={log.id} className="group hover:bg-base-300/30 transition-colors shadow-sm">
-                                                        <td className="pl-6 py-4">
-                                                            <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                                <button className="btn btn-square btn-ghost btn-xs text-info hover:bg-info/10" onClick={() => handleEdit(log)}>
-                                                                    <Edit3 size={14} />
-                                                                </button>
-                                                                <button className="btn btn-square btn-ghost btn-xs text-error hover:bg-error/10" onClick={() => confirmDelete(log.id)}>
-                                                                    <Trash2 size={14} />
-                                                                </button>
-                                                                <button className="btn btn-square btn-ghost btn-xs text-warning hover:bg-warning/10" onClick={() => handleQuickCopy(log)}>
-                                                                    <Copy size={14} />
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                        <td className="font-mono text-xs opacity-70">
-                                                            {format(new Date(log.transDate), 'yyyy-MM-dd HH:mm')}
-                                                        </td>
-                                                        <td>
-                                                            <div className="flex items-center gap-2">
-                                                                <span className="text-xl">{type?.icon || '🍚'}</span>
-                                                                <span className="text-sm font-bold tracking-tight">{log.mealName}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="text-right font-mono font-bold text-secondary">
-                                                            {log.calories} <span className="text-[10px] opacity-40">kcal</span>
-                                                        </td>
-                                                        <td className="pr-6 text-xs opacity-50 italic max-w-xs truncate">
-                                                            {log.ps}
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })}
-                                            {filteredLogs.length === 0 && (
-                                                <tr className="border-none">
-                                                    <td colSpan={5} className="text-center py-20 opacity-30">
-                                                        <div className="flex flex-col items-center gap-4">
-                                                            <AlertCircle size={48} strokeWidth={1} />
-                                                            <span className="text-sm font-bold uppercase tracking-[0.2em]">{t('exercise.table.noRecords')}</span>
+                            <div className="flex-grow overflow-auto scroll-modern rounded border border-base-300 shadow-inner bg-base-100/30">
+                                <table className="table table-zebra w-full border-separate border-spacing-0">
+                                    <thead className="sticky top-0 z-20">
+                                        <tr className="bg-base-100 shadow-sm border-b border-base-300">
+                                            <th className="pl-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('exercise.table.actions')}</th>
+                                            <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('exercise.table.date')}</th>
+                                            <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 min-w-[200px]">{t('exercise.table.item')}</th>
+                                            <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-28">{t('exercise.table.calories')}</th>
+                                            <th className="pr-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('exercise.table.ps')}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-base-content/5">
+                                        {loading ? (
+                                            Array.from({ length: 5 }).map((_, i) => (
+                                                <tr key={i} className="animate-pulse">
+                                                    <td className="pl-6 py-4">
+                                                        <div className="flex gap-2">
+                                                            <div className="w-6 h-6 bg-base-content/10 rounded"></div>
+                                                            <div className="w-6 h-6 bg-base-content/10 rounded"></div>
+                                                            <div className="w-6 h-6 bg-base-content/10 rounded"></div>
                                                         </div>
                                                     </td>
+                                                    <td className="py-4">
+                                                        <div className="h-4 w-24 bg-base-content/10 rounded"></div>
+                                                    </td>
+                                                    <td className="py-4">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="w-8 h-8 bg-base-content/10 rounded-full"></div>
+                                                            <div className="h-4 w-32 bg-base-content/10 rounded"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-4 text-right">
+                                                        <div className="h-4 w-16 bg-base-content/10 rounded ml-auto"></div>
+                                                    </td>
+                                                    <td className="pr-6 py-4">
+                                                        <div className="h-4 w-full bg-base-content/10 rounded"></div>
+                                                    </td>
                                                 </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )}
+                                            ))
+                                        ) : (
+                                            <>
+                                                {filteredLogs.map(log => {
+                                                    const type = mealTypes.find(t => t.name === log.mealName);
+                                                    return (
+                                                        <tr key={log.id} className="group hover:bg-base-300/30 transition-colors shadow-sm">
+                                                            <td className="pl-6 py-4">
+                                                                <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                    <button className="btn btn-square btn-ghost btn-xs text-info hover:bg-info/10" onClick={() => handleEdit(log)}>
+                                                                        <Edit3 size={14} />
+                                                                    </button>
+                                                                    <button className="btn btn-square btn-ghost btn-xs text-error hover:bg-error/10" onClick={() => confirmDelete(log.id)}>
+                                                                        <Trash2 size={14} />
+                                                                    </button>
+                                                                    <button className="btn btn-square btn-ghost btn-xs text-warning hover:bg-warning/10" onClick={() => handleQuickCopy(log)}>
+                                                                        <Copy size={14} />
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td className="font-mono text-xs opacity-70">
+                                                                {format(new Date(log.transDate), 'yyyy-MM-dd HH:mm')}
+                                                            </td>
+                                                            <td>
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className="text-xl">{type?.icon || '🍚'}</span>
+                                                                    <span className="text-sm font-bold tracking-tight">{log.mealName}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td className="text-right font-mono font-bold text-secondary">
+                                                                {log.calories} <span className="text-[10px] opacity-40">kcal</span>
+                                                            </td>
+                                                            <td className="pr-6 text-xs opacity-50 italic max-w-xs truncate">
+                                                                {log.ps}
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                                {filteredLogs.length === 0 && (
+                                                    <tr className="border-none">
+                                                        <td colSpan={5} className="text-center py-20 opacity-30">
+                                                            <div className="flex flex-col items-center gap-4">
+                                                                <AlertCircle size={48} strokeWidth={1} />
+                                                                <span className="text-sm font-bold uppercase tracking-[0.2em]">{t('exercise.table.noRecords')}</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                )}
+                                            </>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     )}
 

@@ -14,7 +14,7 @@ interface ExerciseModalProps {
     exerciseTypes: ExerciseType[];
 }
 
-const ExerciseModal: React.FC<ExerciseModalProps> = ({ isOpen, onClose, onSave, initialData, exerciseTypes }) => {
+const ExerciseModal: React.FC<ExerciseModalProps> = ({ isOpen, onClose, onSave, initialData, exerciseTypes = [] }) => {
     const { t } = useTranslation();
     const { register, handleSubmit, reset, watch, setValue } = useForm<ExerciseLog>();
 
@@ -58,6 +58,7 @@ const ExerciseModal: React.FC<ExerciseModalProps> = ({ isOpen, onClose, onSave, 
 
     // Live calorie calculation when duration changes
     useEffect(() => {
+        if (!exerciseTypes) return;
         const type = exerciseTypes.find(t => t.name === exerciseName);
         if (type && duration) {
             const cal = Math.round((type.kcalPerHour / 60) * duration);

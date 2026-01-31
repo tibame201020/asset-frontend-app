@@ -77,9 +77,9 @@ const MealTypeModal: React.FC<MealTypeModalProps> = ({ isOpen, onClose, onTypesC
 
     return (
         <div className="modal modal-open backdrop-blur-md">
-            <div className="modal-box max-w-2xl bg-base-100 border border-base-300 shadow-2xl p-0 overflow-hidden">
+            <div className="modal-box max-w-2xl bg-base-100 border border-base-300 shadow-2xl p-0 overflow-hidden flex flex-col max-h-[85vh]">
                 {/* Header */}
-                <div className="bg-secondary/5 p-6 border-b border-base-300 flex justify-between items-center">
+                <div className="bg-secondary/5 p-6 border-b border-base-300 flex justify-between items-center flex-none">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-secondary/10 rounded-lg text-secondary">
                             <Utensils size={20} />
@@ -92,7 +92,7 @@ const MealTypeModal: React.FC<MealTypeModalProps> = ({ isOpen, onClose, onTypesC
                     <button className="btn btn-ghost btn-sm btn-circle" onClick={onClose}><X size={20} /></button>
                 </div>
 
-                <div className="p-6">
+                <div className="p-6 flex-1 overflow-y-auto custom-scrollbar">
                     <div className="flex justify-between items-center mb-4">
                         <span className="text-xs font-black opacity-30 uppercase tracking-[0.2em]">{types.length} {t('settings.sections.meal')}</span>
                         <button
@@ -165,7 +165,7 @@ const MealTypeModal: React.FC<MealTypeModalProps> = ({ isOpen, onClose, onTypesC
                     </div>
                 </div>
 
-                <div className="modal-action p-4 bg-base-200/50 border-t border-base-300">
+                <div className="modal-action p-4 bg-base-200/50 border-t border-base-300 flex-none">
                     <button className="btn btn-ghost btn-sm px-6 font-bold" onClick={onClose}>{t('common.close')}</button>
                 </div>
             </div>

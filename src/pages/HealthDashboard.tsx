@@ -37,7 +37,10 @@ const HealthDashboard: React.FC = () => {
     const [weeklyIntake, setWeeklyIntake] = useState<number[]>([]);
     const [weeklyBurned, setWeeklyBurned] = useState<number[]>([]);
 
+    const [loading, setLoading] = useState(false);
+
     const fetchData = async () => {
+        setLoading(true);
         try {
             const start = startOfDay(new Date(dateRange.start)).getTime();
             const end = endOfDay(new Date(dateRange.end)).getTime();
@@ -69,6 +72,8 @@ const HealthDashboard: React.FC = () => {
         } catch (e) {
             console.error(e);
             notify('error', t('common.fetchError'));
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -136,10 +141,17 @@ const HealthDashboard: React.FC = () => {
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-xs font-black uppercase tracking-widest opacity-40 mb-1">{t('meal.dashboard.intake')}</span>
-                                <div className="flex items-baseline gap-4">
-                                    <span className="text-xl font-mono font-black text-secondary leading-none">{totalIntake} <span className="text-[10px] opacity-90">SUM</span></span>
-                                    <span className="text-base font-mono font-bold text-secondary leading-none">{avgIntake} <span className="text-[10px] opacity-90">/DAY</span></span>
-                                </div>
+                                {loading ? (
+                                    <div className="flex flex-col gap-2 animate-pulse">
+                                        <div className="h-6 w-24 bg-base-content/10 rounded"></div>
+                                        <div className="h-4 w-16 bg-base-content/10 rounded"></div>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-baseline gap-4">
+                                        <span className="text-xl font-mono font-black text-secondary leading-none">{totalIntake} <span className="text-[10px] opacity-90">SUM</span></span>
+                                        <span className="text-base font-mono font-bold text-secondary leading-none">{avgIntake} <span className="text-[10px] opacity-90">/DAY</span></span>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -158,10 +170,17 @@ const HealthDashboard: React.FC = () => {
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-xs font-black uppercase tracking-widest opacity-40 mb-1">{t('meal.dashboard.burned')}</span>
-                                <div className="flex items-baseline gap-4">
-                                    <span className="text-xl font-mono font-black text-primary leading-none">{totalBurned} <span className="text-[10px] opacity-90">SUM</span></span>
-                                    <span className="text-base font-mono font-bold text-primary leading-none">{avgBurned} <span className="text-[10px] opacity-90">/DAY</span></span>
-                                </div>
+                                {loading ? (
+                                    <div className="flex flex-col gap-2 animate-pulse">
+                                        <div className="h-6 w-24 bg-base-content/10 rounded"></div>
+                                        <div className="h-4 w-16 bg-base-content/10 rounded"></div>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-baseline gap-4">
+                                        <span className="text-xl font-mono font-black text-primary leading-none">{totalBurned} <span className="text-[10px] opacity-90">SUM</span></span>
+                                        <span className="text-base font-mono font-bold text-primary leading-none">{avgBurned} <span className="text-[10px] opacity-90">/DAY</span></span>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -172,14 +191,21 @@ const HealthDashboard: React.FC = () => {
                             <TrendingUp size={28} className={balance > 0 ? 'text-accent' : 'text-success'} />
                             <div className="flex flex-col">
                                 <span className="text-xs font-black uppercase tracking-widest opacity-40 mb-1">{t('meal.dashboard.balance')}</span>
-                                <div className="flex items-baseline gap-4">
-                                    <span className={`text-xl font-mono font-black leading-none ${balance > 0 ? 'text-accent' : 'text-success'}`}>
-                                        {balance} <span className="text-[10px] opacity-90">SUM</span>
-                                    </span>
-                                    <span className={`text-base font-mono font-bold leading-none ${balance > 0 ? 'text-accent' : 'text-success'}`}>
-                                        {avgBalance} <span className="text-[10px] opacity-90">/DAY</span>
-                                    </span>
-                                </div>
+                                {loading ? (
+                                    <div className="flex flex-col gap-2 animate-pulse">
+                                        <div className="h-6 w-24 bg-base-content/10 rounded"></div>
+                                        <div className="h-4 w-16 bg-base-content/10 rounded"></div>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-baseline gap-4">
+                                        <span className={`text-xl font-mono font-black leading-none ${balance > 0 ? 'text-accent' : 'text-success'}`}>
+                                            {balance} <span className="text-[10px] opacity-90">SUM</span>
+                                        </span>
+                                        <span className={`text-base font-mono font-bold leading-none ${balance > 0 ? 'text-accent' : 'text-success'}`}>
+                                            {avgBalance} <span className="text-[10px] opacity-90">/DAY</span>
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -241,70 +267,79 @@ const HealthDashboard: React.FC = () => {
 
                 <div className="flex-1 w-full relative">
                     <ResponsiveContainer width="100%" height="100%">
-                        <ComposedChart
-                            data={chartData}
-                            margin={{ top: 10, right: 10, bottom: 0, left: 0 }}
-                            barGap={4}
-                        >
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
-                            <XAxis
-                                dataKey="date"
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{ fontSize: 10, fontWeight: 700, opacity: 0.4 }}
-                                dy={10}
-                            />
-                            <YAxis
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{ fontSize: 10, fontWeight: 700, opacity: 0.4 }}
-                            />
-                            <Tooltip
-                                contentStyle={{
-                                    borderRadius: '1.5rem',
-                                    border: 'none',
-                                    boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.15)',
-                                    background: 'rgba(255, 255, 255, 0.95)',
-                                    backdropFilter: 'blur(12px)',
-                                    padding: '1rem'
-                                }}
-                            />
-                            <Legend
-                                verticalAlign="top"
-                                align="right"
-                                iconType="circle"
-                                wrapperStyle={{
-                                    paddingBottom: '20px',
-                                    fontWeight: 'bold',
-                                    fontSize: '10px',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.1em',
-                                    opacity: 0.8
-                                }}
-                            />
-                            <Bar
-                                dataKey="intake"
-                                fill="oklch(var(--s))"
-                                name={t('meal.dashboard.intake')}
-                                barSize={20}
-                                radius={[4, 4, 0, 0]}
-                            />
-                            <Bar
-                                dataKey="burned"
-                                fill="oklch(var(--p))"
-                                name={t('meal.dashboard.burned')}
-                                barSize={20}
-                                radius={[4, 4, 0, 0]}
-                            />
-                            <Line
-                                type="monotone"
-                                dataKey="balance"
-                                stroke="oklch(var(--a))"
-                                strokeWidth={3}
-                                dot={{ r: 4, strokeWidth: 2, fill: '#fff' }}
-                                name={t('meal.dashboard.balance')}
-                            />
-                        </ComposedChart>
+                        {loading ? (
+                            <div className="flex items-center justify-center h-full w-full opacity-50 animate-pulse bg-base-200/50 rounded-lg">
+                                <div className="flex flex-col items-center gap-2">
+                                    <span className="loading loading-spinner text-primary"></span>
+                                    <span className="text-xs font-black uppercase tracking-widest opacity-50">Analyzing Data...</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <ComposedChart
+                                data={chartData}
+                                margin={{ top: 10, right: 10, bottom: 0, left: 0 }}
+                                barGap={4}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                                <XAxis
+                                    dataKey="date"
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fontSize: 10, fontWeight: 700, opacity: 0.4 }}
+                                    dy={10}
+                                />
+                                <YAxis
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fontSize: 10, fontWeight: 700, opacity: 0.4 }}
+                                />
+                                <Tooltip
+                                    contentStyle={{
+                                        borderRadius: '1.5rem',
+                                        border: 'none',
+                                        boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.15)',
+                                        background: 'rgba(255, 255, 255, 0.95)',
+                                        backdropFilter: 'blur(12px)',
+                                        padding: '1rem'
+                                    }}
+                                />
+                                <Legend
+                                    verticalAlign="top"
+                                    align="right"
+                                    iconType="circle"
+                                    wrapperStyle={{
+                                        paddingBottom: '20px',
+                                        fontWeight: 'bold',
+                                        fontSize: '10px',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.1em',
+                                        opacity: 0.8
+                                    }}
+                                />
+                                <Bar
+                                    dataKey="intake"
+                                    fill="oklch(var(--s))"
+                                    name={t('meal.dashboard.intake')}
+                                    barSize={20}
+                                    radius={[4, 4, 0, 0]}
+                                />
+                                <Bar
+                                    dataKey="burned"
+                                    fill="oklch(var(--p))"
+                                    name={t('meal.dashboard.burned')}
+                                    barSize={20}
+                                    radius={[4, 4, 0, 0]}
+                                />
+                                <Line
+                                    type="monotone"
+                                    dataKey="balance"
+                                    stroke="oklch(var(--a))"
+                                    strokeWidth={3}
+                                    dot={{ r: 4, strokeWidth: 2, fill: '#fff' }}
+                                    name={t('meal.dashboard.balance')}
+                                />
+                            </ComposedChart>
+                        )}
                     </ResponsiveContainer>
                 </div>
             </div>
