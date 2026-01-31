@@ -83,12 +83,10 @@ const Header: React.FC = () => {
 
                 {/* Language Switcher */}
                 <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-sm rounded placeholder bg-neutral border border-base-300">
-                        <div className="bg-neutral text-neutral-content rounded w-8">
-                            <span className="text-xs">{i18n.language.toUpperCase()}</span>
-                        </div>
+                    <div tabIndex={0} role="button" className="btn btn-sm rounded placeholder bg-primary/10 text-primary border border-base-300">
+                        <span className="text-xs">{i18n.language.toUpperCase()}</span>
                     </div>
-                    <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-32 border border-base-200">
+                    <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 w-32">
                         <li><a className={i18n.language === 'tw' ? 'active' : ''} onClick={() => changeLanguage('tw')}>繁體中文</a></li>
                         <li><a className={i18n.language === 'en' ? 'active' : ''} onClick={() => changeLanguage('en')}>English</a></li>
                     </ul>
