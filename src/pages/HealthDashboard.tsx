@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Activity, Utensils, TrendingUp, Plus, Calendar as CalendarIcon } from 'lucide-react';
 import { mealService, type MealLog, type MealType } from '../services/mealService';
 import { exerciseService, type ExerciseLog, type ExerciseType } from '../services/exerciseService';
+
+import { settingsService } from '../services/settingsService';
 import MealModal from '../components/MealModal';
 import ExerciseModal from '../components/ExerciseModal';
 import { format, startOfDay, endOfDay, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from 'date-fns';
@@ -16,7 +18,9 @@ import {
     CartesianGrid,
     Tooltip,
     Legend,
-    ResponsiveContainer
+
+    ResponsiveContainer,
+    ReferenceLine
 } from 'recharts';
 
 const HealthDashboard: React.FC = () => {
@@ -56,7 +60,24 @@ const HealthDashboard: React.FC = () => {
     const [weeklyIntake, setWeeklyIntake] = useState<number[]>([]);
     const [weeklyBurned, setWeeklyBurned] = useState<number[]>([]);
 
+
+    const [balanceGoal, setBalanceGoal] = useState<number | null>(null);
+
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchSettings = async () => {
+            try {
+                const settings = await settingsService.getAllSettings();
+                if (settings.balance_goal) {
+                    setBalanceGoal(parseFloat(settings.balance_goal));
+                }
+            } catch (e) {
+                console.error("Failed to fetch settings");
+            }
+        };
+        fetchSettings();
+    }, []);
 
     const fetchData = async () => {
         setLoading(true);
@@ -138,7 +159,23 @@ const HealthDashboard: React.FC = () => {
         intake: weeklyIntake[i] || 0,
         burned: weeklyBurned[i] || 0,
         balance: (weeklyIntake[i] || 0) - (weeklyBurned[i] || 0)
+
     }));
+
+    // Calculate Gradient Offset
+    const gradientOffset = () => {
+        if (balanceGoal === null) return 0;
+        const data = chartData;
+        const max = Math.max(...data.map((i) => i.balance));
+        const min = Math.min(...data.map((i) => i.balance));
+
+        if (max <= balanceGoal) return 0;
+        if (min >= balanceGoal) return 1;
+
+        return (max - balanceGoal) / (max - min);
+    };
+
+    const off = gradientOffset();
 
     return (
         <div className="h-full flex flex-col p-4 md:p-6 space-y-4 animate-in fade-in duration-500 overflow-hidden">
@@ -299,6 +336,12 @@ const HealthDashboard: React.FC = () => {
                                 margin={{ top: 10, right: 10, bottom: 0, left: 0 }}
                                 barGap={4}
                             >
+                                <defs>
+                                    <linearGradient id="splitColor" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset={off} stopColor="#ef4444" stopOpacity={1} />
+                                        <stop offset={off} stopColor="#10b981" stopOpacity={1} />
+                                    </linearGradient>
+                                </defs>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                                 <XAxis
                                     dataKey="date"
@@ -352,11 +395,25 @@ const HealthDashboard: React.FC = () => {
                                 <Line
                                     type="monotone"
                                     dataKey="balance"
-                                    stroke="oklch(var(--a))"
+                                    stroke={balanceGoal !== null ? "url(#splitColor)" : "oklch(var(--a))"}
                                     strokeWidth={3}
                                     dot={{ r: 4, strokeWidth: 2, fill: '#fff' }}
                                     name={t('meal.dashboard.balance')}
                                 />
+                                {balanceGoal !== null && (
+                                    <ReferenceLine
+                                        y={balanceGoal}
+                                        stroke="#ef4444"
+                                        strokeDasharray="3 3"
+                                        label={{
+                                            value: `Goal: ${balanceGoal}`,
+                                            position: 'right',
+                                            fill: '#ef4444',
+                                            fontSize: 10,
+                                            fontWeight: 'bold'
+                                        }}
+                                    />
+                                )}
                             </ComposedChart>
                         )}
                     </ResponsiveContainer>

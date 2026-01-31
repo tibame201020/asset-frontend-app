@@ -285,6 +285,7 @@ const resources = {
             "settings": {
                 "sections": {
                     "language": "Language",
+                    "health": "Health Dashboard",
                     "theme": "Theme & Appearance",
                     "notifications": "Notification Position",
                     "exercise": "Exercise Types & Defaults",
@@ -394,6 +395,26 @@ const resources = {
                         "bottomCenter": "Bottom Center",
                         "bottomEnd": "Bottom Right"
                     }
+                },
+                "health": {
+                    "title": "Health Dashboard Settings",
+                    "balanceGoal": "Daily Balance Goal (Net Calories)",
+                    "calculateTDEE": "Calculate BMR/TDEE",
+                    "gender": "Gender",
+                    "age": "Age",
+                    "weight": "Weight (kg)",
+                    "height": "Height (cm)",
+                    "activity": "Activity Level",
+                    "calculate": "Calculate",
+                    "male": "Male",
+                    "female": "Female",
+                    "sedentary": "Sedentary (Little or no exercise)",
+                    "light": "Lightly active (1-3 days/week)",
+                    "moderate": "Moderately active (3-5 days/week)",
+                    "active": "Active (6-7 days/week)",
+                    "veryActive": "Very active (physical job or 2x training)",
+                    "result": "Your TDEE is approx. {{tdee}} kcal",
+                    "apply": "Apply to Goal"
                 }
             }
         }
@@ -646,6 +667,7 @@ const resources = {
             "settings": {
                 "sections": {
                     "language": "語系設定",
+                    "health": "健康儀表板設定",
                     "theme": "主題與外觀",
                     "notifications": "通知彈窗位置",
                     "exercise": "運動類型與預設值",
@@ -755,6 +777,26 @@ const resources = {
                         "bottomCenter": "下方置中",
                         "bottomEnd": "右下角"
                     }
+                },
+                "health": {
+                    "title": "健康儀表板設定",
+                    "balanceGoal": "每日結餘目標 (淨卡路里)",
+                    "calculateTDEE": "計算 BMR/TDEE",
+                    "gender": "性別",
+                    "age": "年齡",
+                    "weight": "體重 (kg)",
+                    "height": "身高 (cm)",
+                    "activity": "活動量",
+                    "calculate": "計算",
+                    "male": "男性",
+                    "female": "女性",
+                    "sedentary": "久坐 (幾乎不運動)",
+                    "light": "輕度活動 (每週 1-3 天)",
+                    "moderate": "中度活動 (每週 3-5 天)",
+                    "active": "高度活動 (每週 6-7 天)",
+                    "veryActive": "非常高度活動 (勞力工作或一日兩練)",
+                    "result": "您的 TDEE 約為 {{tdee}} kcal",
+                    "apply": "套用到目標"
                 }
             }
         }
