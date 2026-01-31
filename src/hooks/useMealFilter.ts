@@ -24,11 +24,27 @@ export const useMealFilter = (
     }, [logs, keyword, dateRange]);
 
     const chartData = useMemo(() => {
-        const groups: Record<string, number> = {};
+        // 1. First aggregation: Group by Meal Name
+        const nameGroups: Record<string, number> = {};
         filteredLogs.forEach(log => {
-            groups[log.mealName] = (groups[log.mealName] || 0) + log.calories;
+            nameGroups[log.mealName] = (nameGroups[log.mealName] || 0) + log.calories;
         });
-        return Object.entries(groups).map(([name, value]) => ({ name, value }));
+
+        const nameKeys = Object.keys(nameGroups);
+
+        // 2. Drill-down Logic: If only one Meal Name, group by PS (Note)
+        let finalGroups: Record<string, number> = {};
+
+        if (nameKeys.length === 1) {
+            filteredLogs.forEach(log => {
+                const key = log.ps?.trim() || '(No Note)';
+                finalGroups[key] = (finalGroups[key] || 0) + log.calories;
+            });
+        } else {
+            finalGroups = nameGroups;
+        }
+
+        return Object.entries(finalGroups).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value);
     }, [filteredLogs]);
 
     const lineChartData = useMemo(() => {

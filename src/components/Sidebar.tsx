@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     Calendar, Wallet, Calculator, Settings,
-    Menu, ChevronRight, Landmark, Activity, Heart, Utensils, ChevronLeft
+    Menu, ChevronRight, Landmark, Activity, Heart, Utensils, ChevronLeft, BookOpen
 } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
@@ -33,6 +33,7 @@ const Sidebar: React.FC = () => {
         { path: '/calc/list', name: t('nav.calculation'), icon: Calculator },
         { path: '/exercise/list', name: t('nav.exercise'), icon: Activity },
         { path: '/meal/list', name: t('nav.mealRecords'), icon: Utensils },
+        { path: '/diary/list', name: t('nav.diary', { defaultValue: 'Diary' }), icon: BookOpen },
         { path: '/health/dashboard', name: t('nav.health'), icon: Heart },
         { path: '/setting', name: t('nav.settings'), icon: Settings },
     ];

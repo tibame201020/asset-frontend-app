@@ -11,6 +11,7 @@ import CalcList from './pages/CalcList';
 import ExerciseList from './pages/ExerciseList';
 import HealthDashboard from './pages/HealthDashboard';
 import MealList from './pages/MealList';
+import DiaryList from './pages/DiaryList';
 import Settings from './pages/Settings';
 
 const router = createBrowserRouter([
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "meal/list",
         element: <MealList />
+      },
+      {
+        path: "diary/list",
+        element: <DiaryList />
       }
     ]
   }

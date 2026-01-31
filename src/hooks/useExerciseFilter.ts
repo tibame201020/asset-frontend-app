@@ -29,17 +29,29 @@ export const useExerciseFilter = (logs: ExerciseLog[], keyword: string, dateRang
             );
         });
 
-        // 2. Aggregate Data for Pie Chart (By Exercise Name)
-        const aggregation: Record<string, number> = {};
+        // 2. Aggregate Data for Pie Chart (Drill-down Logic)
+        const nameGroups: Record<string, number> = {};
         const exerciseTypes: Set<string> = new Set();
 
         filteredLogs.forEach(log => {
-            const key = log.exerciseName;
-            aggregation[key] = (aggregation[key] || 0) + log.calories;
-            exerciseTypes.add(key);
+            nameGroups[log.exerciseName] = (nameGroups[log.exerciseName] || 0) + log.calories;
+            exerciseTypes.add(log.exerciseName);
         });
 
-        const chartData: ChartData[] = Object.entries(aggregation).map(([name, value]) => ({
+        const nameKeys = Object.keys(nameGroups);
+        let finalGroups: Record<string, number> = {};
+
+        // If only one Exercise Name, group by PS
+        if (nameKeys.length === 1) {
+            filteredLogs.forEach(log => {
+                const key = log.ps?.trim() || '(No Note)';
+                finalGroups[key] = (finalGroups[key] || 0) + log.calories;
+            });
+        } else {
+            finalGroups = nameGroups;
+        }
+
+        const chartData: ChartData[] = Object.entries(finalGroups).map(([name, value]) => ({
             name,
             value
         })).sort((a, b) => b.value - a.value);
