@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { X, Save, Activity } from 'lucide-react';
 import type { ExerciseLog } from '../types';
-import { exerciseService, type ExerciseType } from '../services/exerciseService';
+import { type ExerciseType } from '../services/exerciseService';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 
@@ -11,27 +11,18 @@ interface ExerciseModalProps {
     onClose: () => void;
     onSave: (log: Omit<ExerciseLog, 'id'> | ExerciseLog) => void;
     initialData?: ExerciseLog | null;
+    exerciseTypes: ExerciseType[];
 }
 
-const ExerciseModal: React.FC<ExerciseModalProps> = ({ isOpen, onClose, onSave, initialData }) => {
+const ExerciseModal: React.FC<ExerciseModalProps> = ({ isOpen, onClose, onSave, initialData, exerciseTypes }) => {
     const { t } = useTranslation();
     const { register, handleSubmit, reset, watch, setValue } = useForm<ExerciseLog>();
-    const [exerciseTypes, setExerciseTypes] = useState<ExerciseType[]>([]);
 
     const duration = watch('duration');
     const exerciseName = watch('exerciseName');
 
-    useEffect(() => {
-        const fetchTypes = async () => {
-            try {
-                const types = await exerciseService.getAllTypes();
-                setExerciseTypes(types);
-            } catch (e) {
-                console.error(e);
-            }
-        };
-        fetchTypes();
-    }, []);
+    // Deleted local fetch logic
+
 
     useEffect(() => {
         if (isOpen) {

@@ -393,6 +393,7 @@ const ExerciseList: React.FC = () => {
                 onClose={() => setIsModalOpen(false)}
                 onSave={handleSave}
                 initialData={editingLog}
+                exerciseTypes={exerciseTypes}
             />
             <ExerciseTypeModal
                 isOpen={isTypeModalOpen}

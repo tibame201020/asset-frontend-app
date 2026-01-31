@@ -331,6 +331,7 @@ const MealList: React.FC = () => {
                 onClose={() => setIsModalOpen(false)}
                 onSave={handleSave}
                 initialData={editingLog}
+                mealTypes={mealTypes}
             />
             <MealTypeModal
                 isOpen={isTypeModalOpen}

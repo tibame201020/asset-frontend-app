@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { X, Save, Utensils } from 'lucide-react';
 import type { MealLog } from '../services/mealService';
-import { mealService, type MealType } from '../services/mealService';
+import { type MealType } from '../services/mealService';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 
@@ -11,26 +11,17 @@ interface MealModalProps {
     onClose: () => void;
     onSave: (log: Omit<MealLog, 'id'> | MealLog) => void;
     initialData?: MealLog | null;
+    mealTypes: MealType[];
 }
 
-const MealModal: React.FC<MealModalProps> = ({ isOpen, onClose, onSave, initialData }) => {
+const MealModal: React.FC<MealModalProps> = ({ isOpen, onClose, onSave, initialData, mealTypes }) => {
     const { t } = useTranslation();
     const { register, handleSubmit, reset, watch, setValue } = useForm<MealLog>();
-    const [mealTypes, setMealTypes] = useState<MealType[]>([]);
 
     const mealName = watch('mealName');
 
-    useEffect(() => {
-        const fetchTypes = async () => {
-            try {
-                const types = await mealService.getAllTypes();
-                setMealTypes(types);
-            } catch (e) {
-                console.error(e);
-            }
-        };
-        fetchTypes();
-    }, []);
+    // Deleted local fetch logic
+
 
     useEffect(() => {
         if (isOpen) {
