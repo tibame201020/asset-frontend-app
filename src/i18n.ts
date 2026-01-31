@@ -29,6 +29,7 @@ const resources = {
                 "exercise": "Exercise Tracking",
                 "mealRecords": "Meal Records",
                 "health": "Health Dashboard",
+                "diary": "Diary",
                 "settings": "Settings"
             },
             "calculation": {
@@ -174,6 +175,9 @@ const resources = {
                     "overview": "Daily Overview",
                     "total": "Total"
                 }
+            },
+            "diary": {
+                "subtitle": "Daily Reflections"
             },
             "calendar": {
                 "subtitle": "Schedule Management",
@@ -395,6 +399,7 @@ const resources = {
                 "exercise": "運動記錄",
                 "mealRecords": "餐飲記錄",
                 "health": "健康儀表板",
+                "diary": "日記",
                 "settings": "系統設定"
             },
             "calculation": {
@@ -518,6 +523,9 @@ const resources = {
                     "overview": "每日概覽",
                     "total": "總計"
                 }
+            },
+            "diary": {
+                "subtitle": "每日反思"
             },
             "calendar": {
                 "subtitle": "行程管理",
