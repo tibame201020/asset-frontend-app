@@ -414,8 +414,8 @@ const CalcList: React.FC = () => {
 
                         <div className="flex-grow overflow-y-auto scroll-modern bg-base-100/50 p-0">
                             <table className="table table-pin-rows w-full">
-                                <thead>
-                                    <tr className="text-xs font-bold uppercase tracking-widest opacity-50 bg-base-200/30">
+                                <thead className='sticky top-0 z-20 bg-base-100'>
+                                    <tr className="text-xs font-bold uppercase tracking-widest opacity-50 bg-base-200/30 shadow-sm border-b border-base-300">
                                         <th className="font-normal w-12 text-center">Icon</th>
                                         <th className="font-normal">Details</th>
                                         <th className="font-normal">Frequency</th>
