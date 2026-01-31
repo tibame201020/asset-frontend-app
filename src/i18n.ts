@@ -186,7 +186,19 @@ const resources = {
                     "weeklyTitle": "Weekly Trend",
                     "recentLogs": "Recent Logs",
                     "overview": "Daily Overview",
-                    "total": "Total"
+                    "total": "Total",
+                    "table": {
+                        "date": "Date Time",
+                        "item": "Meal Item",
+                        "calories": "Calories (kcal)",
+                        "ps": "Note",
+                        "actions": "Actions",
+                        "noRecords": "No meals recorded yet"
+                    },
+                    "stats": {
+                        "totalCalories": "Total Intake",
+                        "dailyAvg": "Avg / Day"
+                    }
                 }
             },
             "diary": {
