@@ -269,13 +269,13 @@ const DepositList: React.FC = () => {
                                         <table className="table table-zebra w-full border-separate border-spacing-0">
                                             <thead className="sticky top-0 z-20">
                                                 <tr className="bg-base-100 shadow-sm border-b border-base-300">
-                                                    <th className="pl-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('deposit.table.actions')}</th>
-                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('deposit.table.date')}</th>
-                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('deposit.table.type')}</th>
-                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('deposit.table.category')}</th>
-                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('deposit.table.name')}</th>
-                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('deposit.table.value')}</th>
-                                                    <th className="pr-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('deposit.table.ps')}</th>
+                                                    <th className="pl-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('deposit.table.actions')}</th>
+                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('deposit.table.date')}</th>
+                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('deposit.table.type')}</th>
+                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-32">{t('deposit.table.category')}</th>
+                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 min-w-[200px]">{t('deposit.table.name')}</th>
+                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-32 text-right">{t('deposit.table.value')}</th>
+                                                    <th className="pr-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('deposit.table.ps')}</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-base-content/5">

@@ -439,10 +439,10 @@ const CalcList: React.FC = () => {
                                 <thead className='sticky top-0 z-20 bg-base-100'>
                                     <tr className="text-xs font-bold uppercase tracking-widest opacity-50 bg-base-200/30 shadow-sm border-b border-base-300">
                                         <th className="font-normal w-12 text-center">{t('settings.exercise.table.icon')}</th>
-                                        <th className="font-normal">{t('settings.exercise.table.name')}</th>
-                                        <th className="font-normal">{t('calculation.modal.fields.cycle')}</th>
-                                        <th className="font-normal text-right">{t('calculation.modal.fields.value')}</th>
-                                        <th className="font-normal text-right">{t('calculation.stats.balance')}</th>
+                                        <th className="font-normal min-w-[200px]">{t('settings.exercise.table.name')}</th>
+                                        <th className="font-normal w-24">{t('calculation.modal.fields.cycle')}</th>
+                                        <th className="font-normal text-right w-32">{t('calculation.modal.fields.value')}</th>
+                                        <th className="font-normal text-right w-32">{t('calculation.stats.balance')}</th>
                                         <th className="font-normal w-24 text-center">{t('settings.exercise.table.actions')}</th>
                                     </tr>
                                 </thead>

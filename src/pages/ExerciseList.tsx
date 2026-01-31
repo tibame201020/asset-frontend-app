@@ -266,12 +266,12 @@ const ExerciseList: React.FC = () => {
                                     <table className="table table-zebra w-full border-separate border-spacing-0">
                                         <thead className="sticky top-0 z-20">
                                             <tr className="bg-base-100 shadow-sm border-b border-base-300">
-                                                <th className="pl-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('exercise.table.actions')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('exercise.table.date')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('exercise.table.item')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 text-right">{t('exercise.table.duration')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 text-right">{t('exercise.table.calories')}</th>
-                                                <th className="pr-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40">{t('exercise.table.ps')}</th>
+                                                <th className="pl-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('exercise.table.actions')}</th>
+                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('exercise.table.date')}</th>
+                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 min-w-[200px]">{t('exercise.table.item')}</th>
+                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-28">{t('exercise.table.duration')}</th>
+                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-28">{t('exercise.table.calories')}</th>
+                                                <th className="pr-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('exercise.table.ps')}</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-base-content/5">
