@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { calendarService } from '../services/calendarService';
 import type { CalendarEvent } from '../types';
 import CalendarEventModal from '../components/CalendarEventModal';
+import MealModal from '../components/MealModal';
 import { format } from 'date-fns';
 import {
     Calendar as CalendarIcon,
@@ -16,7 +17,8 @@ import {
     Clock,
     List,
     PlusCircle,
-    Info
+    Info,
+    Utensils
 } from 'lucide-react';
 
 const CalendarHome: React.FC = () => {
@@ -38,6 +40,9 @@ const CalendarHome: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalInitialData, setModalInitialData] = useState<Partial<CalendarEvent>>({});
     const [modalSelectedDateStr, setModalSelectedDateStr] = useState<string>('');
+
+    // Meal Modal
+    const [isMealModalOpen, setIsMealModalOpen] = useState(false);
 
     // Fetch events for range
     const fetchEvents = useCallback(async (start: Date, end: Date) => {
@@ -256,16 +261,24 @@ const CalendarHome: React.FC = () => {
                             )}
                         </div>
 
-                        <button
-                            onClick={() => {
-                                setModalSelectedDateStr(format(selectedDate, 'yyyy-MM-dd'));
-                                setModalInitialData({});
-                                setIsModalOpen(true);
-                            }}
-                            className="btn btn-primary btn-sm m-4 gap-2 shadow-lg"
-                        >
-                            <Plus size={16} /> {t('calendar.newEvent')}
-                        </button>
+                        <div className="flex gap-2 p-4 pt-0">
+                            <button
+                                onClick={() => {
+                                    setModalSelectedDateStr(format(selectedDate, 'yyyy-MM-dd'));
+                                    setModalInitialData({});
+                                    setIsModalOpen(true);
+                                }}
+                                className="btn btn-primary btn-sm flex-1 gap-2 shadow-lg"
+                            >
+                                <Plus size={16} /> {t('calendar.newEvent')}
+                            </button>
+                            <button
+                                onClick={() => setIsMealModalOpen(true)}
+                                className="btn btn-secondary btn-sm flex-1 gap-2 shadow-lg"
+                            >
+                                <Utensils size={16} /> {t('common.add')}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -276,6 +289,15 @@ const CalendarHome: React.FC = () => {
                 onSuccess={handleModalSuccess}
                 initialData={modalInitialData}
                 selectedDateStr={modalSelectedDateStr}
+            />
+
+            <MealModal
+                isOpen={isMealModalOpen}
+                onClose={() => setIsMealModalOpen(false)}
+                onSave={async () => {
+                    // Just refresh if needed, but calendar doesn't show meals yet
+                    setIsMealModalOpen(false);
+                }}
             />
         </div>
     );

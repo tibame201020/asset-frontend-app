@@ -8,6 +8,9 @@ import { NotificationProvider } from './contexts/NotificationContext';
 import CalendarHome from './pages/CalendarHome';
 import DepositList from './pages/DepositList';
 import CalcList from './pages/CalcList';
+import ExerciseList from './pages/ExerciseList';
+import HealthDashboard from './pages/HealthDashboard';
+import MealList from './pages/MealList';
 import Settings from './pages/Settings';
 
 const router = createBrowserRouter([
@@ -32,8 +35,20 @@ const router = createBrowserRouter([
         element: <CalcList />
       },
       {
+        path: "exercise/list",
+        element: <ExerciseList />
+      },
+      {
         path: "setting",
         element: <Settings />
+      },
+      {
+        path: "health/dashboard",
+        element: <HealthDashboard />
+      },
+      {
+        path: "meal/list",
+        element: <MealList />
       }
     ]
   }

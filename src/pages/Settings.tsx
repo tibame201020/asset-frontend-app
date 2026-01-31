@@ -10,36 +10,37 @@ import {
 } from 'lucide-react';
 
 const Settings: React.FC = () => {
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { theme, setTheme } = useTheme();
     const { notify, confirm, position, setPosition } = useNotification();
 
     const positions: { id: ToastPosition; label: string }[] = [
-        { id: 'top-start', label: 'Top Left' },
-        { id: 'top-center', label: 'Top Center' },
-        { id: 'top-end', label: 'Top Right' },
-        { id: 'bottom-start', label: 'Bottom Left' },
-        { id: 'bottom-center', label: 'Bottom Center' },
-        { id: 'bottom-end', label: 'Bottom Right' },
+        { id: 'top-start', label: t('settings.ui.positions.topStart') || 'Top Left' },
+        { id: 'top-center', label: t('settings.ui.positions.topCenter') || 'Top Center' },
+        { id: 'top-end', label: t('settings.ui.positions.topEnd') || 'Top Right' },
+        { id: 'bottom-start', label: t('settings.ui.positions.bottomStart') || 'Bottom Left' },
+        { id: 'bottom-center', label: t('settings.ui.positions.bottomCenter') || 'Bottom Center' },
+        { id: 'bottom-end', label: t('settings.ui.positions.bottomEnd') || 'Bottom Right' },
     ];
+
 
     const handleDelete = (target: string, displayName: string) => {
         confirm({
-            title: 'Delete Data',
-            message: `Are you sure you want to delete all ${displayName} data? This action cannot be undone.`,
-            confirmText: 'Yes, Delete All',
-            cancelText: 'Cancel',
+            title: t('settings.danger.confirmTitle'),
+            message: t('settings.danger.confirmMessage', { displayName }),
+            confirmText: t('settings.danger.confirmButton'),
+            cancelText: t('common.cancel'),
             onConfirm: async () => {
                 try {
                     const res = await api.post('/setting/del', { target });
                     if (res.data === true) {
-                        notify('success', `All ${displayName} data deleted successfully.`);
+                        notify('success', t('settings.danger.success', { displayName }));
                     } else {
-                        notify('error', `Failed to delete ${displayName} data (Backend returned false).`);
+                        notify('error', t('settings.danger.error', { displayName }));
                     }
                 } catch (e) {
                     console.error(e);
-                    notify('error', `Failed to delete ${displayName} data.`);
+                    notify('error', t('settings.danger.error', { displayName }));
                 }
             }
         });
@@ -51,7 +52,7 @@ const Settings: React.FC = () => {
     };
 
     // --- Export / Import Logic ---
-    const [exportType, setExportType] = React.useState<'all' | 'calendar' | 'deposit' | 'calc'>('all');
+    // --- Export / Import Logic ---
     const [importFile, setImportFile] = React.useState<File | null>(null);
     const [importKey, setImportKey] = React.useState('');
     const [isExporting, setIsExporting] = React.useState(false);
@@ -72,16 +73,7 @@ const Settings: React.FC = () => {
         setIsExporting(true);
         try {
             const res = await api.get('/setting/export');
-            let dataToExport = res.data;
-
-            // Filter data if not 'all'
-            if (exportType === 'calendar') {
-                dataToExport = { calendarEvents: dataToExport.calendarEvents };
-            } else if (exportType === 'deposit') {
-                dataToExport = { transLogs: dataToExport.transLogs };
-            } else if (exportType === 'calc') {
-                dataToExport = { calcConfigs: dataToExport.calcConfigs };
-            }
+            const dataToExport = res.data;
 
             const key = generateKey();
             const jsonStr = JSON.stringify(dataToExport);
@@ -92,25 +84,25 @@ const Settings: React.FC = () => {
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `backup_${exportType}_${new Date().toISOString().split('T')[0]}.dat`;
+            link.download = `backup_all_${new Date().toISOString().split('T')[0]}.dat`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
 
             confirm({
-                title: 'Export Successful',
-                message: `Data exported successfully. IMPORTANT: Your 5-digit decryption key is: ${key}. Please save it, you will need it to import this file.`,
-                confirmText: 'Copy Key',
-                cancelText: 'Close',
+                title: t('settings.backup.export.successTitle'),
+                message: t('settings.backup.export.successMessage', { key }),
+                confirmText: t('settings.backup.export.copyKey'),
+                cancelText: t('settings.ui.close'),
                 onConfirm: () => {
                     navigator.clipboard.writeText(key);
-                    notify('success', 'Key copied to clipboard');
+                    notify('success', t('settings.backup.export.keyCopied'));
                 }
             });
         } catch (e) {
             console.error(e);
-            notify('error', 'Export failed');
+            notify('error', t('settings.backup.export.error'));
         } finally {
             setIsExporting(false);
         }
@@ -118,7 +110,7 @@ const Settings: React.FC = () => {
 
     const handleImport = async () => {
         if (!importFile || importKey.length !== 5) {
-            notify('warning', 'Please select a file and enter a 5-digit key');
+            notify('warning', t('settings.backup.import.validationError'));
             return;
         }
 
@@ -133,12 +125,12 @@ const Settings: React.FC = () => {
                     const data = JSON.parse(decrypted);
 
                     await api.post('/setting/import', data);
-                    notify('success', 'Data imported successfully! Please refresh if changes are not visible.');
+                    notify('success', t('settings.backup.import.success'));
                     setImportFile(null);
                     setImportKey('');
                 } catch (err) {
                     console.error(err);
-                    notify('error', 'Import failed: Invalid key or corrupted file');
+                    notify('error', t('settings.backup.import.keyError'));
                 } finally {
                     setIsImporting(false);
                 }
@@ -146,7 +138,7 @@ const Settings: React.FC = () => {
             reader.readAsText(importFile);
         } catch (e) {
             console.error(e);
-            notify('error', 'Import failed');
+            notify('error', t('settings.backup.import.error'));
             setIsImporting(false);
         }
     };
@@ -163,7 +155,7 @@ const Settings: React.FC = () => {
                             <div className="p-2 bg-primary/10 rounded text-primary">
                                 <Globe size={20} />
                             </div>
-                            <h2 className="text-lg font-bold">Language</h2>
+                            <h2 className="text-lg font-bold">{t('settings.sections.language')}</h2>
                         </div>
 
                         <div className="card bg-base-100 border border-base-300 shadow-sm overflow-hidden">
@@ -174,7 +166,7 @@ const Settings: React.FC = () => {
                                 >
                                     <span className="text-xl">🇺🇸</span>
                                     <span className="font-bold">English</span>
-                                    {i18n.language === 'en' && <div className="badge badge-primary badge-xs">Active</div>}
+                                    {i18n.language === 'en' && <div className="badge badge-primary badge-xs">{t('settings.ui.active')}</div>}
                                 </button>
                                 <button
                                     onClick={() => changeLanguage('tw')}
@@ -182,7 +174,7 @@ const Settings: React.FC = () => {
                                 >
                                     <span className="text-xl">🇹🇼</span>
                                     <span className="font-bold">繁體中文</span>
-                                    {i18n.language === 'tw' && <div className="badge badge-primary badge-xs">使用中</div>}
+                                    {i18n.language === 'tw' && <div className="badge badge-primary badge-xs">{t('settings.ui.active')}</div>}
                                 </button>
                             </div>
                         </div>
@@ -197,10 +189,10 @@ const Settings: React.FC = () => {
                                 <div className="p-2 bg-secondary/10 rounded text-secondary">
                                     <Palette size={20} />
                                 </div>
-                                <h2 className="text-lg font-bold">Theme & Appearance</h2>
+                                <h2 className="text-lg font-bold">{t('settings.sections.theme')}</h2>
                             </div>
                             <span className="text-xs font-mono opacity-50 bg-base-300 px-2 py-1 rounded">
-                                {themes.length} Themes Available
+                                {t('settings.ui.themesAvailable', { count: themes.length })}
                             </span>
                         </div>
 
@@ -247,7 +239,7 @@ const Settings: React.FC = () => {
                             <div className="p-2 bg-accent/10 rounded text-accent">
                                 <LayoutTemplate size={20} />
                             </div>
-                            <h2 className="text-lg font-bold">Notification Position</h2>
+                            <h2 className="text-lg font-bold">{t('settings.sections.notifications')}</h2>
                         </div>
 
                         <div className="card bg-base-200/50 border border-base-200 p-6">
@@ -257,7 +249,7 @@ const Settings: React.FC = () => {
                                         key={pos.id}
                                         onClick={() => {
                                             setPosition(pos.id);
-                                            notify('info', `Notification position updated`);
+                                            notify('info', t('settings.ui.notificationUpdated'));
                                         }}
                                         className={`
                                             rounded border-2 transition-all flex items-center justify-center p-2
@@ -277,9 +269,10 @@ const Settings: React.FC = () => {
                                     <span className="text-6xl font-black">UI</span>
                                 </div>
                             </div>
-                            <p className="text-center text-xs opacity-50 mt-4">Select where toast notifications appear on your screen</p>
+                            <p className="text-center text-xs opacity-50 mt-4">{t('settings.ui.toastHint')}</p>
                         </div>
                     </section>
+
                 </div>
 
                 {/* Sidebar Column */}
@@ -289,31 +282,21 @@ const Settings: React.FC = () => {
                         <div className="card-body p-5">
                             <div className="flex items-center gap-3 mb-4 text-primary">
                                 <FileJson size={24} />
-                                <h3 className="font-bold text-lg">Backup & Restore</h3>
+                                <h3 className="font-bold text-lg">{t('settings.sections.backup')}</h3>
                             </div>
 
                             {/* Export Sub-section */}
-                            <div className="space-y-3 mb-6">
+                            <div className="space-y-3 mb-1">
                                 <h4 className="text-xs font-bold uppercase opacity-50 flex items-center gap-2">
-                                    <Download size={12} /> Export Data
+                                    <Download size={12} /> {t('settings.backup.export.title')}
                                 </h4>
-                                <select
-                                    className="select select-bordered select-sm w-full"
-                                    value={exportType}
-                                    onChange={(e) => setExportType(e.target.value as any)}
-                                >
-                                    <option value="all">All Data</option>
-                                    <option value="calendar">Calendar Only</option>
-                                    <option value="deposit">Deposit (Accounting) Only</option>
-                                    <option value="calc">Calculation Only</option>
-                                </select>
                                 <button
                                     onClick={handleExport}
                                     disabled={isExporting}
                                     className="btn btn-primary btn-sm w-full gap-2"
                                 >
                                     {isExporting ? <span className="loading loading-spinner loading-xs"></span> : <Download size={14} />}
-                                    Export to File
+                                    {t('settings.backup.export.button')}
                                 </button>
                             </div>
 
@@ -322,7 +305,7 @@ const Settings: React.FC = () => {
                             {/* Import Sub-section */}
                             <div className="space-y-4 pt-2">
                                 <h4 className="text-xs font-bold uppercase opacity-50 flex items-center gap-2">
-                                    <Upload size={12} /> Import Data
+                                    <Upload size={12} /> {t('settings.backup.import.title')}
                                 </h4>
                                 <div className="space-y-2">
                                     <input
@@ -338,7 +321,7 @@ const Settings: React.FC = () => {
                                         <input
                                             type="text"
                                             maxLength={5}
-                                            placeholder="5-digit Key"
+                                            placeholder={t('settings.backup.import.placeholderKey')}
                                             value={importKey}
                                             onChange={(e) => setImportKey(e.target.value.replace(/\D/g, ''))}
                                             className="input input-bordered input-sm w-full pl-10"
@@ -351,10 +334,10 @@ const Settings: React.FC = () => {
                                     className="btn btn-secondary btn-sm w-full gap-2"
                                 >
                                     {isImporting ? <span className="loading loading-spinner loading-xs"></span> : <Upload size={14} />}
-                                    Import from File
+                                    {t('settings.backup.import.button')}
                                 </button>
                                 <p className="text-[10px] opacity-40 leading-tight">
-                                    Importing will overwrite existing data of the same type.
+                                    {t('settings.backup.import.warning')}
                                 </p>
                             </div>
                         </div>
@@ -365,23 +348,23 @@ const Settings: React.FC = () => {
                         <div className="card-body p-5">
                             <div className="flex items-center gap-3 mb-4 text-primary">
                                 <Shield size={24} />
-                                <h3 className="font-bold text-lg">System Info</h3>
+                                <h3 className="font-bold text-lg">{t('settings.sections.system')}</h3>
                             </div>
 
                             <div className="space-y-3">
                                 <div className="flex justify-between items-center text-sm p-3 bg-base-200/50 rounded">
-                                    <span className="opacity-70">Version</span>
+                                    <span className="opacity-70">{t('settings.system.version')}</span>
                                     <span className="font-mono font-bold">v2.0.0 (React)</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm p-3 bg-base-200/50 rounded">
-                                    <span className="opacity-70">Environment</span>
+                                    <span className="opacity-70">{t('settings.system.environment')}</span>
                                     <div className="badge badge-success badge-sm gap-1">
                                         <div className="w-1.5 h-1.5 rounded bg-white"></div>
-                                        Production
+                                        {t('settings.system.production')}
                                     </div>
                                 </div>
                                 <div className="flex justify-between items-center text-sm p-3 bg-base-200/50 rounded">
-                                    <span className="opacity-70">Region</span>
+                                    <span className="opacity-70">{t('settings.system.region')}</span>
                                     <span className="font-mono">{i18n.language.toUpperCase()}</span>
                                 </div>
                             </div>
@@ -393,11 +376,11 @@ const Settings: React.FC = () => {
                         <div className="card-body p-5">
                             <div className="flex items-center gap-3 mb-4 text-error">
                                 <AlertTriangle size={24} />
-                                <h3 className="font-bold text-lg">Danger Zone</h3>
+                                <h3 className="font-bold text-lg">{t('settings.sections.danger')}</h3>
                             </div>
 
                             <p className="text-xs text-error/70 mb-4 font-medium leading-relaxed">
-                                Actions here will permanently delete data from the database. This cannot be undone.
+                                {t('settings.danger.warning')}
                             </p>
 
                             <div className="space-y-3">
@@ -405,19 +388,43 @@ const Settings: React.FC = () => {
                                     onClick={() => handleDelete('deposit', 'Deposit')}
                                     className="btn btn-outline btn-error btn-sm w-full justification-start gap-3 hover:bg-error hover:text-white"
                                 >
-                                    <Trash2 size={14} /> Wipe Deposit Data
+                                    <Trash2 size={14} /> {t('settings.danger.wipeDeposit')}
                                 </button>
                                 <button
                                     onClick={() => handleDelete('calendar', 'Calendar')}
                                     className="btn btn-outline btn-error btn-sm w-full justification-start gap-3 hover:bg-error hover:text-white"
                                 >
-                                    <Trash2 size={14} /> Wipe Calendar Data
+                                    <Trash2 size={14} /> {t('settings.danger.wipeCalendar')}
                                 </button>
                                 <button
                                     onClick={() => handleDelete('calc', 'Calculation')}
                                     className="btn btn-outline btn-error btn-sm w-full justification-start gap-3 hover:bg-error hover:text-white"
                                 >
-                                    <Trash2 size={14} /> Wipe Calculation Data
+                                    <Trash2 size={14} /> {t('settings.danger.wipeCalc')}
+                                </button>
+                                <button
+                                    onClick={() => handleDelete('exercise', 'Exercise Logs')}
+                                    className="btn btn-outline btn-error btn-sm w-full justification-start gap-3 hover:bg-error hover:text-white"
+                                >
+                                    <Trash2 size={14} /> {t('settings.danger.wipeExercise')}
+                                </button>
+                                <button
+                                    onClick={() => handleDelete('exercisetype', 'Exercise Types')}
+                                    className="btn btn-outline btn-error btn-sm w-full justification-start gap-3 hover:bg-error hover:text-white"
+                                >
+                                    <Trash2 size={14} /> {t('settings.danger.wipeExerciseType')}
+                                </button>
+                                <button
+                                    onClick={() => handleDelete('meal', 'Meal Logs')}
+                                    className="btn btn-outline btn-error btn-sm w-full justification-start gap-3 hover:bg-error hover:text-white"
+                                >
+                                    <Trash2 size={14} /> {t('settings.danger.wipeMeal')}
+                                </button>
+                                <button
+                                    onClick={() => handleDelete('mealtype', 'Meal Types')}
+                                    className="btn btn-outline btn-error btn-sm w-full justification-start gap-3 hover:bg-error hover:text-white"
+                                >
+                                    <Trash2 size={14} /> {t('settings.danger.wipeMealType')}
                                 </button>
                             </div>
                         </div>
