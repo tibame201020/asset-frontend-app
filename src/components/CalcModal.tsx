@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { X, Save } from 'lucide-react';
 import { CALC_KEYS, CALC_PURPOSES, type Calc } from '../types/calc';
 
@@ -12,6 +13,7 @@ interface CalcModalProps {
 
 const CalcModal: React.FC<CalcModalProps> = ({ isOpen, onClose, onSave, initialData }) => {
     const { register, handleSubmit, reset } = useForm<Calc>();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (isOpen) {
@@ -44,7 +46,7 @@ const CalcModal: React.FC<CalcModalProps> = ({ isOpen, onClose, onSave, initialD
                         <div className="p-2 bg-primary/10 rounded text-primary">
                             <Save size={20} />
                         </div>
-                        {initialData ? 'Edit Calculation' : 'Add Calculation'}
+                        {initialData ? t('calculation.modal.editTitle') : t('calculation.modal.addTitle')}
                     </h3>
                     <button
                         onClick={onClose}

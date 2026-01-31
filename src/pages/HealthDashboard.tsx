@@ -68,7 +68,7 @@ const HealthDashboard: React.FC = () => {
 
         } catch (e) {
             console.error(e);
-            notify('error', t('meal.confirm.fetchError') || 'Failed to fetch data');
+            notify('error', t('common.fetchError'));
         }
     };
 
@@ -211,7 +211,7 @@ const HealthDashboard: React.FC = () => {
                             end: format(endOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd')
                         })}
                     >
-                        {t('calendar.thisWeek') || 'This Week'}
+                        {t('calendar.thisWeek')}
                     </button>
                 </div>
             </div>

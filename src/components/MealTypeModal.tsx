@@ -166,7 +166,7 @@ const MealTypeModal: React.FC<MealTypeModalProps> = ({ isOpen, onClose, onTypesC
                 </div>
 
                 <div className="modal-action p-4 bg-base-200/50 border-t border-base-300">
-                    <button className="btn btn-ghost btn-sm px-6 font-bold" onClick={onClose}>{t('common.close') || 'Close'}</button>
+                    <button className="btn btn-ghost btn-sm px-6 font-bold" onClick={onClose}>{t('common.close')}</button>
                 </div>
             </div>
             <div className="modal-backdrop" onClick={onClose}></div>

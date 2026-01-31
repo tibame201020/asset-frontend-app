@@ -15,12 +15,12 @@ const Settings: React.FC = () => {
     const { notify, confirm, position, setPosition } = useNotification();
 
     const positions: { id: ToastPosition; label: string }[] = [
-        { id: 'top-start', label: t('settings.ui.positions.topStart') || 'Top Left' },
-        { id: 'top-center', label: t('settings.ui.positions.topCenter') || 'Top Center' },
-        { id: 'top-end', label: t('settings.ui.positions.topEnd') || 'Top Right' },
-        { id: 'bottom-start', label: t('settings.ui.positions.bottomStart') || 'Bottom Left' },
-        { id: 'bottom-center', label: t('settings.ui.positions.bottomCenter') || 'Bottom Center' },
-        { id: 'bottom-end', label: t('settings.ui.positions.bottomEnd') || 'Bottom Right' },
+        { id: 'top-start', label: t('settings.ui.positions.topStart') },
+        { id: 'top-center', label: t('settings.ui.positions.topCenter') },
+        { id: 'top-end', label: t('settings.ui.positions.topEnd') },
+        { id: 'bottom-start', label: t('settings.ui.positions.bottomStart') },
+        { id: 'bottom-center', label: t('settings.ui.positions.bottomCenter') },
+        { id: 'bottom-end', label: t('settings.ui.positions.bottomEnd') },
     ];
 
 

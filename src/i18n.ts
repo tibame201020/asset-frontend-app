@@ -19,16 +19,72 @@ const resources = {
                 "deleteSuccess": "Deleted successfully",
                 "deleteError": "Delete failed",
                 "fetchError": "Failed to fetch data",
-                "confirm": "Confirm"
+                "confirm": "Confirm",
+                "close": "Close"
             },
             "nav": {
                 "calendar": "Calendar",
                 "deposit": "Accounting",
-                "calculation": "Loan Calculation",
+                "calculation": "Asset Calculation",
                 "exercise": "Exercise Tracking",
                 "mealRecords": "Meal Records",
                 "health": "Health Dashboard",
                 "settings": "Settings"
+            },
+            "calculation": {
+                "subtitle": "Asset Calculation",
+                "tabs": {
+                    "record": "Record",
+                    "analysis": "Analysis"
+                },
+                "chart": {
+                    "assets": "Assets",
+                    "expense": "Expense",
+                    "income": "Income",
+                    "balance": "Balance"
+                },
+                "cycles": {
+                    "monthly": "Monthly",
+                    "weekly": "Weekly",
+                    "daily": "Daily"
+                },
+                "purposes": {
+                    "food": "Food",
+                    "transport": "Transport",
+                    "rent": "Rent",
+                    "entertainment": "Entertainment",
+                    "salary": "Salary",
+                    "deposit": "Fixed Deposit",
+                    "other": "Other"
+                },
+                "modal": {
+                    "addTitle": "Add Calculation",
+                    "editTitle": "Edit Calculation",
+                    "batchTitle": "Batch Entry Mode",
+                    "batchSubtitle": "Add multiple configurations at once",
+                    "fields": {
+                        "cycle": "Cycle",
+                        "value": "Value",
+                        "purpose": "Purpose",
+                        "description": "Description"
+                    },
+                    "placeholders": {
+                        "value": "Amount",
+                        "description": "e.g. Lunch..."
+                    },
+                    "buttons": {
+                        "addRow": "Add Row",
+                        "batchTitle": "Batch Add",
+                        "reset": "Reset",
+                        "saveAll": "Save All",
+                        "save": "Save"
+                    }
+                },
+                "stats": {
+                    "totalIncome": "Total Income (Mo)",
+                    "totalExpense": "Total Expense (Mo)",
+                    "balance": "Balance (Mo)"
+                }
             },
             "exercise": {
                 "subtitle": "Activity Tracking & Analysis",
@@ -140,7 +196,9 @@ const resources = {
                     "start": "Start",
                     "end": "End",
                     "newRecord": "New Record"
-                }
+                },
+                "thisWeek": "This Week",
+                "thisMonth": "This Month"
             },
             "deposit": {
                 "subtitle": "Transaction Tracking & Analysis",
@@ -282,7 +340,7 @@ const resources = {
                     "warning": "Actions here will permanently delete data from the database. This cannot be undone.",
                     "wipeDeposit": "Wipe Deposit Data",
                     "wipeCalendar": "Wipe Calendar Data",
-                    "calc": "Wipe Calculation Data",
+                    "wipeCalc": "Wipe Calculation Data",
                     "wipeExercise": "Wipe Exercise Logs",
                     "wipeExerciseType": "Wipe Exercise Types",
                     "wipeMeal": "Wipe Meal Logs",
@@ -327,16 +385,72 @@ const resources = {
                 "deleteSuccess": "刪除成功",
                 "deleteError": "刪除失敗",
                 "fetchError": "獲取資料失敗",
-                "confirm": "確認"
+                "confirm": "確認",
+                "close": "關閉"
             },
             "nav": {
                 "calendar": "行事曆",
                 "deposit": "帳務記錄",
-                "calculation": "貸款試算",
+                "calculation": "試算功能",
                 "exercise": "運動記錄",
                 "mealRecords": "餐飲記錄",
                 "health": "健康儀表板",
                 "settings": "系統設定"
+            },
+            "calculation": {
+                "subtitle": "試算功能",
+                "tabs": {
+                    "record": "紀錄",
+                    "analysis": "分析"
+                },
+                "chart": {
+                    "assets": "資產分佈",
+                    "expense": "支出佔比",
+                    "income": "收入佔比",
+                    "balance": "結餘"
+                },
+                "cycles": {
+                    "monthly": "每月",
+                    "weekly": "每週",
+                    "daily": "每日"
+                },
+                "purposes": {
+                    "food": "飲食",
+                    "transport": "交通",
+                    "rent": "租屋",
+                    "entertainment": "娛樂",
+                    "salary": "薪資",
+                    "deposit": "固定存款",
+                    "other": "其他"
+                },
+                "modal": {
+                    "addTitle": "新增試算",
+                    "editTitle": "編輯試算",
+                    "batchTitle": "批量輸入模式",
+                    "batchSubtitle": "一次新增多筆配置",
+                    "fields": {
+                        "cycle": "週期",
+                        "value": "金額",
+                        "purpose": "用途",
+                        "description": "描述"
+                    },
+                    "placeholders": {
+                        "value": "金額",
+                        "description": "例如：午餐..."
+                    },
+                    "buttons": {
+                        "addRow": "新增一行",
+                        "batchTitle": "批量新增",
+                        "reset": "重置",
+                        "saveAll": "儲存全部",
+                        "save": "儲存"
+                    }
+                },
+                "stats": {
+                    "totalIncome": "總收入 (月)",
+                    "totalExpense": "總支出 (月)",
+                    "balance": "結餘 (月)"
+                }
             },
             "exercise": {
                 "subtitle": "活動追蹤與分析",
@@ -426,7 +540,9 @@ const resources = {
                     "start": "開始",
                     "end": "結束",
                     "newRecord": "新增記錄"
-                }
+                },
+                "thisWeek": "本週",
+                "thisMonth": "本月"
             },
             "deposit": {
                 "subtitle": "交易追蹤與分析",
@@ -568,7 +684,7 @@ const resources = {
                     "warning": "此操作將永久從資料庫中刪除數據。此動作無法復原。",
                     "wipeDeposit": "清空帳務數據",
                     "wipeCalendar": "清空行事曆數據",
-                    "calc": "清空試算數據",
+                    "wipeCalc": "清空試算數據",
                     "wipeExercise": "清空運動紀錄",
                     "wipeExerciseType": "清空運動類型",
                     "wipeMeal": "清空餐飲紀錄",

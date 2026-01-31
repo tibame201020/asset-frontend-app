@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     Plus, Edit2, Trash2,
     RotateCcw, List, TrendingUp, TrendingDown,
@@ -39,7 +40,21 @@ const getIconForPurpose = (purpose: string) => {
     }
 };
 
+const getPurposeKey = (purpose: string): string => {
+    switch (purpose) {
+        case '飲食': return 'food';
+        case '交通': return 'transport';
+        case '租屋': return 'rent';
+        case '娛樂': return 'entertainment';
+        case '薪資': return 'salary';
+        case '固定存款': return 'deposit';
+        case '其他': return 'other';
+        default: return 'other';
+    }
+};
+
 const CalcList: React.FC = () => {
+    const { t } = useTranslation();
     const { notify, confirm } = useNotification();
     const [configs, setConfigs] = useState<Calc[]>([]);
 
@@ -141,6 +156,13 @@ const CalcList: React.FC = () => {
         });
     };
 
+    const translateName = (name: string) => {
+        // Try to match purpose
+        const key = getPurposeKey(name);
+        if (key !== 'other' || name === '其他') return t(`calculation.purposes.${key}`);
+        return name;
+    }
+
     const saveBatchConfigs = async (items: Calc[]) => {
         try {
             await api.post('/calc/insert', items);
@@ -241,7 +263,7 @@ const CalcList: React.FC = () => {
                                 cx="50%"
                                 cy="50%"
                                 labelLine={isLargeScreen ? { stroke: 'hsl(var(--bc))', strokeWidth: 1, opacity: 0.3 } : false}
-                                label={isLargeScreen ? ({ name, percent }: any) => `${name} ${(percent * 100).toFixed(1)}%` : false}
+                                label={isLargeScreen ? ({ name, percent }: any) => `${translateName(name)} ${(percent * 100).toFixed(1)}%` : false}
                                 innerRadius={isLargeScreen ? "60%" : "55%"}
                                 outerRadius={isLargeScreen ? "80%" : "75%"}
                                 paddingAngle={4}
@@ -263,7 +285,7 @@ const CalcList: React.FC = () => {
                                     padding: '1rem'
                                 }}
                                 itemStyle={{ color: 'hsl(var(--bc))', fontWeight: 'bold' }}
-                                formatter={(value: any) => [`$${value.toLocaleString()}`, '']}
+                                formatter={(value: any, name: any) => [`$${value.toLocaleString()}`, translateName(name as string)]}
                             />
                         </PieChart>
                     </ResponsiveContainer>
@@ -319,7 +341,7 @@ const CalcList: React.FC = () => {
                                         <div className="flex justify-between items-end">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-3 h-3 rounded shadow-sm" style={{ backgroundColor: color }}></div>
-                                                <span className="text-sm font-bold opacity-80 group-hover:opacity-100 transition-opacity">{item.name}</span>
+                                                <span className="text-sm font-bold opacity-80 group-hover:opacity-100 transition-opacity">{translateName(item.name)}</span>
                                             </div>
                                             <div className="text-right">
                                                 <span className="text-xs font-mono font-bold opacity-50 block leading-none mb-1">{percentage}%</span>
@@ -358,13 +380,13 @@ const CalcList: React.FC = () => {
                         className={`join-item btn btn-xs px-6 border-none gap-2 rounded ${activeTab === 'RECORD' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
                         onClick={() => setActiveTab('RECORD')}
                     >
-                        <List size={14} /> Record
+                        <List size={14} /> {t('calculation.tabs.record')}
                     </button>
                     <button
                         className={`join-item btn btn-xs px-6 border-none gap-2 rounded ${activeTab === 'ANALYSIS' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
                         onClick={() => setActiveTab('ANALYSIS')}
                     >
-                        <BarChart3 size={14} /> Analysis
+                        <BarChart3 size={14} /> {t('calculation.tabs.analysis')}
                     </button>
                 </div>
 
@@ -392,8 +414,8 @@ const CalcList: React.FC = () => {
                                     <List size={20} />
                                 </div>
                                 <div>
-                                    <h2 className="font-bold text-lg">Transactions</h2>
-                                    <p className="text-xs opacity-50">Manage your recurring incomes and expenses</p>
+                                    <h2 className="font-bold text-lg">{t('calculation.subtitle')}</h2>
+                                    <p className="text-xs opacity-50">{t('calculation.modal.batchSubtitle')}</p>
                                 </div>
                             </div>
                             <div className="flex gap-2">
@@ -401,13 +423,13 @@ const CalcList: React.FC = () => {
                                     onClick={() => setIsBatchModalOpen(true)}
                                     className="btn btn-sm btn-ghost gap-2 opacity-70 hover:opacity-100"
                                 >
-                                    <List size={16} /> Batch
+                                    <List size={16} /> {t('calculation.modal.buttons.batchTitle')}
                                 </button>
                                 <button
                                     onClick={() => { setEditingCalc(null); setIsEditModalOpen(true); }}
                                     className="btn btn-sm btn-primary gap-2 shadow-lg shadow-primary/20"
                                 >
-                                    <Plus size={16} /> Add New
+                                    <Plus size={16} /> {t('calculation.modal.buttons.addRow')}
                                 </button>
                             </div>
                         </div>
@@ -416,12 +438,12 @@ const CalcList: React.FC = () => {
                             <table className="table table-pin-rows w-full">
                                 <thead className='sticky top-0 z-20 bg-base-100'>
                                     <tr className="text-xs font-bold uppercase tracking-widest opacity-50 bg-base-200/30 shadow-sm border-b border-base-300">
-                                        <th className="font-normal w-12 text-center">Icon</th>
-                                        <th className="font-normal">Details</th>
-                                        <th className="font-normal">Frequency</th>
-                                        <th className="font-normal text-right">Amount</th>
-                                        <th className="font-normal text-right">Monthly Est.</th>
-                                        <th className="font-normal w-24 text-center">Actions</th>
+                                        <th className="font-normal w-12 text-center">{t('settings.exercise.table.icon')}</th>
+                                        <th className="font-normal">{t('settings.exercise.table.name')}</th>
+                                        <th className="font-normal">{t('calculation.modal.fields.cycle')}</th>
+                                        <th className="font-normal text-right">{t('calculation.modal.fields.value')}</th>
+                                        <th className="font-normal text-right">{t('calculation.stats.balance')}</th>
+                                        <th className="font-normal w-24 text-center">{t('settings.exercise.table.actions')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -436,8 +458,8 @@ const CalcList: React.FC = () => {
                                             </td>
                                             <td>
                                                 <div className="flex flex-col">
-                                                    <span className="font-bold text-sm">{config.description || config.purpose}</span>
-                                                    <span className="text-xs opacity-50">{config.purpose}</span>
+                                                    <span className="font-bold text-sm">{config.description || t(`calculation.purposes.${getPurposeKey(config.purpose)}`)}</span>
+                                                    <span className="text-xs opacity-50">{t(`calculation.purposes.${getPurposeKey(config.purpose)}`)}</span>
                                                 </div>
                                             </td>
                                             <td>
@@ -470,7 +492,7 @@ const CalcList: React.FC = () => {
                             {configs.length === 0 && (
                                 <div className="flex flex-col items-center justify-center py-20 opacity-30 gap-4">
                                     <RotateCcw size={40} strokeWidth={1} />
-                                    <span className="text-sm font-bold uppercase tracking-widest">No Records Found</span>
+                                    <span className="text-sm font-bold uppercase tracking-widest">{t('deposit.table.noRecords')}</span>
                                 </div>
                             )}
                         </div>

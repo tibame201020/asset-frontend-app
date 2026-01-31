@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, Copy, RotateCcw, CheckCircle, X } from 'lucide-react';
 import { type Calc } from '../types/calc';
+import { useTranslation } from 'react-i18next';
 
 interface BatchCalcModalProps {
     isOpen: boolean;
@@ -11,6 +12,7 @@ interface BatchCalcModalProps {
 type DraftCalc = Omit<Calc, 'value'> & { value: number | string };
 
 const BatchCalcModal: React.FC<BatchCalcModalProps> = ({ isOpen, onClose, onSave }) => {
+    const { t } = useTranslation();
     const [newCalcs, setNewCalcs] = useState<DraftCalc[]>([]);
 
     React.useEffect(() => {
@@ -73,8 +75,8 @@ const BatchCalcModal: React.FC<BatchCalcModalProps> = ({ isOpen, onClose, onSave
                             <Plus size={20} />
                         </div>
                         <div>
-                            <h2 className="font-bold text-xl">Batch Entry Mode</h2>
-                            <p className="text-xs opacity-50">Add multiple configurations at once</p>
+                            <h2 className="font-bold text-xl">{t('calculation.modal.batchTitle')}</h2>
+                            <p className="text-xs opacity-50">{t('calculation.modal.batchSubtitle')}</p>
                         </div>
                     </div>
                     <button onClick={onClose} className="btn btn-ghost btn-sm btn-circle"><X size={20} /></button>
@@ -133,28 +135,28 @@ const BatchCalcModal: React.FC<BatchCalcModalProps> = ({ isOpen, onClose, onSave
                         </div>
                     ))}
                     {newCalcs.length === 0 && (
-                        <div className="text-center py-10 opacity-40 italic">No rows added yet. Click 'Add Row' to start.</div>
+                        <div className="text-center py-10 opacity-40 italic">{t('exercise.table.noRecords')}</div>
                     )}
                 </div>
 
                 <div className="flex-none bg-base-200/50 p-6 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex gap-2">
                         <button onClick={addNewCalcRow} className="btn btn-outline btn-sm gap-2">
-                            <Plus size={16} /> Add New Row
+                            <Plus size={16} /> {t('calculation.modal.buttons.addRow')}
                         </button>
                         <button onClick={() => setNewCalcs([])} className="btn btn-ghost btn-sm text-warning gap-2">
-                            <RotateCcw size={16} /> Reset All
+                            <RotateCcw size={16} /> {t('calculation.modal.buttons.reset')}
                         </button>
                     </div>
                     <div className="flex gap-3 w-full md:w-auto">
-                        <button onClick={onClose} className="btn btn-ghost flex-1 md:flex-none">Cancel</button>
+                        <button onClick={onClose} className="btn btn-ghost flex-1 md:flex-none">{t('common.cancel')}</button>
                         <button
                             onClick={handleSave}
                             disabled={newCalcs.length === 0}
                             className="btn btn-primary shadow-lg shadow-primary/20 px-10 flex-1 md:flex-none"
                         >
                             <CheckCircle size={18} className="mr-2" />
-                            Save All Entries
+                            {t('calculation.modal.buttons.saveAll')}
                         </button>
                     </div>
                 </div>
