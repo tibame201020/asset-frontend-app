@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import api from '../services/api';
-import { settingsService } from '../services/settingsService';
+
 import { useTheme, themes } from '../contexts/ThemeContext';
 import { useNotification, type ToastPosition } from '../contexts/NotificationContext';
 import {
     Palette, Globe,
     Trash2, LayoutTemplate, Shield, AlertTriangle, Check,
-    Download, Upload, Key, FileJson, Activity, Calculator
+    Download, Upload, Key, FileJson
 } from 'lucide-react';
 
 const Settings: React.FC = () => {
@@ -52,57 +52,7 @@ const Settings: React.FC = () => {
         localStorage.setItem('language', lang);
     };
 
-    // --- Health Dashboard Settings ---
-    const [balanceGoal, setBalanceGoal] = React.useState('');
-    const [tdeeInputs, setTdeeInputs] = React.useState({
-        gender: 'male',
-        age: 25,
-        weight: 70,
-        height: 170,
-        activity: '1.2'
-    });
-    const [calculatedTDEE, setCalculatedTDEE] = React.useState<number | null>(null);
 
-    React.useEffect(() => {
-        const loadSettings = async () => {
-            try {
-                const settings = await settingsService.getAllSettings();
-                if (settings.balance_goal) {
-                    setBalanceGoal(settings.balance_goal);
-                }
-            } catch (e) {
-                console.error("Failed to load settings", e);
-            }
-        };
-        loadSettings();
-    }, []);
-
-    const handleSaveBalanceGoal = async () => {
-        try {
-            await settingsService.saveSetting('balance_goal', balanceGoal);
-            notify('success', t('common.saveSuccess'));
-        } catch (e) {
-            notify('error', t('common.saveError'));
-        }
-    };
-
-    const calculateTDEE = () => {
-        const { gender, age, weight, height, activity } = tdeeInputs;
-        let bmr = 0;
-        if (gender === 'male') {
-            bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-        } else {
-            bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-        }
-        const tdee = Math.round(bmr * parseFloat(activity));
-        setCalculatedTDEE(tdee);
-    };
-
-    const applyTDEE = () => {
-        if (calculatedTDEE) {
-            setBalanceGoal(calculatedTDEE.toString());
-        }
-    };
 
 
     // --- Export / Import Logic ---
@@ -203,106 +153,7 @@ const Settings: React.FC = () => {
                 {/* Main Settings Column */}
                 <div className="lg:col-span-8 space-y-12">
 
-                    {/* Health Dashboard Section */}
-                    <section className="space-y-4">
-                        <div className="flex items-center gap-2 mb-2">
-                            <div className="p-2 bg-success/10 rounded text-success">
-                                <Activity size={20} />
-                            </div>
-                            <h2 className="text-lg font-bold">{t('settings.sections.health')}</h2>
-                        </div>
 
-                        <div className="card bg-base-100 border border-base-300 shadow-sm p-6 space-y-6">
-                            <div className="flex flex-col gap-2">
-                                <label className="text-sm font-bold opacity-70">{t('settings.health.balanceGoal')}</label>
-                                <div className="flex gap-2">
-                                    <input
-                                        type="number"
-                                        className="input input-bordered flex-1"
-                                        value={balanceGoal}
-                                        onChange={(e) => setBalanceGoal(e.target.value)}
-                                        placeholder="2000"
-                                    />
-                                    <button onClick={handleSaveBalanceGoal} className="btn btn-primary">{t('common.save')}</button>
-                                </div>
-                            </div>
-
-                            <div className="collapse collapse-arrow bg-base-200/50 border border-base-200 rounded-lg">
-                                <input type="checkbox" />
-                                <div className="collapse-title font-bold text-sm flex items-center gap-2">
-                                    <Calculator size={16} />
-                                    {t('settings.health.calculateTDEE')}
-                                </div>
-                                <div className="collapse-content space-y-4 pt-2">
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="form-control">
-                                            <label className="label"><span className="label-text">{t('settings.health.gender')}</span></label>
-                                            <select
-                                                className="select select-bordered select-sm"
-                                                value={tdeeInputs.gender}
-                                                onChange={(e) => setTdeeInputs({ ...tdeeInputs, gender: e.target.value })}
-                                            >
-                                                <option value="male">{t('settings.health.male')}</option>
-                                                <option value="female">{t('settings.health.female')}</option>
-                                            </select>
-                                        </div>
-                                        <div className="form-control">
-                                            <label className="label"><span className="label-text">{t('settings.health.age')}</span></label>
-                                            <input
-                                                type="number"
-                                                className="input input-bordered input-sm"
-                                                value={tdeeInputs.age}
-                                                onChange={(e) => setTdeeInputs({ ...tdeeInputs, age: parseInt(e.target.value) || 0 })}
-                                            />
-                                        </div>
-                                        <div className="form-control">
-                                            <label className="label"><span className="label-text">{t('settings.health.weight')}</span></label>
-                                            <input
-                                                type="number"
-                                                className="input input-bordered input-sm"
-                                                value={tdeeInputs.weight}
-                                                onChange={(e) => setTdeeInputs({ ...tdeeInputs, weight: parseFloat(e.target.value) || 0 })}
-                                            />
-                                        </div>
-                                        <div className="form-control">
-                                            <label className="label"><span className="label-text">{t('settings.health.height')}</span></label>
-                                            <input
-                                                type="number"
-                                                className="input input-bordered input-sm"
-                                                value={tdeeInputs.height}
-                                                onChange={(e) => setTdeeInputs({ ...tdeeInputs, height: parseFloat(e.target.value) || 0 })}
-                                            />
-                                        </div>
-                                        <div className="form-control col-span-2">
-                                            <label className="label"><span className="label-text">{t('settings.health.activity')}</span></label>
-                                            <select
-                                                className="select select-bordered select-sm w-full"
-                                                value={tdeeInputs.activity}
-                                                onChange={(e) => setTdeeInputs({ ...tdeeInputs, activity: e.target.value })}
-                                            >
-                                                <option value="1.2">{t('settings.health.sedentary')}</option>
-                                                <option value="1.375">{t('settings.health.light')}</option>
-                                                <option value="1.55">{t('settings.health.moderate')}</option>
-                                                <option value="1.725">{t('settings.health.active')}</option>
-                                                <option value="1.9">{t('settings.health.veryActive')}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-4 pt-2">
-                                        <button className="btn btn-sm btn-accent" onClick={calculateTDEE}>{t('settings.health.calculate')}</button>
-                                        {calculatedTDEE && (
-                                            <div className="flex items-center gap-4 flex-1 justify-end animate-in fade-in slide-in-from-left-2">
-                                                <span className="font-mono font-bold text-lg text-primary">{t('settings.health.result', { tdee: calculatedTDEE })}</span>
-                                                <button className="btn btn-sm btn-ghost text-primary" onClick={applyTDEE}>{t('settings.health.apply')}</button>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <div className="divider opacity-50"></div>
 
                     {/* Language Section */}
                     <section className="space-y-4">

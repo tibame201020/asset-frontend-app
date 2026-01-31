@@ -7,6 +7,7 @@ import { exerciseService, type ExerciseLog, type ExerciseType } from '../service
 import { settingsService } from '../services/settingsService';
 import MealModal from '../components/MealModal';
 import ExerciseModal from '../components/ExerciseModal';
+import GoalSettingModal from '../components/GoalSettingModal';
 import { format, startOfDay, endOfDay, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from 'date-fns';
 import { useNotification } from '../contexts/NotificationContext';
 import {
@@ -54,6 +55,7 @@ const HealthDashboard: React.FC = () => {
 
     const [isMealModalOpen, setIsMealModalOpen] = useState(false);
     const [isExerciseModalOpen, setIsExerciseModalOpen] = useState(false);
+    const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
     const [editingMeal, setEditingMeal] = useState<MealLog | null>(null);
     const [editingExercise, setEditingExercise] = useState<ExerciseLog | null>(null);
     const [chartDays, setChartDays] = useState<Date[]>([]);
@@ -242,9 +244,17 @@ const HealthDashboard: React.FC = () => {
 
                         <div className="w-px h-10 bg-base-content/10"></div>
 
-                        {/* Balance */}
                         <div className="flex items-center gap-6">
-                            <TrendingUp size={28} className={balance > 0 ? 'text-accent' : 'text-success'} />
+                            <div className="relative">
+                                <TrendingUp size={28} className={balance > 0 ? 'text-accent' : 'text-success'} />
+                                <button
+                                    onClick={() => setIsGoalModalOpen(true)}
+                                    className={`absolute -top-1 -right-5 w-5 h-5 ${balanceGoal ? 'bg-accent text-accent-content' : 'bg-base-300 text-base-content'} rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md z-10`}
+                                >
+                                    {/* Use a cog icon or a different visual indicator for settings */}
+                                    <span className="text-[10px] font-bold">set</span>
+                                </button>
+                            </div>
                             <div className="flex flex-col">
                                 <span className="text-xs font-black uppercase tracking-widest opacity-40 mb-1">{t('meal.dashboard.balance')}</span>
                                 {loading ? (
@@ -434,6 +444,12 @@ const HealthDashboard: React.FC = () => {
                 onSave={handleSaveExercise}
                 initialData={editingExercise}
                 exerciseTypes={exerciseTypes}
+            />
+            <GoalSettingModal
+                isOpen={isGoalModalOpen}
+                onClose={() => setIsGoalModalOpen(false)}
+                currentGoal={balanceGoal?.toString() || ''}
+                onSaveSuccess={(newGoal) => setBalanceGoal(parseFloat(newGoal))}
             />
         </div >
     );
