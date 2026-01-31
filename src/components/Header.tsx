@@ -83,7 +83,7 @@ const Header: React.FC = () => {
 
                 {/* Language Switcher */}
                 <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar placeholder border border-base-300">
+                    <div tabIndex={0} role="button" className="btn btn-sm rounded placeholder bg-neutral border border-base-300">
                         <div className="bg-neutral text-neutral-content rounded w-8">
                             <span className="text-xs">{i18n.language.toUpperCase()}</span>
                         </div>
