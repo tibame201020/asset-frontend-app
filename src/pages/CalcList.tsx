@@ -231,7 +231,7 @@ const CalcList: React.FC = () => {
         currentData = [...currentData].sort((a, b) => b.value - a.value);
 
         return (
-            <div className="min-h-full h-auto lg:h-full w-full bg-base-100/30 rounded-3xl p-4 lg:p-10 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch overflow-visible lg:overflow-hidden backdrop-blur-sm">
+            <div className="flex-grow min-h-0 h-full w-full bg-base-100/30 rounded-2xl p-2 lg:p-4 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-4 lg:gap-8 items-stretch overflow-hidden backdrop-blur-sm">
                 {/* Left: Chart Pane */}
                 <div className="hidden lg:flex w-full lg:w-3/5 lg:h-full lg:flex-grow relative items-center justify-center min-h-0">
                     <ResponsiveContainer width="100%" height="100%" key={activeChartTab}>
@@ -284,7 +284,7 @@ const CalcList: React.FC = () => {
                 </div>
 
                 {/* Right: Data Breakdown Pane */}
-                <div className="w-full lg:w-2/5 flex flex-col h-auto lg:h-full overflow-visible lg:overflow-hidden border-t lg:border-t-0 lg:border-l border-base-content/5 pt-4 lg:pt-0 lg:pl-6">
+                <div className="w-full lg:w-2/5 flex flex-col h-auto lg:h-full overflow-hidden border-t lg:border-t-0 lg:border-l border-base-content/5 pt-2 lg:pt-0 lg:pl-6">
                     {/* Mobile Tab Switcher */}
                     <div className="lg:hidden mb-4 flex justify-center">
                         <div className="join bg-base-200/50 p-1 rounded-2xl border border-base-300 w-full justify-center">
@@ -349,22 +349,22 @@ const CalcList: React.FC = () => {
     };
 
     return (
-        <div className="h-full flex flex-col gap-6 animate-in fade-in duration-700">
+        <div className="h-full flex flex-col gap-3 animate-in fade-in duration-700 overflow-hidden">
             {/* Top Unified Dashboard Bar */}
-            <div className="bg-base-100/50 backdrop-blur-md p-6 rounded-3xl border border-base-200/50 shadow-xl flex flex-col xl:flex-row items-center gap-8 shrink-0 transition-all">
+            <div className="bg-base-100/50 backdrop-blur-md p-2 rounded-2xl border border-base-200/50 shadow-lg flex flex-col xl:flex-row items-center gap-4 shrink-0 transition-all">
                 {/* Left: Tabs */}
-                <div className="join join-horizontal bg-base-300/50 p-1.5 rounded-full shrink-0">
+                <div className="join join-horizontal bg-base-300/50 p-1 rounded-full shrink-0">
                     <button
-                        className={`join-item btn btn-sm px-6 border-none gap-2 rounded-full ${activeTab === 'RECORD' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
+                        className={`join-item btn btn-xs px-6 border-none gap-2 rounded-full ${activeTab === 'RECORD' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
                         onClick={() => setActiveTab('RECORD')}
                     >
-                        <List size={16} /> Record
+                        <List size={14} /> Record
                     </button>
                     <button
-                        className={`join-item btn btn-sm px-6 border-none gap-2 rounded-full ${activeTab === 'ANALYSIS' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
+                        className={`join-item btn btn-xs px-6 border-none gap-2 rounded-full ${activeTab === 'ANALYSIS' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
                         onClick={() => setActiveTab('ANALYSIS')}
                     >
-                        <BarChart3 size={16} /> Analysis
+                        <BarChart3 size={14} /> Analysis
                     </button>
                 </div>
 
@@ -373,20 +373,20 @@ const CalcList: React.FC = () => {
 
                 {/* Right: Stats Stats */}
                 {/* Right: Stats Stats */}
-                <div className="flex items-center gap-6 px-4 py-2 bg-base-200/30 rounded-2xl border border-base-300/50 w-full xl:w-auto justify-between xl:justify-start overflow-x-auto custom-scrollbar">
-                    {renderStatItem("Est. Income", summary.totalIncome, <TrendingUp size={16} />, 'success')}
-                    <div className="w-px h-6 bg-base-content/10 flex-shrink-0"></div>
-                    {renderStatItem("Est. Expense", summary.totalExpense, <TrendingDown size={16} />, 'error')}
-                    <div className="w-px h-6 bg-base-content/10 flex-shrink-0"></div>
-                    {renderStatItem("Net Balance", summary.balance, <Wallet size={16} />, 'primary')}
+                <div className="flex items-center gap-4 px-3 py-1.5 bg-base-200/30 rounded-xl border border-base-300/50 w-full xl:w-auto justify-between xl:justify-start overflow-x-auto custom-scrollbar">
+                    {renderStatItem("Est. Income", summary.totalIncome, <TrendingUp size={14} />, 'success')}
+                    <div className="w-px h-4 bg-base-content/10 flex-shrink-0"></div>
+                    {renderStatItem("Est. Expense", summary.totalExpense, <TrendingDown size={14} />, 'error')}
+                    <div className="w-px h-4 bg-base-content/10 flex-shrink-0"></div>
+                    {renderStatItem("Net Balance", summary.balance, <Wallet size={14} />, 'primary')}
                 </div>
             </div>
 
             {/* Main Content Area */}
             <div className="flex-grow min-h-0 flex flex-col">
                 {activeTab === 'RECORD' ? (
-                    <div className="card bg-base-100/30 backdrop-blur-sm shadow-xl border border-base-300 flex-grow flex flex-col overflow-hidden rounded-3xl">
-                        <div className="p-6 border-b border-base-200/50 flex flex-col sm:flex-row justify-between items-center bg-base-100/50 sticky top-0 z-20 gap-4">
+                    <div className="card bg-base-100/30 backdrop-blur-sm shadow-xl border border-base-300 flex-grow flex flex-col overflow-hidden rounded-2xl">
+                        <div className="p-3 border-b border-base-200/50 flex flex-col sm:flex-row justify-between items-center bg-base-100/50 sticky top-0 z-20 gap-2">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 bg-primary/10 text-primary rounded-lg">
                                     <List size={20} />
@@ -476,7 +476,7 @@ const CalcList: React.FC = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex-grow flex flex-col min-h-0 overflow-y-auto lg:overflow-hidden">
+                    <div className="flex-grow flex flex-col min-h-0 overflow-hidden">
                         {renderDetailedAnalysis()}
                     </div>
                 )}

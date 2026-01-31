@@ -136,14 +136,14 @@ const DepositList: React.FC = () => {
     const totalExpense = filteredLogs.filter(l => l.type === '支出' || l.type === 'Expense').reduce((acc, c) => acc + c.value, 0);
 
     return (
-        <div className="h-full flex flex-col gap-6 animate-in fade-in duration-500">
+        <div className="h-full flex flex-col gap-3 animate-in fade-in duration-500 overflow-hidden">
             {/* Filter & Stats Bar */}
-            <div className="flex flex-col xl:flex-row items-center gap-4 bg-base-100/50 backdrop-blur-md p-4 rounded-3xl border border-base-300 shadow-xl">
+            <div className="flex flex-col xl:flex-row items-center gap-2 bg-base-100/50 backdrop-blur-md p-2 rounded-2xl border border-base-300 shadow-lg shrink-0">
                 <div className="flex flex-wrap items-center gap-4 flex-grow w-full xl:w-auto">
                     {/* Date Range Group */}
-                    <div className="flex items-center gap-2 bg-base-200/50 p-2 rounded-2xl border border-base-300">
-                        <div className="p-2 bg-base-100 rounded-lg text-primary shadow-sm">
-                            <Calendar size={18} />
+                    <div className="flex items-center gap-2 bg-base-200/50 p-1.5 rounded-xl border border-base-300">
+                        <div className="p-1.5 bg-base-100 rounded-lg text-primary shadow-sm">
+                            <Calendar size={16} />
                         </div>
                         <div className="join join-horizontal">
                             <input
@@ -163,7 +163,7 @@ const DepositList: React.FC = () => {
                     </div>
 
                     {/* Type Filter Group */}
-                    <div className="join bg-base-200/50 p-1 rounded-2xl border border-base-300">
+                    <div className="join bg-base-200/50 p-1 rounded-xl border border-base-300">
                         <button
                             className={`join-item btn btn-xs px-4 border-none ${typeFilter === 'all' ? 'btn-primary shadow-lg' : 'btn-ghost opacity-60'}`}
                             onClick={() => setTypeFilter('all')}
@@ -185,20 +185,20 @@ const DepositList: React.FC = () => {
                     </div>
 
                     {/* Quick Stats Integration */}
-                    <div className="flex items-center gap-6 px-4 py-2 bg-base-200/30 rounded-2xl border border-base-300/50">
-                        <div className="flex items-center gap-3">
-                            <TrendingUp size={16} className="text-success" />
+                    <div className="flex items-center gap-4 px-3 py-1.5 bg-base-200/30 rounded-xl border border-base-300/50">
+                        <div className="flex items-center gap-2">
+                            <TrendingUp size={14} className="text-success" />
                             <div className="flex flex-col">
-                                <span className="text-[9px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalIncome')}</span>
-                                <span className="text-sm font-mono font-bold text-success">${totalIncome.toLocaleString()}</span>
+                                <span className="text-[8px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalIncome')}</span>
+                                <span className="text-xs font-mono font-bold text-success">${totalIncome.toLocaleString()}</span>
                             </div>
                         </div>
-                        <div className="w-px h-6 bg-base-content/10"></div>
-                        <div className="flex items-center gap-3">
-                            <TrendingDown size={16} className="text-error" />
+                        <div className="w-px h-4 bg-base-content/10"></div>
+                        <div className="flex items-center gap-2">
+                            <TrendingDown size={14} className="text-error" />
                             <div className="flex flex-col">
-                                <span className="text-[9px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalExpense')}</span>
-                                <span className="text-sm font-mono font-bold text-error">${totalExpense.toLocaleString()}</span>
+                                <span className="text-[8px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalExpense')}</span>
+                                <span className="text-xs font-mono font-bold text-error">${totalExpense.toLocaleString()}</span>
                             </div>
                         </div>
                     </div>
@@ -211,22 +211,22 @@ const DepositList: React.FC = () => {
                         <input
                             type="text"
                             placeholder={t('deposit.filter.keyword')}
-                            className="input input-bordered input-sm pl-10 w-full rounded-2xl bg-base-100/50 border-base-300 focus:border-primary transition-all shadow-inner"
+                            className="input input-bordered input-sm pl-10 w-full rounded-xl bg-base-100/50 border-base-300 focus:border-primary transition-all shadow-inner"
                             value={keyword}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
                     </div>
                 </div>
 
-                <button className="btn btn-primary btn-sm px-6 rounded-2xl shadow-lg shadow-primary/20 gap-2 w-full xl:w-auto hover:scale-105 transition-transform" onClick={handleAdd}>
-                    <Plus size={18} /> {t('deposit.filter.add')}
+                <button className="btn btn-primary btn-sm px-4 rounded-xl shadow-lg shadow-primary/20 gap-2 w-full xl:w-auto hover:scale-105 transition-transform shrink-0" onClick={handleAdd}>
+                    <Plus size={16} /> {t('deposit.filter.add')}
                 </button>
             </div>
 
             {/* Content Tabs */}
-            <div className="flex-grow flex flex-col min-h-0 bg-base-100/30 rounded-3xl border border-base-300 shadow-2xl overflow-hidden backdrop-blur-sm">
-                <div className="px-6 py-4 border-b border-base-300 bg-base-100/50 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <div className="join join-horizontal bg-base-300/50 p-1 rounded-2xl">
+            <div className="flex-grow flex flex-col min-h-0 bg-base-100/30 rounded-2xl border border-base-300 shadow-xl overflow-hidden backdrop-blur-sm">
+                <div className="px-4 py-2 border-b border-base-300 bg-base-100/50 flex flex-col sm:flex-row justify-between items-center gap-2 shrink-0">
+                    <div className="join join-horizontal bg-base-300/50 p-1 rounded-xl">
                         <button
                             className={`join-item btn btn-xs px-5 border-none gap-2 ${activeTab === 'LIST' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
                             onClick={() => setActiveTab('LIST')}
@@ -254,7 +254,7 @@ const DepositList: React.FC = () => {
                     </div>
                 </div>
 
-                <div className={`flex-grow min-h-0 p-6 gap-6 flex flex-col ${activeTab === 'LIST' ? 'overflow-hidden' : 'overflow-y-auto lg:overflow-hidden'}`}>
+                <div className={`flex-grow min-h-0 p-4 gap-4 flex flex-col ${activeTab === 'LIST' ? 'overflow-hidden' : 'overflow-hidden'}`}>
                     {/* LIST VIEW */}
                     {activeTab === 'LIST' && (
                         <div className="h-full flex flex-col">
@@ -375,7 +375,7 @@ const DepositList: React.FC = () => {
 
                     {/* IN-LINE CHART VIEW */}
                     {activeTab === 'INLINE' && (
-                        <div className="min-h-full h-auto lg:h-full w-full p-2">
+                        <div className="flex-grow min-h-0 w-full relative">
                             <DepositLineChart
                                 data={lineChartData}
                                 incomeCategories={incomeCategories}
@@ -386,7 +386,7 @@ const DepositList: React.FC = () => {
 
                     {/* CHART VIEW */}
                     {activeTab === 'CHART' && (
-                        <div className="min-h-full h-auto lg:h-full w-full p-2">
+                        <div className="flex-grow min-h-0 w-full relative">
                             <DepositChart data={chartData} />
                         </div>
                     )}

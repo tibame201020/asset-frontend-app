@@ -31,15 +31,15 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
     };
 
     return (
-        <div className="h-full w-full bg-base-100/30 rounded-3xl p-4 lg:p-8 border border-base-300 shadow-inner flex flex-col">
-            <div className="flex-grow min-h-0 w-full overflow-hidden">
-                <div className="w-full h-full overflow-x-auto pb-4 custom-scrollbar">
-                    <div className="min-w-[800px] h-full pr-4">
+        <div className="h-full w-full bg-base-100/30 rounded-2xl p-2 border border-base-300 shadow-inner flex flex-col overflow-hidden">
+            <div className="flex-grow min-h-0 w-full relative overflow-hidden">
+                <div className="w-full h-full">
+                    <div className="w-full h-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <ComposedChart
                                 data={data}
                                 margin={{
-                                    top: 40, right: 10, bottom: 20, left: 10,
+                                    top: 10, right: 30, bottom: 0, left: 10,
                                 }}
                             >
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
@@ -70,7 +70,14 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
                                     verticalAlign="top"
                                     align="right"
                                     iconType="circle"
-                                    wrapperStyle={{ paddingBottom: '30px', fontWeight: 'bold', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.6 }}
+                                    wrapperStyle={{
+                                        paddingBottom: '20px',
+                                        fontWeight: 'bold',
+                                        fontSize: '10px',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.1em',
+                                        opacity: 0.8
+                                    }}
                                 />
 
                                 {/* Expense Stack */}
@@ -86,7 +93,15 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
                                     />
                                 ))}
                                 {/* Total Expense Line */}
-                                <Line type="monotone" dataKey="expenseTotal" stroke="#b91c1c" strokeWidth={1} dot={{ r: 1.5, strokeWidth: 1 }} activeDot={{ r: 3 }} name="Total Expense" />
+                                <Line
+                                    type="monotone"
+                                    dataKey="expenseTotal"
+                                    stroke="#ef4444"
+                                    strokeWidth={3}
+                                    dot={{ r: 3, fill: '#ef4444', strokeWidth: 0 }}
+                                    activeDot={{ r: 5, strokeWidth: 0 }}
+                                    name="Total Expense"
+                                />
 
 
                                 {/* Income Stack */}
@@ -102,9 +117,23 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
                                     />
                                 ))}
                                 {/* Total Income Line */}
-                                <Line type="monotone" dataKey="incomeTotal" stroke="#15803d" strokeWidth={1} dot={{ r: 1.5, strokeWidth: 1 }} activeDot={{ r: 3 }} name="Total Income" />
+                                <Line
+                                    type="monotone"
+                                    dataKey="incomeTotal"
+                                    stroke="#22c55e"
+                                    strokeWidth={3}
+                                    dot={{ r: 3, fill: '#22c55e', strokeWidth: 0 }}
+                                    activeDot={{ r: 5, strokeWidth: 0 }}
+                                    name="Total Income"
+                                />
 
-                                <Brush dataKey="date" height={30} stroke="#8884d8" y={10} fill="var(--b2)" />
+                                <Brush
+                                    dataKey="date"
+                                    height={24}
+                                    stroke="#8884d8"
+                                    fill="rgba(255, 255, 255, 0.5)"
+                                    travellerWidth={8}
+                                />
                             </ComposedChart>
                         </ResponsiveContainer>
                     </div>

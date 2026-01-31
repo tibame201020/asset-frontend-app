@@ -14,7 +14,7 @@ const Layout: React.FC = () => {
             <div className="flex-1 flex flex-col min-w-0">
                 <Header />
 
-                <main className="flex-1 overflow-y-auto scroll-modern bg-base-100 p-4 md:p-6 lg:p-8">
+                <main className="flex-1 overflow-hidden bg-base-100 p-2 md:p-3 lg:p-4">
                     <Outlet />
                 </main>
             </div>
