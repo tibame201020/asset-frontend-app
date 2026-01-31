@@ -81,12 +81,12 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
                                         stackId="expense"
                                         fill={getColor(cat + 'exp')}
                                         name={cat}
-                                        barSize={16}
-                                        radius={[4, 4, 4, 4]}
+                                        barSize={8}
+                                        radius={[0, 0, 0, 0]}
                                     />
                                 ))}
                                 {/* Total Expense Line */}
-                                <Line type="monotone" dataKey="expenseTotal" stroke="#b91c1c" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} name="Total Expense" />
+                                <Line type="monotone" dataKey="expenseTotal" stroke="#b91c1c" strokeWidth={1} dot={{ r: 1.5, strokeWidth: 1 }} activeDot={{ r: 3 }} name="Total Expense" />
 
 
                                 {/* Income Stack */}
@@ -102,7 +102,7 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
                                     />
                                 ))}
                                 {/* Total Income Line */}
-                                <Line type="monotone" dataKey="incomeTotal" stroke="#15803d" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} name="Total Income" />
+                                <Line type="monotone" dataKey="incomeTotal" stroke="#15803d" strokeWidth={1} dot={{ r: 1.5, strokeWidth: 1 }} activeDot={{ r: 3 }} name="Total Income" />
 
                                 <Brush dataKey="date" height={30} stroke="#8884d8" y={10} fill="var(--b2)" />
                             </ComposedChart>

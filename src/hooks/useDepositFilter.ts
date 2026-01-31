@@ -89,9 +89,11 @@ export const useDepositFilter = (logs: TransLog[], keyword: string, dateRange: {
         filteredLogs.forEach(log => {
             let dateStr = '';
             if (typeof log.transDate === 'string') {
-                dateStr = log.transDate.split('T')[0];
+                // Use format and parseISO to handle the ISO string correctly in local time
+                // split('T')[0] takes the date part from UTC string, which can be the previous day in local time.
+                dateStr = format(parseISO(log.transDate), 'yyyy-MM-dd');
             } else if (typeof log.transDate === 'number') {
-                dateStr = new Date(log.transDate).toISOString().split('T')[0];
+                dateStr = format(new Date(log.transDate), 'yyyy-MM-dd');
             } else {
                 return;
             }

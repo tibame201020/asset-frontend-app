@@ -7,7 +7,7 @@ import DepositChart from '../components/DepositChart';
 import DepositLineChart from '../components/DepositLineChart';
 import DepositFormModal from '../components/DepositFormModal';
 import { depositService } from '../services/depositService';
-import { format, subDays } from 'date-fns';
+import { format, subDays, parseISO } from 'date-fns';
 import {
     Plus,
     Search,
@@ -112,6 +112,19 @@ const DepositList: React.FC = () => {
     const handleModalSuccess = () => {
         notify('success', t('deposit.confirm.success'));
         fetchLogs();
+    };
+
+    const formatDateSafe = (dateValue: string | number | undefined) => {
+        if (!dateValue) return '';
+        try {
+            if (typeof dateValue === 'string') {
+                return format(parseISO(dateValue), 'yyyy-MM-dd');
+            }
+            return format(new Date(dateValue), 'yyyy-MM-dd');
+        } catch (e) {
+            console.error("Date format error", e);
+            return String(dateValue);
+        }
     };
 
     // Live Filter Logic
@@ -284,7 +297,7 @@ const DepositList: React.FC = () => {
                                                                 </div>
                                                             </td>
                                                             <td className="font-mono text-xs opacity-70">
-                                                                {log.transDate ? format(new Date(log.transDate), 'yyyy-MM-dd') : ''}
+                                                                {formatDateSafe(log.transDate)}
                                                             </td>
                                                             <td>
                                                                 <div className={`badge badge-sm font-bold gap-1.5 py-2.5 ${isIncome ? 'badge-success text-success-content' : 'badge-error text-error-content'}`}>
@@ -331,7 +344,7 @@ const DepositList: React.FC = () => {
                                                     <div className="flex justify-between items-start mb-3">
                                                         <div>
                                                             <div className="badge badge-xs badge-outline opacity-40 mb-1 font-mono uppercase tracking-tighter">
-                                                                {log.transDate ? format(new Date(log.transDate), 'yyyy-MM-dd') : ''}
+                                                                {formatDateSafe(log.transDate)}
                                                             </div>
                                                             <h4 className="font-bold text-sm">{log.name}</h4>
                                                             <div className="text-[10px] opacity-60 font-black uppercase tracking-widest mt-0.5">{log.category}</div>
