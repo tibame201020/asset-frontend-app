@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Activity, Utensils, TrendingUp, Plus, Calendar as CalendarIcon } from 'lucide-react';
-import { mealService, type MealLog } from '../services/mealService';
-import { exerciseService, type ExerciseLog } from '../services/exerciseService';
+import { mealService, type MealLog, type MealType } from '../services/mealService';
+import { exerciseService, type ExerciseLog, type ExerciseType } from '../services/exerciseService';
 import MealModal from '../components/MealModal';
 import ExerciseModal from '../components/ExerciseModal';
 import { format, startOfDay, endOfDay, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from 'date-fns';
@@ -28,6 +28,25 @@ const HealthDashboard: React.FC = () => {
     });
     const [mealLogs, setMealLogs] = useState<MealLog[]>([]);
     const [exerciseLogs, setExerciseLogs] = useState<ExerciseLog[]>([]);
+
+    const [mealTypes, setMealTypes] = useState<MealType[]>([]);
+    const [exerciseTypes, setExerciseTypes] = useState<ExerciseType[]>([]);
+
+    useEffect(() => {
+        const fetchTypes = async () => {
+            try {
+                const [mTypes, eTypes] = await Promise.all([
+                    mealService.getAllTypes(),
+                    exerciseService.getAllTypes()
+                ]);
+                setMealTypes(mTypes);
+                setExerciseTypes(eTypes);
+            } catch (e) {
+                console.error("Failed to fetch types", e);
+            }
+        };
+        fetchTypes();
+    }, []);
 
     const [isMealModalOpen, setIsMealModalOpen] = useState(false);
     const [isExerciseModalOpen, setIsExerciseModalOpen] = useState(false);
@@ -350,12 +369,14 @@ const HealthDashboard: React.FC = () => {
                 onClose={() => setIsMealModalOpen(false)}
                 onSave={handleSaveMeal}
                 initialData={editingMeal}
+                mealTypes={mealTypes}
             />
             <ExerciseModal
                 isOpen={isExerciseModalOpen}
                 onClose={() => setIsExerciseModalOpen(false)}
                 onSave={handleSaveExercise}
                 initialData={editingExercise}
+                exerciseTypes={exerciseTypes}
             />
         </div >
     );

@@ -8,6 +8,7 @@ import { calendarService } from '../services/calendarService';
 import type { CalendarEvent } from '../types';
 import CalendarEventModal from '../components/CalendarEventModal';
 import MealModal from '../components/MealModal';
+import { mealService, type MealType } from '../services/mealService';
 import { format } from 'date-fns';
 import {
     Calendar as CalendarIcon,
@@ -43,6 +44,19 @@ const CalendarHome: React.FC = () => {
 
     // Meal Modal
     const [isMealModalOpen, setIsMealModalOpen] = useState(false);
+    const [mealTypes, setMealTypes] = useState<MealType[]>([]);
+
+    useEffect(() => {
+        const fetchTypes = async () => {
+            try {
+                const types = await mealService.getAllTypes();
+                setMealTypes(types);
+            } catch (e) {
+                console.error("Failed to fetch meal types", e);
+            }
+        };
+        fetchTypes();
+    }, []);
 
     // Fetch events for range
     const fetchEvents = useCallback(async (start: Date, end: Date) => {
@@ -298,6 +312,7 @@ const CalendarHome: React.FC = () => {
                     // Just refresh if needed, but calendar doesn't show meals yet
                     setIsMealModalOpen(false);
                 }}
+                mealTypes={mealTypes}
             />
         </div>
     );
