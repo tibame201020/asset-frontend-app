@@ -152,7 +152,7 @@ const Settings: React.FC = () => {
     };
 
     return (
-        <div className="max-w-5xl mx-auto pb-20 p-6 space-y-8 animate-in fade-in duration-500">
+        <div className="h-full overflow-y-auto scroll-modern max-w-5xl mx-auto pb-20 p-6 space-y-8 animate-in fade-in duration-500">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                 {/* Main Settings Column */}
                 <div className="lg:col-span-8 space-y-12">
@@ -160,7 +160,7 @@ const Settings: React.FC = () => {
                     {/* Language Section */}
                     <section className="space-y-4">
                         <div className="flex items-center gap-2 mb-2">
-                            <div className="p-2 bg-primary/10 rounded-lg text-primary">
+                            <div className="p-2 bg-primary/10 rounded text-primary">
                                 <Globe size={20} />
                             </div>
                             <h2 className="text-lg font-bold">Language</h2>
@@ -194,7 +194,7 @@ const Settings: React.FC = () => {
                     <section className="space-y-6">
                         <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
-                                <div className="p-2 bg-secondary/10 rounded-lg text-secondary">
+                                <div className="p-2 bg-secondary/10 rounded text-secondary">
                                     <Palette size={20} />
                                 </div>
                                 <h2 className="text-lg font-bold">Theme & Appearance</h2>
@@ -211,7 +211,7 @@ const Settings: React.FC = () => {
                                     onClick={() => setTheme(tName)}
                                     data-theme={tName}
                                     className={`
-                                        group relative w-full text-left rounded-xl border-2 transition-all duration-200 overflow-hidden
+                                        group relative w-full text-left rounded border-2 transition-all duration-200 overflow-hidden
                                         ${theme === tName
                                             ? 'border-primary ring-2 ring-primary/20 ring-offset-2 ring-offset-base-100 scale-[1.02] shadow-md z-10'
                                             : 'border-transparent hover:border-base-300 hover:shadow-sm scale-100 opacity-80 hover:opacity-100'
@@ -244,14 +244,14 @@ const Settings: React.FC = () => {
                     {/* Notification Position */}
                     <section className="space-y-4">
                         <div className="flex items-center gap-2 mb-2">
-                            <div className="p-2 bg-accent/10 rounded-lg text-accent">
+                            <div className="p-2 bg-accent/10 rounded text-accent">
                                 <LayoutTemplate size={20} />
                             </div>
                             <h2 className="text-lg font-bold">Notification Position</h2>
                         </div>
 
                         <div className="card bg-base-200/50 border border-base-200 p-6">
-                            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto aspect-video bg-base-100 rounded-xl shadow-inner border border-base-300 p-4 relative">
+                            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto aspect-video bg-base-100 rounded shadow-inner border border-base-300 p-4 relative">
                                 {positions.map((pos) => (
                                     <button
                                         key={pos.id}
@@ -260,7 +260,7 @@ const Settings: React.FC = () => {
                                             notify('info', `Notification position updated`);
                                         }}
                                         className={`
-                                            rounded-lg border-2 transition-all flex items-center justify-center p-2
+                                            rounded border-2 transition-all flex items-center justify-center p-2
                                             ${position === pos.id
                                                 ? 'border-primary bg-primary text-primary-content shadow-lg scale-110 z-10'
                                                 : 'border-base-300 hover:border-base-content/30 hover:bg-base-200'
@@ -268,7 +268,7 @@ const Settings: React.FC = () => {
                                         `}
                                         title={pos.label}
                                     >
-                                        <div className={`w-2 h-2 rounded-full ${position === pos.id ? 'bg-white' : 'bg-base-content/20'}`}></div>
+                                        <div className={`w-2 h-2 rounded ${position === pos.id ? 'bg-white' : 'bg-base-content/20'}`}></div>
                                     </button>
                                 ))}
 
@@ -369,18 +369,18 @@ const Settings: React.FC = () => {
                             </div>
 
                             <div className="space-y-3">
-                                <div className="flex justify-between items-center text-sm p-3 bg-base-200/50 rounded-lg">
+                                <div className="flex justify-between items-center text-sm p-3 bg-base-200/50 rounded">
                                     <span className="opacity-70">Version</span>
                                     <span className="font-mono font-bold">v2.0.0 (React)</span>
                                 </div>
-                                <div className="flex justify-between items-center text-sm p-3 bg-base-200/50 rounded-lg">
+                                <div className="flex justify-between items-center text-sm p-3 bg-base-200/50 rounded">
                                     <span className="opacity-70">Environment</span>
                                     <div className="badge badge-success badge-sm gap-1">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
+                                        <div className="w-1.5 h-1.5 rounded bg-white"></div>
                                         Production
                                     </div>
                                 </div>
-                                <div className="flex justify-between items-center text-sm p-3 bg-base-200/50 rounded-lg">
+                                <div className="flex justify-between items-center text-sm p-3 bg-base-200/50 rounded">
                                     <span className="opacity-70">Region</span>
                                     <span className="font-mono">{i18n.language.toUpperCase()}</span>
                                 </div>

@@ -104,7 +104,7 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
 
     return (
         <div className="modal modal-open">
-            <div className="modal-box p-0 w-[95%] max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-3xl flex flex-col max-h-[85vh]">
+            <div className="modal-box p-0 w-[95%] max-w-md bg-base-100 border border-base-300 shadow-2xl rounded flex flex-col max-h-[85vh]">
                 {/* Modal Header */}
                 <div className="flex-none bg-primary p-6 text-primary-content relative overflow-hidden">
                     <div className="relative z-10 flex justify-between items-center">

@@ -40,7 +40,7 @@ const Sidebar: React.FC = () => {
                 } bg-base-100 border-r border-base-300 flex flex-col transition-all duration-300 ease-in-out z-50`}
         >
             <div className="p-6 flex items-center gap-3 overflow-hidden whitespace-nowrap">
-                <div className="bg-primary p-2 rounded-lg text-primary-content shadow-lg shadow-primary/20">
+                <div className="bg-primary p-2 rounded text-primary-content shadow-lg shadow-primary/20">
                     <Landmark size={24} />
                 </div>
                 {isSidebarOpen && (
@@ -54,7 +54,7 @@ const Sidebar: React.FC = () => {
                         key={item.path}
                         to={item.path}
                         className={({ isActive }) => `
-            flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group
+            flex items-center gap-4 px-4 py-3 rounded transition-all duration-200 group
             ${isActive
                                 ? 'bg-primary/10 text-primary font-bold border border-primary/20 shadow-sm'
                                 : 'text-base-content/60 hover:bg-base-200 hover:text-base-content'}
@@ -76,7 +76,7 @@ const Sidebar: React.FC = () => {
             <div className="p-4 mt-auto">
                 <button
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                    className="w-full flex items-center justify-center p-3 rounded-xl hover:bg-base-200 text-base-content/40 transition-colors"
+                    className="w-full flex items-center justify-center p-3 rounded hover:bg-base-200 text-base-content/40 transition-colors"
                 >
                     {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
                 </button>

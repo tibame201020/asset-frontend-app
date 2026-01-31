@@ -41,7 +41,7 @@ const CalcModal: React.FC<CalcModalProps> = ({ isOpen, onClose, onSave, initialD
                 {/* Header */}
                 <div className="flex-none p-6 border-b border-base-200 flex justify-between items-center bg-base-100 z-10">
                     <h3 className="font-bold text-xl flex items-center gap-2">
-                        <div className="p-2 bg-primary/10 rounded-lg text-primary">
+                        <div className="p-2 bg-primary/10 rounded text-primary">
                             <Save size={20} />
                         </div>
                         {initialData ? 'Edit Calculation' : 'Add Calculation'}

@@ -31,7 +31,7 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
     };
 
     return (
-        <div className="h-full w-full bg-base-100/30 rounded-2xl p-2 border border-base-300 shadow-inner flex flex-col overflow-hidden">
+        <div className="h-full w-full bg-base-100/30 rounded p-2 border border-base-300 shadow-inner flex flex-col overflow-hidden">
             <div className="flex-grow min-h-0 w-full relative overflow-hidden">
                 <div className="w-full h-full">
                     <div className="w-full h-full">

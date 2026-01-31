@@ -134,7 +134,7 @@ const CalendarHome: React.FC = () => {
             {/* Header / Toolbar */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-base-300">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-primary/10 rounded-2xl text-primary shadow-sm">
+                    <div className="p-3 bg-primary/10 rounded text-primary shadow-sm">
                         <CalendarIcon size={24} />
                     </div>
                     <div>
@@ -143,7 +143,7 @@ const CalendarHome: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2 bg-base-100 p-1.5 rounded-2xl border border-base-300 shadow-sm">
+                <div className="flex items-center gap-2 bg-base-100 p-1.5 rounded border border-base-300 shadow-sm">
                     <div className="join join-horizontal">
                         <button onClick={goPrev} className="btn btn-ghost btn-sm join-item"><ChevronLeft size={18} /></button>
                         <button onClick={goToday} className="btn btn-ghost btn-sm join-item text-xs font-bold uppercase tracking-widest">{t('calendar.today')}</button>
@@ -159,7 +159,7 @@ const CalendarHome: React.FC = () => {
 
             <div className="flex flex-col lg:flex-row gap-6 lg:h-[calc(100vh-220px)] h-auto lg:overflow-hidden">
                 {/* Calendar Area */}
-                <div className="flex-grow bg-base-100 p-4 lg:p-6 rounded-3xl border border-base-300 shadow-xl overflow-hidden flex flex-col min-h-[500px] lg:min-h-0">
+                <div className="flex-grow bg-base-100 p-4 lg:p-6 rounded border border-base-300 shadow-xl overflow-hidden flex flex-col min-h-[500px] lg:min-h-0">
                     <div className="flex-grow overflow-auto scroll-modern calendar-container">
                         <FullCalendar
                             ref={calendarRef}
@@ -197,7 +197,7 @@ const CalendarHome: React.FC = () => {
                     <div className={`card transition-all duration-300 border-2 ${isAddMode ? 'bg-secondary/10 border-secondary shadow-lg' : 'bg-base-100 border-base-300 shadow-sm'}`}>
                         <div className="card-body p-4 flex flex-row items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <div className={`p-2 rounded-lg ${isAddMode ? 'bg-secondary text-secondary-content' : 'bg-base-300 text-base-content/50'}`}>
+                                <div className={`p-2 rounded ${isAddMode ? 'bg-secondary text-secondary-content' : 'bg-base-300 text-base-content/50'}`}>
                                     <PlusCircle size={20} />
                                 </div>
                                 <div>
@@ -215,7 +215,7 @@ const CalendarHome: React.FC = () => {
                     </div>
 
                     {/* Agenda List */}
-                    <div className="flex-grow bg-base-100 rounded-3xl border border-base-300 shadow-lg flex flex-col overflow-hidden">
+                    <div className="flex-grow bg-base-100 rounded border border-base-300 shadow-lg flex flex-col overflow-hidden">
                         <div className="p-4 border-b border-base-200 bg-base-200/50 flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <List size={16} className="text-primary" />
@@ -243,7 +243,7 @@ const CalendarHome: React.FC = () => {
                                     >
                                         <div className="card-body p-4 gap-1">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-2 h-2 rounded-full bg-primary group-hover:bg-primary-content"></div>
+                                                <div className="w-2 h-2 rounded bg-primary group-hover:bg-primary-content"></div>
                                                 <h4 className="font-bold text-sm truncate">{evt.title}</h4>
                                             </div>
                                             <div className="flex items-center gap-2 text-xs opacity-60 group-hover:opacity-90 font-mono">

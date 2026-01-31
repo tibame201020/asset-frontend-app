@@ -69,7 +69,7 @@ const BatchCalcModal: React.FC<BatchCalcModalProps> = ({ isOpen, onClose, onSave
             <div className="modal-box w-11/12 max-w-5xl bg-base-100 p-0 border border-base-200 shadow-2xl flex flex-col max-h-[85vh]">
                 <div className="flex-none bg-primary/5 px-6 py-4 border-b border-base-200 flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-primary text-primary-content flex items-center justify-center shadow-lg shadow-primary/20">
+                        <div className="w-10 h-10 rounded bg-primary text-primary-content flex items-center justify-center shadow-lg shadow-primary/20">
                             <Plus size={20} />
                         </div>
                         <div>
@@ -82,7 +82,7 @@ const BatchCalcModal: React.FC<BatchCalcModalProps> = ({ isOpen, onClose, onSave
 
                 <div className="flex-1 overflow-y-auto p-6 space-y-4 scroll-modern bg-base-100/50">
                     {newCalcs.map((item, index) => (
-                        <div key={index} className="group flex flex-wrap md:flex-nowrap gap-4 items-end p-4 rounded-2xl bg-base-100 border border-base-200 hover:border-primary/30 hover:shadow-md transition-all">
+                        <div key={index} className="group flex flex-wrap md:flex-nowrap gap-4 items-end p-4 rounded bg-base-100 border border-base-200 hover:border-primary/30 hover:shadow-md transition-all">
                             <div className="flex flex-col gap-1.5 w-full md:w-32">
                                 <span className="text-[10px] font-bold uppercase tracking-wider opacity-50 ml-1">Cycle</span>
                                 <select

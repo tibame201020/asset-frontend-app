@@ -90,12 +90,12 @@ const DepositFormModal: React.FC<DepositFormModalProps> = ({ isOpen, onClose, on
 
     return (
         <div className="modal modal-open">
-            <div className="modal-box p-0 max-w-md bg-base-100 border border-base-300 shadow-2xl rounded-3xl flex flex-col max-h-[85vh]">
+            <div className="modal-box p-0 max-w-md bg-base-100 border border-base-300 shadow-2xl rounded flex flex-col max-h-[85vh]">
                 {/* Modal Header */}
                 <div className={`flex-none p-8 relative overflow-hidden transition-colors duration-500 ${isIncome ? 'bg-success text-success-content' : 'bg-error text-error-content'}`}>
                     <div className="relative z-10 flex justify-between items-center">
                         <div className="flex items-center gap-4">
-                            <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl shadow-sm">
+                            <div className="p-3 bg-white/20 backdrop-blur-md rounded shadow-sm">
                                 {isIncome ? <TrendingUp size={24} /> : <TrendingDown size={24} />}
                             </div>
                             <div>
@@ -248,7 +248,7 @@ const DepositFormModal: React.FC<DepositFormModalProps> = ({ isOpen, onClose, on
                         <div className="flex gap-3 ml-auto">
                             <button
                                 type="button"
-                                className="btn btn-ghost btn-sm rounded-xl font-bold uppercase tracking-widest text-xs"
+                                className="btn btn-ghost btn-sm rounded font-bold uppercase tracking-widest text-xs"
                                 onClick={onClose}
                                 disabled={loading}
                             >
@@ -257,7 +257,7 @@ const DepositFormModal: React.FC<DepositFormModalProps> = ({ isOpen, onClose, on
                             <button
                                 type="submit"
                                 form="deposit-form"
-                                className={`btn btn-sm px-8 rounded-xl shadow-lg gap-2 font-bold uppercase tracking-widest text-xs group transition-all duration-300 ${isIncome ? 'btn-success shadow-success/20' : 'btn-error shadow-error/20'}`}
+                                className={`btn btn-sm px-8 rounded shadow-lg gap-2 font-bold uppercase tracking-widest text-xs group transition-all duration-300 ${isIncome ? 'btn-success shadow-success/20' : 'btn-error shadow-error/20'}`}
                                 disabled={loading}
                             >
                                 {loading ? (

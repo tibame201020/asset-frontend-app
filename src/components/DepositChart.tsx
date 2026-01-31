@@ -32,7 +32,7 @@ const DepositChart: React.FC<DepositChartProps> = ({ data }) => {
     const totalValue = data.reduce((acc: number, curr: any) => acc + curr.value, 0);
 
     return (
-        <div className="h-full w-full bg-base-100/30 rounded-2xl p-3 lg:p-4 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-4 lg:gap-8 items-stretch overflow-hidden">
+        <div className="h-full w-full bg-base-100/30 rounded p-3 lg:p-4 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-4 lg:gap-8 items-stretch overflow-hidden">
             {/* Visual Pane */}
             <div className="hidden lg:flex w-full lg:w-3/5 lg:h-full lg:flex-grow relative items-center justify-center min-h-0">
                 <ResponsiveContainer width="100%" height="100%">
@@ -95,7 +95,7 @@ const DepositChart: React.FC<DepositChartProps> = ({ data }) => {
                             <div key={index} className="flex flex-col gap-2 group hover:translate-x-1 transition-transform cursor-default">
                                 <div className="flex justify-between items-end">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: color }}></div>
+                                        <div className="w-3 h-3 rounded shadow-sm" style={{ backgroundColor: color }}></div>
                                         <span className="text-sm font-bold opacity-80 group-hover:opacity-100 transition-opacity">{item.name}</span>
                                     </div>
                                     <div className="text-right">
@@ -103,9 +103,9 @@ const DepositChart: React.FC<DepositChartProps> = ({ data }) => {
                                         <span className="text-sm font-mono font-black border-b-2" style={{ borderColor: `${color}40` }}>${item.value.toLocaleString()}</span>
                                     </div>
                                 </div>
-                                <div className="w-full h-1.5 bg-base-content/5 rounded-full overflow-hidden">
+                                <div className="w-full h-1.5 bg-base-content/5 rounded overflow-hidden">
                                     <div
-                                        className="h-full rounded-full transition-all duration-1000 ease-out"
+                                        className="h-full rounded transition-all duration-1000 ease-out"
                                         style={{
                                             width: `${percentage}%`,
                                             backgroundColor: color,

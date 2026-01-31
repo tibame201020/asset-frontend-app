@@ -80,7 +80,7 @@
     }
 
     .fc-daygrid-event {
-        @apply rounded-md px-1.5 py-0.5 text-xs font-medium border-none shadow-sm transition-transform active:scale-95;
+        @apply rounded px-1.5 py-0.5 text-xs font-medium border-none shadow-sm transition-transform active:scale-95;
     }
 
     .fc-v-event {

@@ -138,11 +138,11 @@ const DepositList: React.FC = () => {
     return (
         <div className="h-full flex flex-col gap-3 animate-in fade-in duration-500 overflow-hidden">
             {/* Filter & Stats Bar */}
-            <div className="flex flex-col xl:flex-row items-center gap-2 bg-base-100/50 backdrop-blur-md p-2 rounded-2xl border border-base-300 shadow-lg shrink-0">
+            <div className="flex flex-col xl:flex-row items-center gap-2 bg-base-100/50 backdrop-blur-md p-2 rounded border border-base-300 shadow-lg shrink-0">
                 <div className="flex flex-wrap items-center gap-4 flex-grow w-full xl:w-auto">
                     {/* Date Range Group */}
-                    <div className="flex items-center gap-2 bg-base-200/50 p-1.5 rounded-xl border border-base-300">
-                        <div className="p-1.5 bg-base-100 rounded-lg text-primary shadow-sm">
+                    <div className="flex items-center gap-2 bg-base-200/50 p-1.5 rounded border border-base-300">
+                        <div className="p-1.5 bg-base-100 rounded text-primary shadow-sm">
                             <Calendar size={16} />
                         </div>
                         <div className="join join-horizontal">
@@ -163,7 +163,7 @@ const DepositList: React.FC = () => {
                     </div>
 
                     {/* Type Filter Group */}
-                    <div className="join bg-base-200/50 p-1 rounded-xl border border-base-300">
+                    <div className="join bg-base-200/50 p-1 rounded border border-base-300">
                         <button
                             className={`join-item btn btn-xs px-4 border-none ${typeFilter === 'all' ? 'btn-primary shadow-lg' : 'btn-ghost opacity-60'}`}
                             onClick={() => setTypeFilter('all')}
@@ -185,7 +185,7 @@ const DepositList: React.FC = () => {
                     </div>
 
                     {/* Quick Stats Integration */}
-                    <div className="flex items-center gap-4 px-3 py-1.5 bg-base-200/30 rounded-xl border border-base-300/50">
+                    <div className="flex items-center gap-4 px-3 py-1.5 bg-base-200/30 rounded border border-base-300/50">
                         <div className="flex items-center gap-2">
                             <TrendingUp size={14} className="text-success" />
                             <div className="flex flex-col">
@@ -211,22 +211,22 @@ const DepositList: React.FC = () => {
                         <input
                             type="text"
                             placeholder={t('deposit.filter.keyword')}
-                            className="input input-bordered input-sm pl-10 w-full rounded-xl bg-base-100/50 border-base-300 focus:border-primary transition-all shadow-inner"
+                            className="input input-bordered input-sm pl-10 w-full rounded bg-base-100/50 border-base-300 focus:border-primary transition-all shadow-inner"
                             value={keyword}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
                     </div>
                 </div>
 
-                <button className="btn btn-primary btn-sm px-4 rounded-xl shadow-lg shadow-primary/20 gap-2 w-full xl:w-auto hover:scale-105 transition-transform shrink-0" onClick={handleAdd}>
+                <button className="btn btn-primary btn-sm px-4 rounded shadow-lg shadow-primary/20 gap-2 w-full xl:w-auto hover:scale-105 transition-transform shrink-0" onClick={handleAdd}>
                     <Plus size={16} /> {t('deposit.filter.add')}
                 </button>
             </div>
 
             {/* Content Tabs */}
-            <div className="flex-grow flex flex-col min-h-0 bg-base-100/30 rounded-2xl border border-base-300 shadow-xl overflow-hidden backdrop-blur-sm">
+            <div className="flex-grow flex flex-col min-h-0 bg-base-100/30 border border-base-300 shadow-xl overflow-hidden backdrop-blur-sm">
                 <div className="px-4 py-2 border-b border-base-300 bg-base-100/50 flex flex-col sm:flex-row justify-between items-center gap-2 shrink-0">
-                    <div className="join join-horizontal bg-base-300/50 p-1 rounded-xl">
+                    <div className="join join-horizontal bg-base-300/50 p-1 rounded">
                         <button
                             className={`join-item btn btn-xs px-5 border-none gap-2 ${activeTab === 'LIST' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
                             onClick={() => setActiveTab('LIST')}
@@ -265,7 +265,7 @@ const DepositList: React.FC = () => {
                                 </div>
                             ) : (
                                 <>
-                                    <div className="hidden lg:block flex-grow overflow-auto scroll-modern rounded-2xl border border-base-300 shadow-inner bg-base-100/30">
+                                    <div className="hidden lg:block flex-grow overflow-auto scroll-modern rounded border border-base-300 shadow-inner bg-base-100/30">
                                         <table className="table table-zebra w-full border-separate border-spacing-0">
                                             <thead className="sticky top-0 z-20">
                                                 <tr className="bg-base-100 shadow-sm border-b border-base-300">
@@ -282,8 +282,8 @@ const DepositList: React.FC = () => {
                                                 {filteredLogs.map(log => {
                                                     const isIncome = log.type === '收入' || log.type === 'Income';
                                                     return (
-                                                        <tr key={log.id} className="group hover:bg-base-300/30 transition-colors shadow-sm mb-2 rounded-2xl">
-                                                            <td className="rounded-l-2xl pl-6 py-4">
+                                                        <tr key={log.id} className="group hover:bg-base-300/30 transition-colors shadow-sm mb-2">
+                                                            <td className="pl-6 py-4">
                                                                 <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                                                                     <button className="btn btn-square btn-ghost btn-xs text-info hover:bg-info/10" onClick={() => handleEdit(log)}>
                                                                         <Edit3 size={14} />
@@ -307,7 +307,7 @@ const DepositList: React.FC = () => {
                                                             </td>
                                                             <td>
                                                                 <div className="flex items-center gap-2">
-                                                                    <div className="w-2 h-2 rounded-full bg-primary/30"></div>
+                                                                    <div className="w-2 h-2 rounded bg-primary/30"></div>
                                                                     <span className="text-sm font-medium">{log.category}</span>
                                                                 </div>
                                                             </td>
@@ -315,7 +315,7 @@ const DepositList: React.FC = () => {
                                                             <td className={`font-mono font-bold ${isIncome ? 'text-success' : 'text-error'}`}>
                                                                 ${log.value.toLocaleString()}
                                                             </td>
-                                                            <td className="rounded-r-2xl pr-6 text-xs opacity-50 italic max-w-xs truncate">
+                                                            <td className="pr-6 text-xs opacity-50 italic max-w-xs truncate">
                                                                 {log.ps}
                                                             </td>
                                                         </tr>
@@ -340,7 +340,7 @@ const DepositList: React.FC = () => {
                                         {filteredLogs.map(log => {
                                             const isIncome = log.type === '收入' || log.type === 'Income';
                                             return (
-                                                <div key={log.id} className="card bg-base-200/50 border border-base-300 rounded-3xl p-5 shadow-sm group active:scale-[0.98] transition-all">
+                                                <div key={log.id} className="card bg-base-200/50 border border-base-300 rounded p-5 shadow-sm group active:scale-[0.98] transition-all">
                                                     <div className="flex justify-between items-start mb-3">
                                                         <div>
                                                             <div className="badge badge-xs badge-outline opacity-40 mb-1 font-mono uppercase tracking-tighter">

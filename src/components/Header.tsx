@@ -39,14 +39,14 @@ const Header: React.FC = () => {
                         <Palette size={14} className="text-primary" />
                         <span className="text-[10px] font-black uppercase tracking-widest opacity-60 hidden sm:inline-block">{theme}</span>
                     </label>
-                    <div tabIndex={0} className="dropdown-content z-[100] p-2 shadow-2xl bg-base-100 border border-base-300 rounded-2xl w-64 mt-4 flex flex-col gap-2">
+                    <div tabIndex={0} className="dropdown-content z-[100] p-2 shadow-2xl bg-base-100 border border-base-300 rounded w-64 mt-4 flex flex-col gap-2">
                         <div className="px-2 pt-2">
                             <div className="relative group">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/30 group-focus-within:text-primary transition-colors" size={14} />
                                 <input
                                     type="text"
                                     placeholder="Search themes..."
-                                    className="w-full bg-base-200 border-none focus:ring-1 focus:ring-primary rounded-xl pl-9 pr-4 py-2 text-xs font-bold transition-all outline-none"
+                                    className="w-full bg-base-200 border-none focus:ring-1 focus:ring-primary rounded pl-9 pr-4 py-2 text-xs font-bold transition-all outline-none"
                                     value={themeSearch}
                                     onChange={(e) => setThemeSearch(e.target.value)}
                                     onClick={(e) => e.stopPropagation()}
@@ -60,13 +60,13 @@ const Header: React.FC = () => {
                                     <li key={t}>
                                         <button
                                             onClick={() => setTheme(t)}
-                                            className={`flex justify-between items-center py-3 px-4 rounded-xl text-xs font-bold transition-all ${theme === t ? 'bg-primary/10 text-primary' : 'hover:bg-base-200 opacity-70 hover:opacity-100'}`}
+                                            className={`flex justify-between items-center py-3 px-4 rounded text-xs font-bold transition-all ${theme === t ? 'bg-primary/10 text-primary' : 'hover:bg-base-200 opacity-70 hover:opacity-100'}`}
                                             data-theme={t}
                                         >
                                             <div className="flex items-center gap-3">
                                                 <div className="flex gap-0.5">
-                                                    <div className="w-1.5 h-3 bg-primary rounded-full"></div>
-                                                    <div className="w-1.5 h-3 bg-secondary rounded-full"></div>
+                                                    <div className="w-1.5 h-3 bg-primary rounded"></div>
+                                                    <div className="w-1.5 h-3 bg-secondary rounded"></div>
                                                 </div>
                                                 <span className="capitalize">{t}</span>
                                             </div>
@@ -84,7 +84,7 @@ const Header: React.FC = () => {
                 {/* Language Switcher */}
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar placeholder border border-base-300">
-                        <div className="bg-neutral text-neutral-content rounded-full w-8">
+                        <div className="bg-neutral text-neutral-content rounded w-8">
                             <span className="text-xs">{i18n.language.toUpperCase()}</span>
                         </div>
                     </div>

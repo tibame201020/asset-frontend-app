@@ -231,7 +231,7 @@ const CalcList: React.FC = () => {
         currentData = [...currentData].sort((a, b) => b.value - a.value);
 
         return (
-            <div className="flex-grow min-h-0 h-full w-full bg-base-100/30 rounded-2xl p-2 lg:p-4 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-4 lg:gap-8 items-stretch overflow-hidden backdrop-blur-sm">
+            <div className="flex-grow min-h-0 h-full w-full bg-base-100/30 rounded p-2 lg:p-4 border border-base-300 shadow-inner flex flex-col lg:flex-row gap-4 lg:gap-8 items-stretch overflow-hidden backdrop-blur-sm">
                 {/* Left: Chart Pane */}
                 <div className="hidden lg:flex w-full lg:w-3/5 lg:h-full lg:flex-grow relative items-center justify-center min-h-0">
                     <ResponsiveContainer width="100%" height="100%" key={activeChartTab}>
@@ -269,7 +269,7 @@ const CalcList: React.FC = () => {
                     </ResponsiveContainer>
                     {/* Floating Tab Switcher (Inside Analysis) */}
                     <div className="absolute top-0 left-0 z-10">
-                        <div className="join bg-base-200/50 p-1 rounded-2xl border border-base-300">
+                        <div className="join bg-base-200/50 p-1 rounded border border-base-300">
                             {(['ASSETS', 'EXPENSE', 'INCOME'] as const).map(tab => (
                                 <button
                                     key={tab}
@@ -287,7 +287,7 @@ const CalcList: React.FC = () => {
                 <div className="w-full lg:w-2/5 flex flex-col h-auto lg:h-full overflow-hidden border-t lg:border-t-0 lg:border-l border-base-content/5 pt-2 lg:pt-0 lg:pl-6">
                     {/* Mobile Tab Switcher */}
                     <div className="lg:hidden mb-4 flex justify-center">
-                        <div className="join bg-base-200/50 p-1 rounded-2xl border border-base-300 w-full justify-center">
+                        <div className="join bg-base-200/50 p-1 rounded border border-base-300 w-full justify-center">
                             {(['ASSETS', 'EXPENSE', 'INCOME'] as const).map(tab => (
                                 <button
                                     key={tab}
@@ -318,7 +318,7 @@ const CalcList: React.FC = () => {
                                     <div key={index} className="flex flex-col gap-2 group hover:translate-x-1 transition-transform cursor-default">
                                         <div className="flex justify-between items-end">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: color }}></div>
+                                                <div className="w-3 h-3 rounded shadow-sm" style={{ backgroundColor: color }}></div>
                                                 <span className="text-sm font-bold opacity-80 group-hover:opacity-100 transition-opacity">{item.name}</span>
                                             </div>
                                             <div className="text-right">
@@ -326,9 +326,9 @@ const CalcList: React.FC = () => {
                                                 <span className="text-sm font-mono font-black border-b-2" style={{ borderColor: `${color}40` }}>${item.value.toLocaleString()}</span>
                                             </div>
                                         </div>
-                                        <div className="w-full h-1.5 bg-base-content/5 rounded-full overflow-hidden">
+                                        <div className="w-full h-1.5 bg-base-content/5 rounded overflow-hidden">
                                             <div
-                                                className="h-full rounded-full transition-all duration-1000 ease-out"
+                                                className="h-full rounded transition-all duration-1000 ease-out"
                                                 style={{
                                                     width: `${percentage}%`,
                                                     backgroundColor: color,
@@ -351,17 +351,17 @@ const CalcList: React.FC = () => {
     return (
         <div className="h-full flex flex-col gap-3 animate-in fade-in duration-700 overflow-hidden">
             {/* Top Unified Dashboard Bar */}
-            <div className="bg-base-100/50 backdrop-blur-md p-2 rounded-2xl border border-base-200/50 shadow-lg flex flex-col xl:flex-row items-center gap-4 shrink-0 transition-all">
+            <div className="bg-base-100/50 backdrop-blur-md p-2 rounded border border-base-200/50 shadow-lg flex flex-col xl:flex-row items-center gap-4 shrink-0 transition-all">
                 {/* Left: Tabs */}
-                <div className="join join-horizontal bg-base-300/50 p-1 rounded-full shrink-0">
+                <div className="join join-horizontal bg-base-300/50 p-1 rounded shrink-0">
                     <button
-                        className={`join-item btn btn-xs px-6 border-none gap-2 rounded-full ${activeTab === 'RECORD' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
+                        className={`join-item btn btn-xs px-6 border-none gap-2 rounded ${activeTab === 'RECORD' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
                         onClick={() => setActiveTab('RECORD')}
                     >
                         <List size={14} /> Record
                     </button>
                     <button
-                        className={`join-item btn btn-xs px-6 border-none gap-2 rounded-full ${activeTab === 'ANALYSIS' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
+                        className={`join-item btn btn-xs px-6 border-none gap-2 rounded ${activeTab === 'ANALYSIS' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
                         onClick={() => setActiveTab('ANALYSIS')}
                     >
                         <BarChart3 size={14} /> Analysis
@@ -373,7 +373,7 @@ const CalcList: React.FC = () => {
 
                 {/* Right: Stats Stats */}
                 {/* Right: Stats Stats */}
-                <div className="flex items-center gap-4 px-3 py-1.5 bg-base-200/30 rounded-xl border border-base-300/50 w-full xl:w-auto justify-between xl:justify-start overflow-x-auto custom-scrollbar">
+                <div className="flex items-center gap-4 px-3 py-1.5 bg-base-200/30 rounded border border-base-300/50 w-full xl:w-auto justify-between xl:justify-start overflow-x-auto custom-scrollbar">
                     {renderStatItem("Est. Income", summary.totalIncome, <TrendingUp size={14} />, 'success')}
                     <div className="w-px h-4 bg-base-content/10 flex-shrink-0"></div>
                     {renderStatItem("Est. Expense", summary.totalExpense, <TrendingDown size={14} />, 'error')}
@@ -385,10 +385,10 @@ const CalcList: React.FC = () => {
             {/* Main Content Area */}
             <div className="flex-grow min-h-0 flex flex-col">
                 {activeTab === 'RECORD' ? (
-                    <div className="card bg-base-100/30 backdrop-blur-sm shadow-xl border border-base-300 flex-grow flex flex-col overflow-hidden rounded-2xl">
+                    <div className="card bg-base-100/30 backdrop-blur-sm shadow-xl border border-base-300 flex-grow flex flex-col overflow-hidden rounded">
                         <div className="p-3 border-b border-base-200/50 flex flex-col sm:flex-row justify-between items-center bg-base-100/50 sticky top-0 z-20 gap-2">
                             <div className="flex items-center gap-3">
-                                <div className="p-2 bg-primary/10 text-primary rounded-lg">
+                                <div className="p-2 bg-primary/10 text-primary rounded">
                                     <List size={20} />
                                 </div>
                                 <div>
@@ -428,7 +428,7 @@ const CalcList: React.FC = () => {
                                     {configs.map((config) => (
                                         <tr key={config.id} className="hover:bg-base-200/50 transition-colors group border-b border-base-100/50 last:border-none">
                                             <td className="text-center">
-                                                <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm
+                                                <div className={`w-10 h-10 rounded flex items-center justify-center transition-all shadow-sm
                                                     ${config.value > 0 ? 'bg-success/10 text-success' : 'bg-base-200 text-base-content/70'}
                                                 `}>
                                                     {getIconForPurpose(config.purpose)}
