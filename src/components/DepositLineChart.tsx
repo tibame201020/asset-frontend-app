@@ -89,7 +89,7 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
                                         fill={getColor(cat + 'exp')}
                                         name={cat}
                                         barSize={8}
-                                        radius={[0, 0, 0, 0]}
+                                        radius={[1, 1, 1, 1]}
                                     />
                                 ))}
                                 {/* Total Expense Line */}
@@ -97,9 +97,9 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
                                     type="monotone"
                                     dataKey="expenseTotal"
                                     stroke="#ef4444"
-                                    strokeWidth={3}
-                                    dot={{ r: 3, fill: '#ef4444', strokeWidth: 0 }}
-                                    activeDot={{ r: 5, strokeWidth: 0 }}
+                                    strokeWidth={1.5}
+                                    dot={{ r: 1.5, fill: '#ef4444', strokeWidth: 1 }}
+                                    activeDot={{ r: 5, strokeWidth: 1 }}
                                     name="Total Expense"
                                 />
 
@@ -112,8 +112,8 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
                                         stackId="income"
                                         fill={getColor(cat + 'inc')}
                                         name={cat}
-                                        barSize={16}
-                                        radius={[4, 4, 4, 4]}
+                                        barSize={8}
+                                        radius={[1, 1, 1, 1]}
                                     />
                                 ))}
                                 {/* Total Income Line */}
@@ -121,9 +121,9 @@ const DepositLineChart: React.FC<DepositLineChartProps> = ({ data, incomeCategor
                                     type="monotone"
                                     dataKey="incomeTotal"
                                     stroke="#22c55e"
-                                    strokeWidth={3}
-                                    dot={{ r: 3, fill: '#22c55e', strokeWidth: 0 }}
-                                    activeDot={{ r: 5, strokeWidth: 0 }}
+                                    strokeWidth={1.5}
+                                    dot={{ r: 1.5, fill: '#22c55e', strokeWidth: 1 }}
+                                    activeDot={{ r: 5, strokeWidth: 1 }}
                                     name="Total Income"
                                 />
 
