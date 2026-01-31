@@ -143,7 +143,20 @@ const resources = {
                         "weeklyTitle": "Weekly Trend",
                         "recentLogs": "Recent Logs",
                         "overview": "Daily Overview",
-                        "total": "Total"
+
+                        "total": "Total",
+                        "table": {
+                            "date": "Date Time",
+                            "item": "Meal Item",
+                            "calories": "Calories (kcal)",
+                            "ps": "Note",
+                            "actions": "Actions",
+                            "noRecords": "No meals recorded yet"
+                        },
+                        "stats": {
+                            "totalCalories": "Total Intake",
+                            "dailyAvg": "Avg / Day"
+                        }
                     }
                 },
                 "confirm": {
@@ -520,8 +533,21 @@ const resources = {
                     "target": "建議目標",
                     "weeklyTitle": "本週熱量趨勢",
                     "recentLogs": "最近記錄",
-                    "overview": "每日概覽",
-                    "total": "總計"
+
+
+                    "total": "總計",
+                    "table": {
+                        "date": "日期時間",
+                        "item": "餐飲項目",
+                        "calories": "攝入 (kcal)",
+                        "ps": "備註",
+                        "actions": "操作",
+                        "noRecords": "目前沒有任何餐飲紀錄"
+                    },
+                    "stats": {
+                        "totalCalories": "總攝入",
+                        "dailyAvg": "平均 / 日"
+                    }
                 }
             },
             "diary": {

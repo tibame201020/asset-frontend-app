@@ -165,20 +165,21 @@ const MealList: React.FC = () => {
                     </div>
 
                     {/* Quick Stats */}
+                    {/* Quick Stats */}
                     <div className="flex items-center gap-4 px-3 py-1.5 bg-base-200/30 rounded border border-base-300/50">
                         <div className="flex items-center gap-2">
                             <Utensils size={14} className="text-secondary" />
                             <div className="flex flex-col">
-                                <span className="text-[8px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('meal.dashboard.intake')} ({t('exercise.stats.avg')})</span>
-                                <span className="text-xs font-mono font-bold text-secondary">{avgCalories.toLocaleString()} <span className="text-[8px] opacity-40">kcal/day</span></span>
+                                <span className="text-[8px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('meal.dashboard.stats.totalCalories')}</span>
+                                <span className="text-xs font-mono font-bold text-secondary">{totalCalories.toLocaleString()} <span className="text-[8px] opacity-40">kcal</span></span>
                             </div>
                         </div>
                         <div className="w-px h-4 bg-base-content/10"></div>
                         <div className="flex items-center gap-2">
                             <TrendingUp size={14} className="text-accent" />
                             <div className="flex flex-col">
-                                <span className="text-[8px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('exercise.stats.count')}</span>
-                                <span className="text-xs font-mono font-bold text-accent">{filteredLogs.length}</span>
+                                <span className="text-[8px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('meal.dashboard.stats.dailyAvg')}</span>
+                                <span className="text-xs font-mono font-bold text-accent">{avgCalories.toLocaleString()} <span className="text-[8px] opacity-40">kcal</span></span>
                             </div>
                         </div>
                     </div>
@@ -246,11 +247,11 @@ const MealList: React.FC = () => {
                                 <table className="table table-zebra w-full border-separate border-spacing-0">
                                     <thead className="sticky top-0 z-20">
                                         <tr className="bg-base-100 shadow-sm border-b border-base-300">
-                                            <th className="pl-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('exercise.table.actions')}</th>
-                                            <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('exercise.table.date')}</th>
-                                            <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 min-w-[200px]">{t('exercise.table.item')}</th>
-                                            <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-28">{t('exercise.table.calories')}</th>
-                                            <th className="pr-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('exercise.table.ps')}</th>
+                                            <th className="pl-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('meal.dashboard.table.actions')}</th>
+                                            <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('meal.dashboard.table.date')}</th>
+                                            <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 min-w-[200px]">{t('meal.dashboard.table.item')}</th>
+                                            <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-28">{t('meal.dashboard.table.calories')}</th>
+                                            <th className="pr-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('meal.dashboard.table.ps')}</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-base-content/5">
@@ -323,7 +324,7 @@ const MealList: React.FC = () => {
                                                         <td colSpan={5} className="text-center py-20 opacity-30">
                                                             <div className="flex flex-col items-center gap-4">
                                                                 <AlertCircle size={48} strokeWidth={1} />
-                                                                <span className="text-sm font-bold uppercase tracking-[0.2em]">{t('exercise.table.noRecords')}</span>
+                                                                <span className="text-sm font-bold uppercase tracking-[0.2em]">{t('meal.dashboard.table.noRecords')}</span>
                                                             </div>
                                                         </td>
                                                     </tr>
