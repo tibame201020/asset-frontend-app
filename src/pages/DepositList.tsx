@@ -7,7 +7,7 @@ import DepositChart from '../components/DepositChart';
 import DepositLineChart from '../components/DepositLineChart';
 import DepositFormModal from '../components/DepositFormModal';
 import { depositService } from '../services/depositService';
-import { format, subDays, parseISO } from 'date-fns';
+import { format, subMonths, parseISO } from 'date-fns';
 import {
     Plus,
     Search,
@@ -35,7 +35,7 @@ const DepositList: React.FC = () => {
     const [keyword, setKeyword] = useState('');
     const [typeFilter, setTypeFilter] = useState('all'); // 'all' | 'expands' | 'incomes'
     const [dateRange, setDateRange] = useState({
-        start: format(subDays(new Date(), 30), 'yyyy-MM-dd'),
+        start: format(subMonths(new Date(), 1), 'yyyy-MM-dd'),
         end: format(new Date(), 'yyyy-MM-dd')
     });
     const [activeTab, setActiveTab] = useState('LIST'); // 'LIST' | 'INLINE' | 'CHART'
