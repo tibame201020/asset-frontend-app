@@ -22,7 +22,7 @@ import MealModal from '../components/MealModal';
 import MealTimeline from '../components/MealTimeline';
 import MealChart from '../components/MealChart';
 import MealTypeModal from '../components/MealTypeModal';
-import { startOfMonth, endOfMonth, format, startOfDay, endOfDay } from 'date-fns';
+import { subMonths, format, startOfDay, endOfDay } from 'date-fns';
 
 const MealList: React.FC = () => {
     const { t } = useTranslation();
@@ -35,8 +35,8 @@ const MealList: React.FC = () => {
     // Filter States
     const [keyword, setKeyword] = useState('');
     const [dateRange, setDateRange] = useState({
-        start: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
-        end: format(endOfMonth(new Date()), 'yyyy-MM-dd')
+        start: format(subMonths(new Date(), 1), 'yyyy-MM-dd'),
+        end: format(new Date(), 'yyyy-MM-dd')
     });
     const [activeTab, setActiveTab] = useState<'LIST' | 'TIMELINE' | 'CHART'>('LIST');
 

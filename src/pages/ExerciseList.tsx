@@ -24,7 +24,7 @@ import ExerciseModal from '../components/ExerciseModal';
 import ExerciseTimeline from '../components/ExerciseTimeline';
 import ExerciseChart from '../components/ExerciseChart';
 import ExerciseTypeModal from '../components/ExerciseTypeModal';
-import { startOfMonth, endOfMonth, format } from 'date-fns';
+import { subMonths, format } from 'date-fns';
 
 
 const ExerciseList: React.FC = () => {
@@ -38,8 +38,8 @@ const ExerciseList: React.FC = () => {
     // Filter States
     const [keyword, setKeyword] = useState('');
     const [dateRange, setDateRange] = useState({
-        start: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
-        end: format(endOfMonth(new Date()), 'yyyy-MM-dd')
+        start: format(subMonths(new Date(), 1), 'yyyy-MM-dd'),
+        end: format(new Date(), 'yyyy-MM-dd')
     });
     const [activeTab, setActiveTab] = useState<'LIST' | 'TIMELINE' | 'CHART'>('LIST');
 
