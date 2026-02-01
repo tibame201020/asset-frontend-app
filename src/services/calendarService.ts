@@ -29,7 +29,7 @@ export const calendarService = {
 
     // Delete event
     deleteById: async (id: number): Promise<boolean> => {
-        const response = await api.post<boolean>('/calendar/delete', id);
+        const response = await api.delete<boolean>(`/calendar/delete/${id}`);
         return response.data;
     }
 };

@@ -180,7 +180,7 @@ const CalcList: React.FC = () => {
             confirmText: 'Delete',
             onConfirm: async () => {
                 try {
-                    await api.post('/calc/deleteById', id);
+                    await api.delete(`/calc/delete/${id}`);
                     notify('success', 'Deleted successfully');
                     fetchConfigs();
                 } catch (e) {
@@ -198,7 +198,7 @@ const CalcList: React.FC = () => {
     const saveEdit = async (data: Calc | Omit<Calc, 'id'>) => {
         if (!editingCalc) return;
         try {
-            await api.post('/calc/update', { ...data, id: editingCalc.id });
+            await api.put('/calc/update', { ...data, id: editingCalc.id });
             notify('success', 'Updated successfully');
             fetchConfigs();
         } catch (e) {
