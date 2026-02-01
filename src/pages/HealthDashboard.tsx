@@ -314,20 +314,7 @@ const HealthDashboard: React.FC = () => {
                         <Activity size={18} className="text-primary" />
                         {t('meal.dashboard.title')}
                     </h3>
-                    <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-secondary rounded-full shadow-sm shadow-secondary/30"></div>
-                            <span className="text-[10px] font-bold opacity-40 uppercase tracking-widest">{t('meal.dashboard.intake')}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-primary rounded-full shadow-sm shadow-primary/30"></div>
-                            <span className="text-[10px] font-bold opacity-40 uppercase tracking-widest">{t('meal.dashboard.burned')}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-accent rounded-full shadow-sm shadow-accent/30"></div>
-                            <span className="text-[10px] font-bold opacity-40 uppercase tracking-widest">{t('meal.dashboard.balance')}</span>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div className="flex-1 w-full relative">

@@ -143,19 +143,19 @@ const DepositList: React.FC = () => {
                     {/* Date Range Group */}
                     <div className="flex items-center gap-2 bg-base-200/50 p-1.5 rounded border border-base-300">
                         <div className="p-1.5 bg-base-100 rounded text-primary shadow-sm">
-                            <Calendar size={16} />
+                            <Calendar size={18} />
                         </div>
                         <div className="join join-horizontal">
                             <input
                                 type="date"
-                                className="input input-ghost input-xs join-item font-mono focus:bg-transparent"
+                                className="input input-ghost input-sm join-item font-mono focus:bg-transparent h-8"
                                 value={dateRange.start}
                                 onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
                             />
                             <div className="join-item flex items-center px-1 opacity-30 text-xs">—</div>
                             <input
                                 type="date"
-                                className="input input-ghost input-xs join-item font-mono focus:bg-transparent"
+                                className="input input-ghost input-sm join-item font-mono focus:bg-transparent h-8"
                                 value={dateRange.end}
                                 onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
                             />
@@ -165,19 +165,19 @@ const DepositList: React.FC = () => {
                     {/* Type Filter Group */}
                     <div className="join bg-base-200/50 p-1 rounded border border-base-300">
                         <button
-                            className={`join-item btn btn-xs px-4 border-none ${typeFilter === 'all' ? 'btn-primary shadow-lg' : 'btn-ghost opacity-60'}`}
+                            className={`join-item btn btn-sm px-4 border-none ${typeFilter === 'all' ? 'btn-primary shadow-lg' : 'btn-ghost opacity-60'}`}
                             onClick={() => setTypeFilter('all')}
                         >
                             {t('deposit.filter.all')}
                         </button>
                         <button
-                            className={`join-item btn btn-xs px-4 border-none ${typeFilter === 'expands' ? 'btn-error shadow-lg' : 'btn-ghost opacity-60'}`}
+                            className={`join-item btn btn-sm px-4 border-none ${typeFilter === 'expands' ? 'btn-error shadow-lg' : 'btn-ghost opacity-60'}`}
                             onClick={() => setTypeFilter('expands')}
                         >
                             {t('deposit.filter.expense')}
                         </button>
                         <button
-                            className={`join-item btn btn-xs px-4 border-none ${typeFilter === 'incomes' ? 'btn-success shadow-lg' : 'btn-ghost opacity-60'}`}
+                            className={`join-item btn btn-sm px-4 border-none ${typeFilter === 'incomes' ? 'btn-success shadow-lg' : 'btn-ghost opacity-60'}`}
                             onClick={() => setTypeFilter('incomes')}
                         >
                             {t('deposit.filter.income')}
@@ -186,19 +186,19 @@ const DepositList: React.FC = () => {
 
                     {/* Quick Stats Integration */}
                     <div className="flex items-center gap-4 px-3 py-1.5 bg-base-200/30 rounded border border-base-300/50">
-                        <div className="flex items-center gap-2">
-                            <TrendingUp size={14} className="text-success" />
+                        <div className="flex items-center gap-3">
+                            <div className="text-success"><TrendingUp size={16} /></div>
                             <div className="flex flex-col">
-                                <span className="text-[8px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalIncome')}</span>
-                                <span className="text-xs font-mono font-bold text-success">${totalIncome.toLocaleString()}</span>
+                                <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalIncome')}</span>
+                                <span className="text-lg font-mono font-bold text-success">${totalIncome.toLocaleString()}</span>
                             </div>
                         </div>
                         <div className="w-px h-4 bg-base-content/10"></div>
-                        <div className="flex items-center gap-2">
-                            <TrendingDown size={14} className="text-error" />
+                        <div className="flex items-center gap-3">
+                            <div className="text-error"><TrendingDown size={16} /></div>
                             <div className="flex flex-col">
-                                <span className="text-[8px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalExpense')}</span>
-                                <span className="text-xs font-mono font-bold text-error">${totalExpense.toLocaleString()}</span>
+                                <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalExpense')}</span>
+                                <span className="text-lg font-mono font-bold text-error">${totalExpense.toLocaleString()}</span>
                             </div>
                         </div>
                     </div>
@@ -206,12 +206,12 @@ const DepositList: React.FC = () => {
                     {/* Keyword Group */}
                     <div className="relative flex-grow min-w-[200px]">
                         <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none opacity-40">
-                            <Search size={16} />
+                            <Search size={18} />
                         </div>
                         <input
                             type="text"
                             placeholder={t('deposit.filter.keyword')}
-                            className="input input-bordered input-sm pl-10 w-full rounded bg-base-100/50 border-base-300 focus:border-primary transition-all shadow-inner"
+                            className="input input-bordered input-sm pl-10 w-full rounded bg-base-100/50 border-base-300 focus:border-primary transition-all shadow-inner text-sm"
                             value={keyword}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
@@ -219,7 +219,7 @@ const DepositList: React.FC = () => {
                 </div>
 
                 <button className="btn btn-primary btn-sm px-4 rounded shadow-lg shadow-primary/20 gap-2 w-full xl:w-auto hover:scale-105 transition-transform shrink-0" onClick={handleAdd}>
-                    <Plus size={16} /> {t('deposit.filter.add')}
+                    <Plus size={18} /> {t('deposit.filter.add')}
                 </button>
             </div>
 

@@ -145,19 +145,19 @@ const MealList: React.FC = () => {
                     {/* Date Range Group */}
                     <div className="flex items-center gap-2 bg-base-200/50 p-1.5 rounded border border-base-300">
                         <div className="p-1.5 bg-base-100 rounded text-secondary shadow-sm">
-                            <Calendar size={16} />
+                            <Calendar size={18} />
                         </div>
                         <div className="join join-horizontal">
                             <input
                                 type="date"
-                                className="input input-ghost input-xs join-item font-mono focus:bg-transparent"
+                                className="input input-ghost input-sm join-item font-mono focus:bg-transparent h-8"
                                 value={dateRange.start}
                                 onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
                             />
                             <div className="join-item flex items-center px-1 opacity-30 text-xs">—</div>
                             <input
                                 type="date"
-                                className="input input-ghost input-xs join-item font-mono focus:bg-transparent"
+                                className="input input-ghost input-sm join-item font-mono focus:bg-transparent h-8"
                                 value={dateRange.end}
                                 onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
                             />
@@ -165,21 +165,20 @@ const MealList: React.FC = () => {
                     </div>
 
                     {/* Quick Stats */}
-                    {/* Quick Stats */}
                     <div className="flex items-center gap-4 px-3 py-1.5 bg-base-200/30 rounded border border-base-300/50">
-                        <div className="flex items-center gap-2">
-                            <Utensils size={14} className="text-secondary" />
+                        <div className="flex items-center gap-3">
+                            <div className="text-secondary"><Utensils size={16} /></div>
                             <div className="flex flex-col">
-                                <span className="text-[8px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('meal.dashboard.stats.totalCalories')}</span>
-                                <span className="text-xs font-mono font-bold text-secondary">{totalCalories.toLocaleString()} <span className="text-[8px] opacity-40">kcal</span></span>
+                                <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('meal.dashboard.stats.totalCalories')}</span>
+                                <span className="text-lg font-mono font-bold text-secondary">{totalCalories.toLocaleString()} <span className="text-[9px] opacity-40">kcal</span></span>
                             </div>
                         </div>
                         <div className="w-px h-4 bg-base-content/10"></div>
-                        <div className="flex items-center gap-2">
-                            <TrendingUp size={14} className="text-accent" />
+                        <div className="flex items-center gap-3">
+                            <div className="text-accent"><TrendingUp size={16} /></div>
                             <div className="flex flex-col">
-                                <span className="text-[8px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('meal.dashboard.stats.dailyAvg')}</span>
-                                <span className="text-xs font-mono font-bold text-accent">{avgCalories.toLocaleString()} <span className="text-[8px] opacity-40">kcal</span></span>
+                                <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('meal.dashboard.stats.dailyAvg')}</span>
+                                <span className="text-lg font-mono font-bold text-accent">{avgCalories.toLocaleString()} <span className="text-[9px] opacity-40">kcal</span></span>
                             </div>
                         </div>
                     </div>
@@ -187,12 +186,12 @@ const MealList: React.FC = () => {
                     {/* Keyword Group */}
                     <div className="relative flex-grow min-w-[200px]">
                         <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none opacity-40">
-                            <Search size={16} />
+                            <Search size={18} />
                         </div>
                         <input
                             type="text"
-                            placeholder={t('deposit.filter.keyword')}
-                            className="input input-bordered input-sm pl-10 w-full rounded bg-base-100/50 border-base-300 focus:border-secondary transition-all shadow-inner"
+                            placeholder={t('meal.filter.keyword')}
+                            className="input input-bordered input-sm pl-10 w-full rounded bg-base-100/50 border-base-300 focus:border-secondary transition-all shadow-inner text-sm"
                             value={keyword}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
@@ -201,10 +200,10 @@ const MealList: React.FC = () => {
 
                 <div className="flex items-center gap-2 w-full xl:w-auto shrink-0">
                     <button className="btn btn-ghost btn-sm btn-square rounded border border-base-300 shadow-sm" onClick={() => setIsTypeModalOpen(true)} title={t('settings.sections.meal')}>
-                        <Settings2 size={16} className="opacity-60" />
+                        <Settings2 size={18} className="opacity-60" />
                     </button>
                     <button className="btn btn-secondary btn-sm px-4 rounded shadow-lg shadow-secondary/20 gap-2 flex-grow xl:flex-grow-0 hover:scale-105 transition-transform shrink-0" onClick={handleAdd}>
-                        <Plus size={16} /> {t('common.add')}
+                        <Plus size={18} /> {t('common.add')}
                     </button>
                 </div>
             </div>

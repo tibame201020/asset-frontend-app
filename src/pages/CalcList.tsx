@@ -212,10 +212,10 @@ const CalcList: React.FC = () => {
         const colorClass = type === 'success' ? 'text-success' : type === 'error' ? 'text-error' : 'text-primary';
         return (
             <div className="flex items-center gap-3">
-                <div className={colorClass}>{icon}</div>
+                <div className={`${colorClass} p-1.5 bg-base-200 rounded-full`}>{icon}</div>
                 <div className="flex flex-col">
-                    <span className="text-[9px] font-black uppercase tracking-tighter opacity-40 leading-none">{title}</span>
-                    <span className={`text-sm font-mono font-bold ${colorClass}`}>${value.toLocaleString()}</span>
+                    <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{title}</span>
+                    <span className={`text-lg font-mono font-bold ${colorClass}`}>${value.toLocaleString()}</span>
                 </div>
             </div>
         );
@@ -377,16 +377,16 @@ const CalcList: React.FC = () => {
                 {/* Left: Tabs */}
                 <div className="join join-horizontal bg-base-300/50 p-1 rounded shrink-0">
                     <button
-                        className={`join-item btn btn-xs px-6 border-none gap-2 rounded ${activeTab === 'RECORD' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
+                        className={`join-item btn btn-sm px-6 border-none gap-2 rounded ${activeTab === 'RECORD' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
                         onClick={() => setActiveTab('RECORD')}
                     >
-                        <List size={14} /> {t('calculation.tabs.record')}
+                        <List size={16} /> {t('calculation.tabs.record')}
                     </button>
                     <button
-                        className={`join-item btn btn-xs px-6 border-none gap-2 rounded ${activeTab === 'ANALYSIS' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
+                        className={`join-item btn btn-sm px-6 border-none gap-2 rounded ${activeTab === 'ANALYSIS' ? 'btn-primary shadow-md' : 'btn-ghost opacity-60'}`}
                         onClick={() => setActiveTab('ANALYSIS')}
                     >
-                        <BarChart3 size={14} /> {t('calculation.tabs.analysis')}
+                        <BarChart3 size={16} /> {t('calculation.tabs.analysis')}
                     </button>
                 </div>
 
@@ -394,13 +394,12 @@ const CalcList: React.FC = () => {
                 <div className="hidden xl:block w-px h-12 bg-base-content/10 mx-2"></div>
 
                 {/* Right: Stats Stats */}
-                {/* Right: Stats Stats */}
                 <div className="flex items-center gap-4 px-3 py-1.5 bg-base-200/30 rounded border border-base-300/50 w-full xl:w-auto justify-between xl:justify-start overflow-x-auto custom-scrollbar">
-                    {renderStatItem("Est. Income", summary.totalIncome, <TrendingUp size={14} />, 'success')}
+                    {renderStatItem("Est. Income", summary.totalIncome, <TrendingUp size={16} />, 'success')}
                     <div className="w-px h-4 bg-base-content/10 flex-shrink-0"></div>
-                    {renderStatItem("Est. Expense", summary.totalExpense, <TrendingDown size={14} />, 'error')}
+                    {renderStatItem("Est. Expense", summary.totalExpense, <TrendingDown size={16} />, 'error')}
                     <div className="w-px h-4 bg-base-content/10 flex-shrink-0"></div>
-                    {renderStatItem("Net Balance", summary.balance, <Wallet size={14} />, 'primary')}
+                    {renderStatItem("Net Balance", summary.balance, <Wallet size={16} />, 'primary')}
                 </div>
             </div>
 
