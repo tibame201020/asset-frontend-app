@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Plus, Search, Calendar, Edit3, Trash2, BookOpen, AlertCircle } from 'lucide-react';
+import { Plus, Search, Calendar, Edit3, Trash2, AlertCircle } from 'lucide-react';
 import { format, subMonths, startOfDay, endOfDay, parseISO } from 'date-fns';
 import { diaryService, type DiaryLog } from '../services/diaryService';
 import { useNotification } from '../contexts/NotificationContext';
