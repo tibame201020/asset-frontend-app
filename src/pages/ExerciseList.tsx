@@ -174,23 +174,23 @@ const ExerciseList: React.FC = () => {
                         <div className="flex items-center gap-3">
                             <div className="text-primary"><Flame size={16} /></div>
                             <div className="flex flex-col">
-                                <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('exercise.stats.totalCalories')}</span>
-                                <span className="text-lg font-mono font-bold text-primary">{totalCalories.toLocaleString()} <span className="text-[9px] opacity-40">kcal</span></span>
+                                <span className="text-[12px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('exercise.stats.totalCalories')}</span>
+                                <span className="text-lg font-mono font-bold text-primary">{totalCalories.toLocaleString()} <span className="text-[9px] opacity-90">kcal</span></span>
                             </div>
                         </div>
                         <div className="w-px h-4 bg-base-content/10"></div>
                         <div className="flex items-center gap-3">
                             <div className="text-secondary"><Clock size={16} /></div>
                             <div className="flex flex-col">
-                                <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('exercise.stats.totalDuration')}</span>
-                                <span className="text-lg font-mono font-bold text-secondary">{totalDuration.toLocaleString()} <span className="text-[9px] opacity-40">min</span></span>
+                                <span className="text-[12px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('exercise.stats.totalDuration')}</span>
+                                <span className="text-lg font-mono font-bold text-secondary">{totalDuration.toLocaleString()} <span className="text-[9px] opacity-90">min</span></span>
                             </div>
                         </div>
                         <div className="w-px h-4 bg-base-content/10"></div>
                         <div className="flex items-center gap-3">
                             <div className="text-accent"><TrendingUp size={16} /></div>
                             <div className="flex flex-col">
-                                <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('exercise.stats.count')}</span>
+                                <span className="text-[12px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('exercise.stats.count')}</span>
                                 <span className="text-lg font-mono font-bold text-accent">{filteredLogs.length}</span>
                             </div>
                         </div>
@@ -266,12 +266,12 @@ const ExerciseList: React.FC = () => {
                                     <table className="table table-zebra w-full border-separate border-spacing-0">
                                         <thead className="sticky top-0 z-20">
                                             <tr className="bg-base-100 shadow-sm border-b border-base-300">
-                                                <th className="pl-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('exercise.table.actions')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('exercise.table.date')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 min-w-[200px]">{t('exercise.table.item')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-28">{t('exercise.table.duration')}</th>
-                                                <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-28">{t('exercise.table.calories')}</th>
-                                                <th className="pr-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('exercise.table.ps')}</th>
+                                                <th className="pl-6 py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('exercise.table.actions')}</th>
+                                                <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('exercise.table.date')}</th>
+                                                <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('exercise.table.item')}</th>
+                                                <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-24">{t('exercise.table.duration')}</th>
+                                                <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-24">{t('exercise.table.calories')}</th>
+                                                <th className="pr-6 py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 min-w-[200px]">{t('exercise.table.ps')}</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-base-content/5">
@@ -302,12 +302,12 @@ const ExerciseList: React.FC = () => {
                                                             </div>
                                                         </td>
                                                         <td className="text-right font-mono font-bold text-secondary">
-                                                            {log.duration} <span className="text-[10px] opacity-40">min</span>
+                                                            {log.duration} <span className="text-[10px] opacity-70">min</span>
                                                         </td>
                                                         <td className="text-right font-mono font-bold text-primary">
-                                                            {log.calories} <span className="text-[10px] opacity-40">kcal</span>
+                                                            {log.calories} <span className="text-[10px] opacity-70">kcal</span>
                                                         </td>
-                                                        <td className="pr-6 text-xs opacity-50 italic max-w-xs truncate">
+                                                        <td className="pr-6 text-xs opacity-70 italic max-w-xs truncate">
                                                             {log.ps}
                                                         </td>
                                                     </tr>

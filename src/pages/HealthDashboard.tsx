@@ -180,19 +180,19 @@ const HealthDashboard: React.FC = () => {
     const off = gradientOffset();
 
     return (
-        <div className="h-full flex flex-col p-4 md:p-6 space-y-4 animate-in fade-in duration-500 overflow-hidden">
+        <div className="h-full flex flex-col p-2 md:p-4 space-y-4 animate-in fade-in duration-500 overflow-hidden">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0 bg-base-100/50 backdrop-blur-md p-3 rounded border border-base-300 shadow-sm">
                 <div className="flex flex-wrap items-center gap-6 flex-1">
 
                     {/* Compact Summary Bar (Large Version) */}
                     <div className="flex items-center gap-12 px-8 py-5 bg-base-200/40 rounded border border-base-300/50 shadow-inner">
                         {/* Intake */}
-                        <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-7">
                             <div className="relative">
                                 <Utensils size={28} className="text-secondary" />
                                 <button
                                     onClick={() => { setEditingMeal(null); setIsMealModalOpen(true); }}
-                                    className="absolute -top-1 -right-5 w-5 h-5 bg-secondary text-secondary-content rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md z-10"
+                                    className="absolute -top-0 -right-6 w-5 h-5 bg-secondary text-secondary-content rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md z-10"
                                 >
                                     <Plus size={12} />
                                 </button>
@@ -205,7 +205,7 @@ const HealthDashboard: React.FC = () => {
                                         <div className="h-4 w-16 bg-base-content/10 rounded"></div>
                                     </div>
                                 ) : (
-                                    <div className="flex items-baseline gap-4">
+                                    <div className="flex items-baseline gap-4 flex-wrap">
                                         <span className="text-xl font-mono font-black text-secondary leading-none">{totalIntake} <span className="text-[10px] opacity-90">SUM</span></span>
                                         <span className="text-base font-mono font-bold text-secondary leading-none">{avgIntake} <span className="text-[10px] opacity-90">/DAY</span></span>
                                     </div>
@@ -216,12 +216,12 @@ const HealthDashboard: React.FC = () => {
                         <div className="w-px h-10 bg-base-content/10"></div>
 
                         {/* Burned */}
-                        <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-7">
                             <div className="relative">
                                 <Activity size={28} className="text-primary" />
                                 <button
                                     onClick={() => { setEditingExercise(null); setIsExerciseModalOpen(true); }}
-                                    className="absolute -top-1 -right-5 w-5 h-5 bg-primary text-primary-content rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md z-10"
+                                    className="absolute -top-0 -right-6 w-5 h-5 bg-primary text-primary-content rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md z-10"
                                 >
                                     <Plus size={12} />
                                 </button>
@@ -234,7 +234,7 @@ const HealthDashboard: React.FC = () => {
                                         <div className="h-4 w-16 bg-base-content/10 rounded"></div>
                                     </div>
                                 ) : (
-                                    <div className="flex items-baseline gap-4">
+                                    <div className="flex items-baseline gap-4 flex-wrap">
                                         <span className="text-xl font-mono font-black text-primary leading-none">{totalBurned} <span className="text-[10px] opacity-90">SUM</span></span>
                                         <span className="text-base font-mono font-bold text-primary leading-none">{avgBurned} <span className="text-[10px] opacity-90">/DAY</span></span>
                                     </div>
@@ -244,12 +244,12 @@ const HealthDashboard: React.FC = () => {
 
                         <div className="w-px h-10 bg-base-content/10"></div>
 
-                        <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-7">
                             <div className="relative">
                                 <TrendingUp size={28} className={balance > 0 ? 'text-accent' : 'text-success'} />
                                 <button
                                     onClick={() => setIsGoalModalOpen(true)}
-                                    className={`absolute -top-1 -right-5 w-5 h-5 ${balance > 0 ? 'bg-accent text-accent-content' : 'bg-success text-success-content'} rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md z-10`}
+                                    className={`absolute -top-0 -right-6 w-5 h-5 ${balance > 0 ? 'bg-accent text-accent-content' : 'bg-success text-success-content'} rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md z-10`}
                                 >
                                     <Settings size={12} />
                                 </button>
@@ -262,7 +262,7 @@ const HealthDashboard: React.FC = () => {
                                         <div className="h-4 w-16 bg-base-content/10 rounded"></div>
                                     </div>
                                 ) : (
-                                    <div className="flex items-baseline gap-4">
+                                    <div className="flex items-baseline gap-4 flex-wrap">
                                         <span className={`text-xl font-mono font-black leading-none ${balance > 0 ? 'text-accent' : 'text-success'}`}>
                                             {balance} <span className="text-[10px] opacity-90">SUM</span>
                                         </span>

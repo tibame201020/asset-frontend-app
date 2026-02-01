@@ -23,6 +23,10 @@ const Header: React.FC = () => {
         if (location.pathname.includes('/deposit')) return t('nav.deposit');
         if (location.pathname.includes('/calc')) return t('nav.calculation');
         if (location.pathname.includes('/setting')) return t('nav.settings');
+        if (location.pathname.includes('/health')) return t('nav.health');
+        if (location.pathname.includes('/meal')) return t('nav.mealRecords');
+        if (location.pathname.includes('/diary')) return t('nav.diary');
+        if (location.pathname.includes('/exercise')) return t('nav.exercise');
         return 'Asset App';
     };
 

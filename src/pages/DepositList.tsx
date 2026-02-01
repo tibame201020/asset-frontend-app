@@ -189,7 +189,7 @@ const DepositList: React.FC = () => {
                         <div className="flex items-center gap-3">
                             <div className="text-success"><TrendingUp size={16} /></div>
                             <div className="flex flex-col">
-                                <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalIncome')}</span>
+                                <span className="text-[12px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalIncome')}</span>
                                 <span className="text-lg font-mono font-bold text-success">${totalIncome.toLocaleString()}</span>
                             </div>
                         </div>
@@ -197,7 +197,7 @@ const DepositList: React.FC = () => {
                         <div className="flex items-center gap-3">
                             <div className="text-error"><TrendingDown size={16} /></div>
                             <div className="flex flex-col">
-                                <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalExpense')}</span>
+                                <span className="text-[12px] font-black uppercase tracking-tighter opacity-40 leading-none">{t('deposit.stats.totalExpense')}</span>
                                 <span className="text-lg font-mono font-bold text-error">${totalExpense.toLocaleString()}</span>
                             </div>
                         </div>
@@ -269,13 +269,13 @@ const DepositList: React.FC = () => {
                                         <table className="table table-zebra w-full border-separate border-spacing-0">
                                             <thead className="sticky top-0 z-20">
                                                 <tr className="bg-base-100 shadow-sm border-b border-base-300">
-                                                    <th className="pl-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('deposit.table.actions')}</th>
-                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('deposit.table.date')}</th>
-                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('deposit.table.type')}</th>
-                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-32">{t('deposit.table.category')}</th>
-                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 min-w-[200px]">{t('deposit.table.name')}</th>
-                                                    <th className="py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-32 text-right">{t('deposit.table.value')}</th>
-                                                    <th className="pr-6 py-5 text-[11px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('deposit.table.ps')}</th>
+                                                    <th className="pl-6 py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('deposit.table.actions')}</th>
+                                                    <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('deposit.table.date')}</th>
+                                                    <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('deposit.table.type')}</th>
+                                                    <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-32">{t('deposit.table.category')}</th>
+                                                    <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('deposit.table.name')}</th>
+                                                    <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-32 text">{t('deposit.table.value')}</th>
+                                                    <th className="pr-6 py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-64">{t('deposit.table.ps')}</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-base-content/5">
@@ -315,7 +315,7 @@ const DepositList: React.FC = () => {
                                                             <td className={`font-mono font-bold ${isIncome ? 'text-success' : 'text-error'}`}>
                                                                 ${log.value.toLocaleString()}
                                                             </td>
-                                                            <td className="pr-6 text-xs opacity-50 italic max-w-xs truncate">
+                                                            <td className="pr-6 text-xs opacity-70 italic max-w-xs truncate">
                                                                 {log.ps}
                                                             </td>
                                                         </tr>

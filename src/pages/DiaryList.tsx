@@ -107,16 +107,6 @@ const DiaryList: React.FC = () => {
         <div className="h-full flex flex-col gap-6 animate-in fade-in duration-500 overflow-hidden">
             {/* Header / Filter Bar */}
             <div className="flex flex-col xl:flex-row items-center gap-4 bg-base-100/50 backdrop-blur-md p-4 rounded border border-base-300 shadow-lg shrink-0">
-                <div className="flex items-center gap-3 mr-auto">
-                    <div className="p-2 bg-primary/10 rounded text-primary shadow-sm">
-                        <BookOpen size={24} />
-                    </div>
-                    <div>
-                        <h1 className="text-xl font-bold tracking-tight text-base-content">{t('nav.diary', { defaultValue: 'Diary' })}</h1>
-                        <p className="text-xs font-medium opacity-50 uppercase tracking-widest">{t('diary.subtitle', { defaultValue: 'Daily Reflections' })}</p>
-                    </div>
-                </div>
-
                 <div className="flex flex-wrap items-center gap-4 w-full xl:w-auto">
                     {/* Date Range */}
                     <div className="flex items-center gap-2 bg-base-200/50 p-1.5 rounded border border-base-300">

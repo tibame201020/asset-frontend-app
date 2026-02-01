@@ -214,7 +214,7 @@ const CalcList: React.FC = () => {
             <div className="flex items-center gap-3">
                 <div className={`${colorClass} p-1.5 bg-base-200 rounded-full`}>{icon}</div>
                 <div className="flex flex-col">
-                    <span className="text-[11px] font-black uppercase tracking-tighter opacity-40 leading-none">{title}</span>
+                    <span className="text-[12px] font-black uppercase tracking-tighter opacity-40 leading-none">{title}</span>
                     <span className={`text-lg font-mono font-bold ${colorClass}`}>${value.toLocaleString()}</span>
                 </div>
             </div>

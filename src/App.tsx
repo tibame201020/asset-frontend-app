@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/calendar/home" replace />
+        element: <Navigate to="/health/dashboard" replace />
       },
       {
         path: "calendar/home",
