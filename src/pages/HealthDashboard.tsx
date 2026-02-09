@@ -8,7 +8,7 @@ import { settingsService } from '../services/settingsService';
 import MealModal from '../components/MealModal';
 import ExerciseModal from '../components/ExerciseModal';
 import GoalSettingModal from '../components/GoalSettingModal';
-import { format, startOfDay, endOfDay, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from 'date-fns';
+import { format, startOfDay, endOfDay, eachDayOfInterval, isSameDay, subDays } from 'date-fns';
 import { useNotification } from '../contexts/NotificationContext';
 import {
     ComposedChart,
@@ -28,8 +28,8 @@ const HealthDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { notify } = useNotification();
     const [dateRange, setDateRange] = useState({
-        start: format(startOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd'),
-        end: format(endOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd')
+        start: format(subDays(new Date(), 6), 'yyyy-MM-dd'),
+        end: format(new Date(), 'yyyy-MM-dd')
     });
     const [mealLogs, setMealLogs] = useState<MealLog[]>([]);
     const [exerciseLogs, setExerciseLogs] = useState<ExerciseLog[]>([]);
@@ -298,11 +298,11 @@ const HealthDashboard: React.FC = () => {
                     <button
                         className="btn btn-primary btn-sm px-4 font-bold rounded"
                         onClick={() => setDateRange({
-                            start: format(startOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd'),
-                            end: format(endOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd')
+                            start: format(subDays(new Date(), 6), 'yyyy-MM-dd'),
+                            end: format(new Date(), 'yyyy-MM-dd')
                         })}
                     >
-                        {t('calendar.thisWeek')}
+                        {t('calendar.last7Days')}
                     </button>
                 </div>
             </div>

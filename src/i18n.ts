@@ -230,7 +230,8 @@ const resources = {
                     "newRecord": "New Record"
                 },
                 "thisWeek": "This Week",
-                "thisMonth": "This Month"
+                "thisMonth": "This Month",
+                "last7Days": "Last 7 Days"
             },
             "deposit": {
                 "subtitle": "Transaction Tracking & Analysis",
@@ -551,229 +552,196 @@ const resources = {
                     "error": "操作失敗"
                 }
             },
-            "meal": {
-                "modal": {
-                    "title": "餐飲管理",
-                    "fields": {
-                        "name": "餐飲內容",
-                        "calories": "攝入熱量",
-                        "date": "日期時間",
-                        "ps": "備註"
-                    }
+            "thisWeek": "本週",
+            "thisMonth": "本月",
+            "last7Days": "最近 7 天"
+        },
+        "deposit": {
+            "subtitle": "交易追蹤與分析",
+            "stats": {
+                "totalIncome": "總收入",
+                "totalExpense": "總支出"
+            },
+            "filter": {
+                "dateRange": "日期範圍",
+                "type": "類型",
+                "keyword": "搜尋交易記錄...",
+                "all": "全部",
+                "income": "收入",
+                "expense": "支出",
+                "add": "新增記錄"
+            },
+            "tabs": {
+                "list": "清單檢視",
+                "inline": "每日趨勢",
+                "chart": "分類分析"
+            },
+            "table": {
+                "actions": "操作",
+                "date": "日期",
+                "type": "類型",
+                "category": "類別",
+                "name": "名稱",
+                "value": "金額",
+                "ps": "備註",
+                "noRecords": "沒有找到相關記錄"
+            },
+            "modal": {
+                "title": "交易詳情",
+                "fields": {
+                    "date": "交易日期",
+                    "type": "類型",
+                    "category": "類別",
+                    "name": "項目名稱",
+                    "value": "金額",
+                    "ps": "備註 (PS)"
                 },
-                "calendar": {
-                    "subtitle": "行程管理",
-                    "today": "今天",
-                    "month": "月",
-                    "week": "週",
-                    "selectedDate": "所選日期",
-                    "quickAddMode": "快速新增模式",
-                    "quickAddHint": "點擊行事曆以新增行程",
-                    "agenda": "日程",
-                    "eventsCount": "個行程",
-                    "noEvents": "目前沒有行程",
-                    "newEvent": "新增行程",
-                    "modal": {
-                        "newTitle": "新增行程",
-                        "editTitle": "編輯行程",
-                        "eventTitle": "行程名稱",
-                        "placeholder": "例如：與團隊午餐...",
-                        "date": "日期",
-                        "start": "開始",
-                        "end": "結束",
-                        "newRecord": "新增記錄"
-                    },
-                    "thisWeek": "本週",
-                    "thisMonth": "本月"
-                },
-                "deposit": {
-                    "subtitle": "交易追蹤與分析",
-                    "stats": {
-                        "totalIncome": "總收入",
-                        "totalExpense": "總支出"
-                    },
-                    "filter": {
-                        "dateRange": "日期範圍",
-                        "type": "類型",
-                        "keyword": "搜尋交易記錄...",
-                        "all": "全部",
-                        "income": "收入",
-                        "expense": "支出",
-                        "add": "新增記錄"
-                    },
-                    "tabs": {
-                        "list": "清單檢視",
-                        "inline": "每日趨勢",
-                        "chart": "分類分析"
-                    },
-                    "table": {
-                        "actions": "操作",
-                        "date": "日期",
-                        "type": "類型",
-                        "category": "類別",
-                        "name": "名稱",
-                        "value": "金額",
-                        "ps": "備註",
-                        "noRecords": "沒有找到相關記錄"
-                    },
-                    "modal": {
-                        "title": "交易詳情",
-                        "fields": {
-                            "date": "交易日期",
-                            "type": "類型",
-                            "category": "類別",
-                            "name": "項目名稱",
-                            "value": "金額",
-                            "ps": "備註 (PS)"
-                        },
-                        "placeholders": {
-                            "category": "請選擇類別",
-                            "name": "您買了什麼？"
-                        }
-                    },
-                    "confirm": {
-                        "deleteTitle": "確認刪除",
-                        "deleteMessage": "您確定要刪除這筆記錄嗎？",
-                        "success": "儲存成功",
-                        "deleted": "刪除成功",
-                        "error": "操作失敗"
-                    }
-                },
-                "settings": {
-                    "sections": {
-                        "language": "語系設定",
-                        "health": "健康儀表板設定",
-                        "theme": "主題與外觀",
-                        "notifications": "通知彈窗位置",
-                        "exercise": "運動類型與預設值",
-                        "meal": "餐飲類型與預設值",
-                        "backup": "備份與還原",
-                        "system": "系統資訊",
-                        "danger": "危險區域"
-                    },
-                    "exercise": {
-                        "addNew": "新增類型",
-                        "table": {
-                            "icon": "圖示",
-                            "name": "名稱",
-                            "duration": "預設時長 (分)",
-                            "kcalPerHour": "卡路里/小時",
-                            "actions": "操作",
-                            "empty": "尚未定義自定義運動類型"
-                        },
-                        "placeholder": "運動名稱",
-                        "confirm": {
-                            "deleteTitle": "刪除運動類型",
-                            "deleteMessage": "您確定嗎？這不會刪除現有的運動紀錄，但此類型將無法再用於新紀錄。",
-                            "saveSuccess": "運動類型已儲存",
-                            "saveError": "儲存運動類型失敗",
-                            "deleteSuccess": "運動類型已刪除",
-                            "deleteError": "刪除運動類型失敗",
-                            "validationError": "名稱與圖示為必填項"
-                        }
-                    },
-                    "meal": {
-                        "addNew": "新增餐飲類型",
-                        "placeholder": "輸入餐飲名稱 (如：早餐)",
-                        "table": {
-                            "icon": "圖示",
-                            "name": "名稱",
-                            "calories": "預設卡路里",
-                            "actions": "操作",
-                            "empty": "尚未定義自定義餐飲類型"
-                        },
-                        "confirm": {
-                            "deleteTitle": "刪除餐飲類型",
-                            "deleteMessage": "您確定要刪除此餐飲類型嗎？",
-                            "deleteSuccess": "餐飲類型已成功刪除",
-                            "deleteError": "刪除餐飲類型失敗",
-                            "saveSuccess": "餐飲類型已成功儲存",
-                            "saveError": "儲存餐飲類型失敗",
-                            "validationError": "請輸入名稱與圖示",
-                            "fetchError": "獲取餐飲類型失敗"
-                        }
-                    },
-                    "backup": {
-                        "export": {
-                            "title": "導出數據",
-                            "options": {
-                                "all": "全部數據"
-                            },
-                            "button": "導出至檔案",
-                            "successTitle": "導出成功",
-                            "successMessage": "數據導出成功。重要：您的 5 位數解密密鑰為：{{key}}。請妥善保存，導入此文件時將需要它。",
-                            "copyKey": "複製密鑰",
-                            "keyCopied": "密鑰已複製到剪貼簿",
-                            "error": "導出失敗"
-                        },
-                        "import": {
-                            "title": "導入數據",
-                            "placeholderKey": "5 位數密鑰",
-                            "button": "從檔案導入",
-                            "warning": "導入將覆蓋相同類型的現有數據。",
-                            "validationError": "請選擇檔案並輸入 5 位數密鑰",
-                            "success": "數據導入成功！如果更改未顯示，請重新整理頁面。",
-                            "keyError": "導入失敗：密鑰無效或文件損壞",
-                            "error": "導入失敗"
-                        }
-                    },
-                    "system": {
-                        "version": "版本",
-                        "environment": "環境",
-                        "region": "區域",
-                        "production": "正式環境"
-                    },
-                    "danger": {
-                        "warning": "此操作將永久從資料庫中刪除數據。此動作無法復原。",
-                        "wipeDeposit": "清空帳務數據",
-                        "wipeCalendar": "清空行事曆數據",
-                        "wipeCalc": "清空試算數據",
-                        "wipeExercise": "清空運動紀錄",
-                        "wipeExerciseType": "清空運動類型",
-                        "wipeMeal": "清空餐飲紀錄",
-                        "wipeMealType": "清空餐飲類型",
-                        "confirmTitle": "刪除數據",
-                        "confirmMessage": "您確定要刪除所有 {{displayName}} 數據嗎？此操作無法復原。",
-                        "confirmButton": "是的，全部刪除",
-                        "success": "所有 {{displayName}} 數據已成功刪除。",
-                        "error": "刪除 {{displayName}} 數據失敗。"
-                    },
-                    "ui": {
-                        "active": "使用中",
-                        "themesAvailable": "現有 {{count}} 種主題",
-                        "toastHint": "選擇通知彈窗在螢幕上的顯示位置",
-                        "notificationUpdated": "通知位置已更新",
-                        "close": "關閉",
-                        "positions": {
-                            "topStart": "左上角",
-                            "topCenter": "上方置中",
-                            "topEnd": "右上角",
-                            "bottomStart": "左下角",
-                            "bottomCenter": "下方置中",
-                            "bottomEnd": "右下角"
-                        }
-                    },
-                    "health": {
-                        "title": "健康儀表板設定",
-                        "balanceGoal": "每日結餘目標 (淨卡路里)",
-                        "calculateTDEE": "計算 BMR/TDEE",
-                        "gender": "性別",
-                        "age": "年齡",
-                        "weight": "體重 (kg)",
-                        "height": "身高 (cm)",
-                        "activity": "活動量",
-                        "calculate": "計算",
-                        "male": "男性",
-                        "female": "女性",
-                        "sedentary": "久坐 (幾乎不運動)",
-                        "light": "輕度活動 (每週 1-3 天)",
-                        "moderate": "中度活動 (每週 3-5 天)",
-                        "active": "高度活動 (每週 6-7 天)",
-                        "veryActive": "非常高度活動 (勞力工作或一日兩練)",
-                        "result": "您的 TDEE 約為 {{tdee}} kcal",
-                        "apply": "套用到目標"
-                    }
+                "placeholders": {
+                    "category": "請選擇類別",
+                    "name": "您買了什麼？"
                 }
+            },
+            "confirm": {
+                "deleteTitle": "確認刪除",
+                "deleteMessage": "您確定要刪除這筆記錄嗎？",
+                "success": "儲存成功",
+                "deleted": "刪除成功",
+                "error": "操作失敗"
+            }
+        },
+        "settings": {
+            "sections": {
+                "language": "語系設定",
+                "health": "健康儀表板設定",
+                "theme": "主題與外觀",
+                "notifications": "通知彈窗位置",
+                "exercise": "運動類型與預設值",
+                "meal": "餐飲類型與預設值",
+                "backup": "備份與還原",
+                "system": "系統資訊",
+                "danger": "危險區域"
+            },
+            "exercise": {
+                "addNew": "新增類型",
+                "table": {
+                    "icon": "圖示",
+                    "name": "名稱",
+                    "duration": "預設時長 (分)",
+                    "kcalPerHour": "卡路里/小時",
+                    "actions": "操作",
+                    "empty": "尚未定義自定義運動類型"
+                },
+                "placeholder": "運動名稱",
+                "confirm": {
+                    "deleteTitle": "刪除運動類型",
+                    "deleteMessage": "您確定嗎？這不會刪除現有的運動紀錄，但此類型將無法再用於新紀錄。",
+                    "saveSuccess": "運動類型已儲存",
+                    "saveError": "儲存運動類型失敗",
+                    "deleteSuccess": "運動類型已刪除",
+                    "deleteError": "刪除運動類型失敗",
+                    "validationError": "名稱與圖示為必填項"
+                }
+            },
+            "meal": {
+                "addNew": "新增餐飲類型",
+                "placeholder": "輸入餐飲名稱 (如：早餐)",
+                "table": {
+                    "icon": "圖示",
+                    "name": "名稱",
+                    "calories": "預設卡路里",
+                    "actions": "操作",
+                    "empty": "尚未定義自定義餐飲類型"
+                },
+                "confirm": {
+                    "deleteTitle": "刪除餐飲類型",
+                    "deleteMessage": "您確定要刪除此餐飲類型嗎？",
+                    "deleteSuccess": "餐飲類型已成功刪除",
+                    "deleteError": "刪除餐飲類型失敗",
+                    "saveSuccess": "餐飲類型已成功儲存",
+                    "saveError": "儲存餐飲類型失敗",
+                    "validationError": "請輸入名稱與圖示",
+                    "fetchError": "獲取餐飲類型失敗"
+                }
+            },
+            "backup": {
+                "export": {
+                    "title": "導出數據",
+                    "options": {
+                        "all": "全部數據"
+                    },
+                    "button": "導出至檔案",
+                    "successTitle": "導出成功",
+                    "successMessage": "數據導出成功。重要：您的 5 位數解密密鑰為：{{key}}。請妥善保存，導入此文件時將需要它。",
+                    "copyKey": "複製密鑰",
+                    "keyCopied": "密鑰已複製到剪貼簿",
+                    "error": "導出失敗"
+                },
+                "import": {
+                    "title": "導入數據",
+                    "placeholderKey": "5 位數密鑰",
+                    "button": "從檔案導入",
+                    "warning": "導入將覆蓋相同類型的現有數據。",
+                    "validationError": "請選擇檔案並輸入 5 位數密鑰",
+                    "success": "數據導入成功！如果更改未顯示，請重新整理頁面。",
+                    "keyError": "導入失敗：密鑰無效或文件損壞",
+                    "error": "導入失敗"
+                }
+            },
+            "system": {
+                "version": "版本",
+                "environment": "環境",
+                "region": "區域",
+                "production": "正式環境"
+            },
+            "danger": {
+                "warning": "此操作將永久從資料庫中刪除數據。此動作無法復原。",
+                "wipeDeposit": "清空帳務數據",
+                "wipeCalendar": "清空行事曆數據",
+                "wipeCalc": "清空試算數據",
+                "wipeExercise": "清空運動紀錄",
+                "wipeExerciseType": "清空運動類型",
+                "wipeMeal": "清空餐飲紀錄",
+                "wipeMealType": "清空餐飲類型",
+                "confirmTitle": "刪除數據",
+                "confirmMessage": "您確定要刪除所有 {{displayName}} 數據嗎？此操作無法復原。",
+                "confirmButton": "是的，全部刪除",
+                "success": "所有 {{displayName}} 數據已成功刪除。",
+                "error": "刪除 {{displayName}} 數據失敗。"
+            },
+            "ui": {
+                "active": "使用中",
+                "themesAvailable": "現有 {{count}} 種主題",
+                "toastHint": "選擇通知彈窗在螢幕上的顯示位置",
+                "notificationUpdated": "通知位置已更新",
+                "close": "關閉",
+                "positions": {
+                    "topStart": "左上角",
+                    "topCenter": "上方置中",
+                    "topEnd": "右上角",
+                    "bottomStart": "左下角",
+                    "bottomCenter": "下方置中",
+                    "bottomEnd": "右下角"
+                }
+            },
+            "health": {
+                "title": "健康儀表板設定",
+                "balanceGoal": "每日結餘目標 (淨卡路里)",
+                "calculateTDEE": "計算 BMR/TDEE",
+                "gender": "性別",
+                "age": "年齡",
+                "weight": "體重 (kg)",
+                "height": "身高 (cm)",
+                "activity": "活動量",
+                "calculate": "計算",
+                "male": "男性",
+                "female": "女性",
+                "sedentary": "久坐 (幾乎不運動)",
+                "light": "輕度活動 (每週 1-3 天)",
+                "moderate": "中度活動 (每週 3-5 天)",
+                "active": "高度活動 (每週 6-7 天)",
+                "veryActive": "非常高度活動 (勞力工作或一日兩練)",
+                "result": "您的 TDEE 約為 {{tdee}} kcal",
+                "apply": "套用到目標"
             }
         }
     }
