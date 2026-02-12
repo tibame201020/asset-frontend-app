@@ -50,9 +50,13 @@ const DepositList: React.FC = () => {
     const fetchLogs = async () => {
         setLoading(true);
         try {
+            // Convert local date strings to UTC-equivalent ISO strings for the full day range
+            const startISO = new Date(dateRange.start + 'T00:00:00').toISOString();
+            const endISO = new Date(dateRange.end + 'T23:59:59').toISOString();
+
             const payload: DateRange = {
-                start: dateRange.start,
-                end: dateRange.end,
+                start: startISO,
+                end: endISO,
                 type: typeFilter === 'expands' ? 'expand' : typeFilter === 'incomes' ? 'income' : 'all'
             };
             const data = await depositService.queryByDateRange(payload);
