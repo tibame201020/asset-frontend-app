@@ -234,6 +234,20 @@ const resources = {
                 "thisMonth": "This Month",
                 "last7Days": "Last 7 Days"
             },
+            "overview": {
+                "financialTrend": "Financial Trend",
+                "healthTrend": "Health Trend",
+                "netIncome": "Net Income",
+                "netCalories": "Net Calories",
+                "ranges": {
+                    "thisMonth": "This Month",
+                    "lastMonth": "Last Month",
+                    "last3Months": "Last 3 Months",
+                    "last6Months": "Last 6 Months",
+                    "thisYear": "This Year",
+                    "allTime": "All Time"
+                }
+            },
             "deposit": {
                 "subtitle": "Transaction Tracking & Analysis",
                 "stats": {
@@ -558,6 +572,20 @@ const resources = {
                 "thisWeek": "本週",
                 "thisMonth": "本月",
                 "last7Days": "最近 7 天"
+            },
+            "overview": {
+                "financialTrend": "財務趨勢",
+                "healthTrend": "健康趨勢",
+                "netIncome": "淨收入",
+                "netCalories": "淨卡路里",
+                "ranges": {
+                    "thisMonth": "本月",
+                    "lastMonth": "上個月",
+                    "last3Months": "最近 3 個月",
+                    "last6Months": "最近 6 個月",
+                    "thisYear": "今年",
+                    "allTime": "全部"
+                }
             },
             "deposit": {
                 "subtitle": "交易追蹤與分析",
