@@ -23,6 +23,7 @@ const resources = {
                 "close": "Close"
             },
             "nav": {
+                "overview": "Overview",
                 "calendar": "Calendar",
                 "deposit": "Accounting",
                 "calculation": "Asset Calculation",
@@ -443,6 +444,7 @@ const resources = {
                 "close": "關閉"
             },
             "nav": {
+                "overview": "總覽",
                 "calendar": "行事曆",
                 "deposit": "帳務記錄",
                 "calculation": "試算功能",
@@ -552,12 +554,13 @@ const resources = {
                     "error": "操作失敗"
                 }
             },
-            "thisWeek": "本週",
-            "thisMonth": "本月",
-            "last7Days": "最近 7 天"
-        },
-        "deposit": {
-            "subtitle": "交易追蹤與分析",
+            "calendar": {
+                "thisWeek": "本週",
+                "thisMonth": "本月",
+                "last7Days": "最近 7 天"
+            },
+            "deposit": {
+                "subtitle": "交易追蹤與分析",
             "stats": {
                 "totalIncome": "總收入",
                 "totalExpense": "總支出"
@@ -744,6 +747,7 @@ const resources = {
                 "apply": "套用到目標"
             }
         }
+    }
     }
 };
 
