@@ -9,7 +9,6 @@ import {
     endOfYear,
     parseISO,
     eachDayOfInterval,
-    isSameDay,
     startOfDay,
     endOfDay
 } from 'date-fns';
