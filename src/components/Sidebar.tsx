@@ -3,7 +3,8 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     Calendar, Wallet, Calculator, Settings,
-    Menu, ChevronRight, Landmark, Activity, Heart, Utensils, ChevronLeft, BookOpen
+    Menu, ChevronRight, Landmark, Activity, Heart, Utensils, ChevronLeft, BookOpen,
+    LayoutDashboard
 } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
@@ -28,6 +29,7 @@ const Sidebar: React.FC = () => {
     }, []);
 
     const menuItems = [
+        { path: '/overview', name: t('nav.overview'), icon: LayoutDashboard },
         { path: '/calendar/home', name: t('nav.calendar'), icon: Calendar },
         { path: '/deposit/list', name: t('nav.deposit'), icon: Wallet },
         { path: '/calc/list', name: t('nav.calculation'), icon: Calculator },
@@ -52,24 +54,24 @@ const Sidebar: React.FC = () => {
                 )}
             </div>
 
-            <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto no-scrollbar">
+            <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto no-scrollbar">
                 {menuItems.map((item) => (
                     <NavLink
                         key={item.path}
                         to={item.path}
                         className={({ isActive }) => `
-            flex items-center gap-4 px-4 py-3 rounded transition-all duration-200 group
+            flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 group relative
             ${isActive
-                                ? 'bg-primary/10 text-primary font-bold border border-primary/20 shadow-sm'
+                                ? 'bg-primary text-primary-content shadow-lg shadow-primary/30 font-bold'
                                 : 'text-base-content/60 hover:bg-base-200 hover:text-base-content'}
           `}
                     >
                         {({ isActive }) => (
                             <>
                                 <item.icon size={20} strokeWidth={isActive ? 2.5 : 2} className={isSidebarOpen ? '' : 'mx-auto'} />
-                                {isSidebarOpen && <span className="text-sm">{item.name}</span>}
+                                {isSidebarOpen && <span className="text-sm tracking-wide">{item.name}</span>}
                                 {isSidebarOpen && location.pathname === item.path && (
-                                    <ChevronRight size={14} className="ml-auto opacity-50" />
+                                    <ChevronRight size={14} className="ml-auto opacity-80" />
                                 )}
                             </>
                         )}

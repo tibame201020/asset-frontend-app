@@ -5,6 +5,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 
 // Placeholder Pages (will implement later)
+import Overview from './pages/Overview';
 import CalendarHome from './pages/CalendarHome';
 import DepositList from './pages/DepositList';
 import CalcList from './pages/CalcList';
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/health/dashboard" replace />
+        element: <Navigate to="/overview" replace />
+      },
+      {
+        path: "overview",
+        element: <Overview />
       },
       {
         path: "calendar/home",
