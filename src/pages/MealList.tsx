@@ -129,7 +129,7 @@ const MealList: React.FC = () => {
         });
     };
 
-    const filterResult = useMealFilter(logs, keyword, dateRange);
+    const filterResult = useMealFilter(logs, mealTypes, keyword, dateRange);
     const { filteredLogs, chartData, lineChartData, mealTypes: allMealTypes } = filterResult;
 
     // Summary Stats

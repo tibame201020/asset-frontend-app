@@ -1,87 +1,83 @@
 import { useMemo } from 'react';
 import { startOfDay, endOfDay, format, eachDayOfInterval } from 'date-fns';
-import type { MealLog } from '../services/mealService';
+import type { MealLog, MealType } from '../services/mealService';
 
 export const useMealFilter = (
     logs: MealLog[],
+    mealTypes: MealType[],
     keyword: string,
     dateRange: { start: string; end: string }
 ) => {
-    const filteredLogs = useMemo(() => {
-        return logs.filter((log) => {
+    return useMemo(() => {
+        const typeNameById = new Map(mealTypes.map(type => [type.id, type.name]));
+        const getTypeName = (log: MealLog) => log.mealTypeId ? (typeNameById.get(log.mealTypeId) || '其他') : '未分類';
+
+        const filteredLogs = logs.filter((log) => {
             const date = new Date(log.transDate);
             const start = startOfDay(new Date(dateRange.start));
             const end = endOfDay(new Date(dateRange.end));
-
-            // Use 1ms buffer to avoid edge case issues
+            const lower = keyword.toLowerCase();
             const matchesDate = date.getTime() >= start.getTime() && date.getTime() <= end.getTime();
             const matchesKeyword = !keyword ||
-                log.mealName.toLowerCase().includes(keyword.toLowerCase()) ||
-                (log.ps && log.ps.toLowerCase().includes(keyword.toLowerCase()));
-
+                getTypeName(log).toLowerCase().includes(lower) ||
+                log.mealName.toLowerCase().includes(lower) ||
+                (log.ps && log.ps.toLowerCase().includes(lower));
             return matchesDate && matchesKeyword;
         }).sort((a, b) => new Date(b.transDate).getTime() - new Date(a.transDate).getTime());
-    }, [logs, keyword, dateRange]);
 
-    const chartData = useMemo(() => {
-        // 1. First aggregation: Group by Meal Name
-        const nameGroups: Record<string, number> = {};
+        // Drill-down: MealType -> mealName -> ps.
+        const typeGroups: Record<string, number> = {};
         filteredLogs.forEach(log => {
-            nameGroups[log.mealName] = (nameGroups[log.mealName] || 0) + log.calories;
+            const key = getTypeName(log);
+            typeGroups[key] = (typeGroups[key] || 0) + log.calories;
         });
 
-        const nameKeys = Object.keys(nameGroups);
-
-        // 2. Drill-down Logic: If only one Meal Name, group by PS (Note)
-        let finalGroups: Record<string, number> = {};
-
-        if (nameKeys.length === 1) {
+        let finalGroups: Record<string, number> = typeGroups;
+        if (Object.keys(typeGroups).length === 1) {
+            const nameGroups: Record<string, number> = {};
             filteredLogs.forEach(log => {
-                const key = log.ps?.trim() || '(No Note)';
-                finalGroups[key] = (finalGroups[key] || 0) + log.calories;
+                nameGroups[log.mealName] = (nameGroups[log.mealName] || 0) + log.calories;
             });
-        } else {
             finalGroups = nameGroups;
+
+            if (Object.keys(nameGroups).length === 1) {
+                const noteGroups: Record<string, number> = {};
+                filteredLogs.forEach(log => {
+                    const key = log.ps?.trim() || '(No Note)';
+                    noteGroups[key] = (noteGroups[key] || 0) + log.calories;
+                });
+                finalGroups = noteGroups;
+            }
         }
 
-        return Object.entries(finalGroups).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value);
-    }, [filteredLogs]);
+        const chartData = Object.entries(finalGroups)
+            .map(([name, value]) => ({ name, value }))
+            .sort((a, b) => b.value - a.value);
 
-    const lineChartData = useMemo(() => {
         const dailyMap: Record<string, any> = {};
-
-        // 1. Initialize with all days in range (Gap Filling)
         try {
-            const days = eachDayOfInterval({
+            eachDayOfInterval({
                 start: startOfDay(new Date(dateRange.start)),
                 end: endOfDay(new Date(dateRange.end))
-            });
-            days.forEach(day => {
+            }).forEach(day => {
                 const dateStr = format(day, 'yyyy-MM-dd');
                 dailyMap[dateStr] = { date: dateStr, total: 0 };
             });
         } catch (e) {
-            console.error("Invalid date range", e);
+            console.error('Invalid date range', e);
         }
 
-        // 2. Aggregate Data
         filteredLogs.forEach(log => {
             const dateStr = format(new Date(log.transDate), 'yyyy-MM-dd');
-            if (!dailyMap[dateStr]) {
-                dailyMap[dateStr] = { date: dateStr, total: 0 };
-            }
-
-            const mealName = log.mealName;
-            dailyMap[dateStr][mealName] = (dailyMap[dateStr][mealName] || 0) + log.calories;
+            if (!dailyMap[dateStr]) dailyMap[dateStr] = { date: dateStr, total: 0 };
+            const typeName = getTypeName(log);
+            dailyMap[dateStr][typeName] = (dailyMap[dateStr][typeName] || 0) + log.calories;
             dailyMap[dateStr].total += log.calories;
         });
 
-        return Object.values(dailyMap).sort((a: any, b: any) => a.date.localeCompare(b.date));
-    }, [filteredLogs, dateRange]);
+        const lineChartData = Object.values(dailyMap).sort((a: any, b: any) => a.date.localeCompare(b.date));
+        const analyticsTypes = Array.from(new Set(filteredLogs.map(getTypeName)));
 
-    const mealTypes = useMemo(() => {
-        return Array.from(new Set(logs.map(l => l.mealName)));
-    }, [logs]);
-
-    return { filteredLogs, chartData, lineChartData, mealTypes };
+        return { filteredLogs, chartData, lineChartData, mealTypes: analyticsTypes, getTypeName };
+    }, [logs, mealTypes, keyword, dateRange]);
 };

@@ -134,7 +134,7 @@ const ExerciseList: React.FC = () => {
     };
 
     // Filter & Aggregate Logic - Rename exerciseTypes from hook to avoid conflict
-    const filterResult = useExerciseFilter(logs, keyword, dateRange);
+    const filterResult = useExerciseFilter(logs, exerciseTypes, keyword, dateRange);
     const { filteredLogs, chartData, lineChartData } = filterResult;
     const logExerciseNames = filterResult.exerciseTypes; // string[]
 
