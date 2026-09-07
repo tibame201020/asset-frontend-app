@@ -171,7 +171,8 @@ const resources = {
                 "modal": {
                     "title": "Meal Management",
                     "fields": {
-                        "name": "Meal Content",
+                        "type": "Meal Period",
+                        "name": "Meal Item",
                         "calories": "Calories Intake",
                         "date": "Date & Time",
                         "ps": "Note"
@@ -293,7 +294,7 @@ const resources = {
                     "theme": "Theme & Appearance",
                     "notifications": "Notification Position",
                     "exercise": "Exercise Types & Defaults",
-                    "meal": "Meal Types & Defaults",
+                    "meal": "Meal Period Taxonomy",
                     "backup": "Backup & Restore",
                     "system": "System Info",
                     "danger": "Danger Zone"

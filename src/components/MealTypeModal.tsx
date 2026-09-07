@@ -81,7 +81,7 @@ const MealTypeModal: React.FC<MealTypeModalProps> = ({ isOpen, onClose, onTypesC
 
                 <div className="p-6 flex-1 overflow-y-auto custom-scrollbar">
                     <div className="flex justify-between items-center mb-4">
-                        <span className="text-xs font-black opacity-30 uppercase tracking-[0.2em]">{types.length} types</span>
+                        <span className="text-xs font-black opacity-30 uppercase tracking-[0.2em]">{types.length} {t('settings.sections.meal')}</span>
                         <button className="btn btn-secondary btn-sm gap-2" onClick={() => { setIsEditingType(0); setEditingType({ id: 0, name: '', icon: '🍴' }); }}><Plus size={14} /> {t('settings.meal.addNew')}</button>
                     </div>
 
