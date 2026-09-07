@@ -1,7 +1,9 @@
 name: Build and Push Docker Image
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build-and-push:
@@ -9,7 +11,7 @@ jobs:
     environment: 'docker build'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -18,8 +20,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/asset-frontend:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/asset-frontend:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/asset-frontend:${{ github.ref_name }}
