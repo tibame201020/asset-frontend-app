@@ -305,7 +305,7 @@ const MealList: React.FC = () => {
                                                                 {format(new Date(log.transDate), 'yyyy-MM-dd HH:mm')}
                                                             </td>
                                                             <td>
-                                                                <div className="badge badge-sm record-type-pill border-0 bg-base-200/70 text-base-content/70 gap-1.5 font-semibold whitespace-nowrap shadow-none">
+                                                                <div className="record-type-label inline-flex items-center gap-1.5 text-xs font-semibold text-base-content/60 whitespace-nowrap">
                                                                     <span>{type?.icon || '🍴'}</span>
                                                                     <span>{type?.name || '未分類'}</span>
                                                                 </div>
