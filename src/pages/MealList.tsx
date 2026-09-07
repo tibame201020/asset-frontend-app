@@ -248,6 +248,7 @@ const MealList: React.FC = () => {
                                         <tr className="bg-base-100 shadow-sm border-b border-base-300">
                                             <th className="pl-6 py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('meal.dashboard.table.actions')}</th>
                                             <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('meal.dashboard.table.date')}</th>
+                                            <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-32">{t('meal.dashboard.table.type')}</th>
                                             <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('meal.dashboard.table.item')}</th>
                                             <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-24">{t('meal.dashboard.table.calories')}</th>
                                             <th className="pr-6 py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 min-w-[200px]">{t('meal.dashboard.table.ps')}</th>
@@ -284,7 +285,7 @@ const MealList: React.FC = () => {
                                         ) : (
                                             <>
                                                 {filteredLogs.map(log => {
-                                                    const type = mealTypes.find(t => t.name === log.mealName);
+                                                    const type = mealTypes.find(t => t.id === log.mealTypeId);
                                                     return (
                                                         <tr key={log.id} className="group hover:bg-base-300/30 transition-colors shadow-sm">
                                                             <td className="pl-6 py-4">
@@ -304,10 +305,13 @@ const MealList: React.FC = () => {
                                                                 {format(new Date(log.transDate), 'yyyy-MM-dd HH:mm')}
                                                             </td>
                                                             <td>
-                                                                <div className="flex items-center gap-2">
-                                                                    <span className="text-xl">{type?.icon || '🍚'}</span>
-                                                                    <span className="text-sm font-bold tracking-tight">{log.mealName}</span>
+                                                                <div className="badge badge-sm badge-outline gap-1.5 font-bold whitespace-nowrap">
+                                                                    <span>{type?.icon || '🍴'}</span>
+                                                                    <span>{type?.name || '未分類'}</span>
                                                                 </div>
+                                                            </td>
+                                                            <td>
+                                                                <span className="text-sm font-bold tracking-tight">{log.mealName}</span>
                                                             </td>
                                                             <td className="text-right font-mono font-bold text-secondary">
                                                                 {log.calories} <span className="text-[10px] opacity-70">kcal</span>
@@ -320,7 +324,7 @@ const MealList: React.FC = () => {
                                                 })}
                                                 {filteredLogs.length === 0 && (
                                                     <tr className="border-none">
-                                                        <td colSpan={5} className="text-center py-20 opacity-30">
+                                                        <td colSpan={6} className="text-center py-20 opacity-30">
                                                             <div className="flex flex-col items-center gap-4">
                                                                 <AlertCircle size={48} strokeWidth={1} />
                                                                 <span className="text-sm font-bold uppercase tracking-[0.2em]">{t('meal.dashboard.table.noRecords')}</span>

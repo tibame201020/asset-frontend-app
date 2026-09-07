@@ -108,6 +108,7 @@ const resources = {
                 "table": {
                     "actions": "Actions",
                     "date": "Date Time",
+                    "type": "Activity Type",
                     "item": "Exercise Item",
                     "duration": "Duration (min)",
                     "calories": "Calories (kcal)",
@@ -190,6 +191,7 @@ const resources = {
                     total: "Total",
                     table: {
                         date: "Date Time",
+                        type: "Meal Type",
                         item: "Meal Item",
                         calories: "Calories (kcal)",
                         ps: "Note",
@@ -529,6 +531,7 @@ const resources = {
                 "table": {
                     "actions": "操作",
                     "date": "日期時間",
+                    "type": "運動類型",
                     "item": "運動項目",
                     "duration": "時長 (分)",
                     "calories": "消耗 (kcal)",

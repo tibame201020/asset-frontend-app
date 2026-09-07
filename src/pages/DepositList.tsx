@@ -122,9 +122,9 @@ const DepositList: React.FC = () => {
         if (!dateValue) return '';
         try {
             if (typeof dateValue === 'string') {
-                return format(parseISO(dateValue), 'yyyy-MM-dd');
+                return format(parseISO(dateValue), 'yyyy-MM-dd HH:mm');
             }
-            return format(new Date(dateValue), 'yyyy-MM-dd');
+            return format(new Date(dateValue), 'yyyy-MM-dd HH:mm');
         } catch (e) {
             console.error("Date format error", e);
             return String(dateValue);
@@ -358,9 +358,12 @@ const DepositList: React.FC = () => {
                                                         </div>
                                                     </div>
                                                     <div className="flex justify-between items-center pt-3 border-t border-base-content/5">
-                                                        <div className={`badge badge-sm font-bold gap-1 ${isIncome ? 'badge-success text-success-content' : 'badge-error text-error-content'}`}>
-                                                            {isIncome ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
-                                                            {log.type}
+                                                        <div className="flex flex-col gap-1 max-w-[55%]">
+                                                            <div className={`badge badge-sm font-bold gap-1 ${isIncome ? 'badge-success text-success-content' : 'badge-error text-error-content'}`}>
+                                                                {isIncome ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
+                                                                {log.type}
+                                                            </div>
+                                                            <div className="text-xs opacity-50 italic truncate">{log.ps || '...'}</div>
                                                         </div>
                                                         <div className="flex gap-2">
                                                             <button className="btn btn-circle btn-ghost btn-xs text-info" onClick={() => handleEdit(log)}><Edit3 size={14} /></button>

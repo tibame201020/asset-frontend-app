@@ -1,10 +1,10 @@
-﻿name: Verify
+name: Verify
 on:
   pull_request:
   push:
     branches: [main]
 jobs:
-  build:
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -13,4 +13,5 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - run: npm test
       - run: npm run build
