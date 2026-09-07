@@ -12,24 +12,23 @@ export interface ExerciseType {
 
 export const exerciseService = {
     deleteLog: async (id: number) => {
-        const response = await api.delete(`/exercise/delete/${id}`);
+        const response = await api.delete<boolean>(`/exercise/delete/${id}`);
         return response.data;
     },
 
     getLogs: async (start: number, end: number) => {
-        const response = await api.post('/exercise/queryByDateRange', {
+        const response = await api.post<ExerciseLog[]>('/exercise/queryByDateRange', {
             start: new Date(start).toISOString(),
             end: new Date(end).toISOString()
         });
-        return response.data as ExerciseLog[];
-    },
-
-    saveLog: async (log: ExerciseLog | Omit<ExerciseLog, 'id'>) => {
-        const response = await api.post('/exercise/save', log);
         return response.data;
     },
 
-    // New Exercise Type methods
+    saveLog: async (log: ExerciseLog | Omit<ExerciseLog, 'id'>): Promise<ExerciseLog> => {
+        const response = await api.post<ExerciseLog>('/exercise/save', log);
+        return response.data;
+    },
+
     getAllTypes: async (): Promise<ExerciseType[]> => {
         const response = await api.get('/exercise-type/all');
         return response.data;
