@@ -3,6 +3,7 @@ import api from './api';
 export interface MealLog {
     id: number;
     mealName: string;
+    mealTypeId?: number;
     calories: number;
     transDate: string;
     ps: string;
@@ -17,7 +18,6 @@ export interface MealType {
 }
 
 export const mealService = {
-    // Logs
     getLogs: async (start?: number, end?: number) => {
         const params = start && end ? { start, end } : {};
         const res = await api.get<MealLog[]>('/meal/logs', { params });
@@ -30,8 +30,6 @@ export const mealService = {
     deleteLog: async (id: number) => {
         await api.delete(`/meal/log/${id}`);
     },
-
-    // Types
     getAllTypes: async () => {
         const res = await api.get<MealType[]>('/meal/types');
         return res.data;

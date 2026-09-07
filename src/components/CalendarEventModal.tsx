@@ -76,7 +76,11 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({ isOpen, onClose
                 logTime: new Date().toISOString()
             };
 
-            await calendarService.addEvent(payload);
+            if (initialData?.id) {
+                await calendarService.updateEvent(initialData.id, payload);
+            } else {
+                await calendarService.addEvent(payload);
+            }
             onSuccess();
             onClose();
         } catch (error) {

@@ -2,8 +2,8 @@ import api from './api';
 import type { TransLog, DateRange } from '../types';
 
 export const depositService = {
-    save: async (log: TransLog): Promise<boolean> => {
-        const response = await api.post<boolean>('/trans/save', log);
+    save: async (log: TransLog): Promise<TransLog> => {
+        const response = await api.post<TransLog>('/trans/save', log);
         return response.data;
     },
 

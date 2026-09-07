@@ -39,6 +39,7 @@ export interface CalendarEvent {
 export interface ExerciseLog {
     id: number;
     exerciseName: string;
+    exerciseTypeId?: number;
     duration: number; // minutes
     calories: number;
     transDate: string; // ISO string
