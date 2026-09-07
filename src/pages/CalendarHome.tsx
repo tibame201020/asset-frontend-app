@@ -131,6 +131,11 @@ const CalendarHome: React.FC = () => {
         setIsModalOpen(true);
     };
 
+    const handleSaveMeal = async (log: any) => {
+        await mealService.saveLog(log);
+        setIsMealModalOpen(false);
+    };
+
     const handleModalSuccess = () => {
         if (calendarRef.current) {
             const api = calendarRef.current.getApi();
@@ -308,10 +313,7 @@ const CalendarHome: React.FC = () => {
             <MealModal
                 isOpen={isMealModalOpen}
                 onClose={() => setIsMealModalOpen(false)}
-                onSave={async () => {
-                    // Just refresh if needed, but calendar doesn't show meals yet
-                    setIsMealModalOpen(false);
-                }}
+                onSave={handleSaveMeal}
                 mealTypes={mealTypes}
             />
         </div>

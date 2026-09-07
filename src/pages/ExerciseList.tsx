@@ -268,6 +268,7 @@ const ExerciseList: React.FC = () => {
                                             <tr className="bg-base-100 shadow-sm border-b border-base-300">
                                                 <th className="pl-6 py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-24">{t('exercise.table.actions')}</th>
                                                 <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-36">{t('exercise.table.date')}</th>
+                                                <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-32">{t('exercise.table.type')}</th>
                                                 <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 w-48">{t('exercise.table.item')}</th>
                                                 <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-24">{t('exercise.table.duration')}</th>
                                                 <th className="py-5 text-[12px] font-black uppercase tracking-[0.15em] opacity-40 text-right w-24">{t('exercise.table.calories')}</th>
@@ -276,7 +277,7 @@ const ExerciseList: React.FC = () => {
                                         </thead>
                                         <tbody className="divide-y divide-base-content/5">
                                             {filteredLogs.map(log => {
-                                                const type = exerciseTypes.find(t => t.name === log.exerciseName);
+                                                const type = exerciseTypes.find(t => t.id === log.exerciseTypeId);
                                                 return (
                                                     <tr key={log.id} className="group hover:bg-base-300/30 transition-colors shadow-sm">
                                                         <td className="pl-6 py-4">
@@ -296,10 +297,13 @@ const ExerciseList: React.FC = () => {
                                                             {format(new Date(log.transDate), 'yyyy-MM-dd HH:mm')}
                                                         </td>
                                                         <td>
-                                                            <div className="flex items-center gap-2">
-                                                                <span className="text-xl">{type?.icon || '✨'}</span>
-                                                                <span className="text-sm font-bold tracking-tight">{log.exerciseName}</span>
+                                                            <div className="badge badge-sm badge-outline gap-1.5 font-bold whitespace-nowrap">
+                                                                <span>{type?.icon || '✨'}</span>
+                                                                <span>{type?.name || '未分類'}</span>
                                                             </div>
+                                                        </td>
+                                                        <td>
+                                                            <span className="text-sm font-bold tracking-tight">{log.exerciseName}</span>
                                                         </td>
                                                         <td className="text-right font-mono font-bold text-secondary">
                                                             {log.duration} <span className="text-[10px] opacity-70">min</span>
@@ -315,7 +319,7 @@ const ExerciseList: React.FC = () => {
                                             })}
                                             {filteredLogs.length === 0 && (
                                                 <tr className="border-none">
-                                                    <td colSpan={6} className="text-center py-20 opacity-30">
+                                                    <td colSpan={7} className="text-center py-20 opacity-30">
                                                         <div className="flex flex-col items-center gap-4">
                                                             <AlertCircle size={48} strokeWidth={1} />
                                                             <span className="text-sm font-bold uppercase tracking-[0.2em]">{t('exercise.table.noRecords')}</span>
@@ -332,7 +336,7 @@ const ExerciseList: React.FC = () => {
                             {!loading && (
                                 <div className="lg:hidden mt-4 space-y-4">
                                     {filteredLogs.map(log => {
-                                        const type = exerciseTypes.find(t => t.name === log.exerciseName);
+                                        const type = exerciseTypes.find(t => t.id === log.exerciseTypeId);
                                         return (
                                             <div key={log.id} className="card bg-base-200/50 border border-base-300 rounded p-5 shadow-sm group active:scale-[0.98] transition-all">
                                                 <div className="flex justify-between items-start mb-3">
@@ -340,10 +344,11 @@ const ExerciseList: React.FC = () => {
                                                         <div className="badge badge-xs badge-outline opacity-40 mb-1 font-mono uppercase tracking-tighter">
                                                             {format(new Date(log.transDate), 'yyyy-MM-dd HH:mm')}
                                                         </div>
-                                                        <h4 className="font-bold text-sm flex items-center gap-2">
+                                                        <div className="badge badge-xs badge-outline gap-1 mb-1">
                                                             <span>{type?.icon || '✨'}</span>
-                                                            {log.exerciseName}
-                                                        </h4>
+                                                            <span>{type?.name || '未分類'}</span>
+                                                        </div>
+                                                        <h4 className="font-bold text-sm">{log.exerciseName}</h4>
                                                     </div>
                                                     <div className="text-right">
                                                         <div className="text-lg font-mono font-black text-primary">
