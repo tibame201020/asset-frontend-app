@@ -30,6 +30,8 @@ describe('record presentation completeness contract', () => {
     expect(exercise).not.toMatch(/record-type-label[^\"]*bg-/);
     expect(meal).not.toMatch(/record-type-label[^\"]*rounded/);
     expect(exercise).not.toMatch(/record-type-label[^\"]*rounded/);
+    expect(meal).not.toMatch(/record-type-label[^\"]*text-base-content\/60/);
+    expect(exercise).not.toMatch(/record-type-label[^\"]*text-base-content\/60/);
   });
 
   it('Transaction list preserves time and note context on mobile', () => {
