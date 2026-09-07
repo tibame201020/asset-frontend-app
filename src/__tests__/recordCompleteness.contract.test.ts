@@ -19,6 +19,16 @@ describe('record presentation completeness contract', () => {
     expect((source.match(/type\?\.name/g) || []).length).toBeGreaterThanOrEqual(2);
   });
 
+  it('Meal and Exercise taxonomy pills are soft metadata without outline borders', () => {
+    const meal = read('src/pages/MealList.tsx');
+    const exercise = read('src/pages/ExerciseList.tsx');
+    expect(meal).toContain('record-type-pill');
+    expect(exercise).toContain('record-type-pill');
+    expect(meal).toMatch(/record-type-pill[^\"]*border-0/);
+    expect(exercise).toMatch(/record-type-pill[^\"]*border-0/);
+    expect(meal).not.toMatch(/record-type-pill[^\"]*badge-outline/);
+    expect(exercise).not.toMatch(/record-type-pill[^\"]*badge-outline/);
+  });
   it('Transaction list preserves time and note context on mobile', () => {
     const source = read('src/pages/DepositList.tsx');
     expect(source).toContain("'yyyy-MM-dd HH:mm'");
