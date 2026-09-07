@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { ExerciseLog } from '../types';
+import type { ExerciseType } from '../services/exerciseService';
 import { eachDayOfInterval, format, parseISO } from 'date-fns';
 
 interface ChartData {
@@ -14,14 +15,22 @@ interface FilterResult {
     exerciseTypes: string[];
 }
 
-export const useExerciseFilter = (logs: ExerciseLog[], keyword: string, dateRange: { start: string; end: string }): FilterResult => {
+export const useExerciseFilter = (
+    logs: ExerciseLog[],
+    exerciseTypes: ExerciseType[],
+    keyword: string,
+    dateRange: { start: string; end: string }
+): FilterResult => {
     return useMemo(() => {
-        // 1. Filter logs by keyword
+        const typeNameById = new Map(exerciseTypes.map(type => [type.id, type.name]));
+        const getTypeName = (log: ExerciseLog) => log.exerciseTypeId ? (typeNameById.get(log.exerciseTypeId) || 'Other') : (log.exerciseName || 'Uncategorized');
         const lowerKeyword = keyword.toLowerCase().trim();
+
         const filteredLogs = logs.filter(log => {
             if (!lowerKeyword) return true;
             return (
                 (log.transDate && String(log.transDate).includes(lowerKeyword)) ||
+                getTypeName(log).toLowerCase().includes(lowerKeyword) ||
                 (log.exerciseName && log.exerciseName.toLowerCase().includes(lowerKeyword)) ||
                 (log.duration && log.duration.toString().includes(lowerKeyword)) ||
                 (log.calories && log.calories.toString().includes(lowerKeyword)) ||
@@ -29,65 +38,54 @@ export const useExerciseFilter = (logs: ExerciseLog[], keyword: string, dateRang
             );
         });
 
-        // 2. Aggregate Data for Pie Chart (Drill-down Logic)
-        const nameGroups: Record<string, number> = {};
-        const exerciseTypes: Set<string> = new Set();
-
+        // Drill-down: ExerciseType -> exerciseName -> ps.
+        const typeGroups: Record<string, number> = {};
         filteredLogs.forEach(log => {
-            nameGroups[log.exerciseName] = (nameGroups[log.exerciseName] || 0) + log.calories;
-            exerciseTypes.add(log.exerciseName);
+            const key = getTypeName(log);
+            typeGroups[key] = (typeGroups[key] || 0) + log.calories;
         });
 
-        const nameKeys = Object.keys(nameGroups);
-        let finalGroups: Record<string, number> = {};
-
-        // If only one Exercise Name, group by PS
-        if (nameKeys.length === 1) {
+        let finalGroups: Record<string, number> = typeGroups;
+        if (Object.keys(typeGroups).length === 1) {
+            const nameGroups: Record<string, number> = {};
             filteredLogs.forEach(log => {
-                const key = log.ps?.trim() || '(No Note)';
-                finalGroups[key] = (finalGroups[key] || 0) + log.calories;
+                nameGroups[log.exerciseName] = (nameGroups[log.exerciseName] || 0) + log.calories;
             });
-        } else {
             finalGroups = nameGroups;
+
+            if (Object.keys(nameGroups).length === 1) {
+                const noteGroups: Record<string, number> = {};
+                filteredLogs.forEach(log => {
+                    const key = log.ps?.trim() || '(No Note)';
+                    noteGroups[key] = (noteGroups[key] || 0) + log.calories;
+                });
+                finalGroups = noteGroups;
+            }
         }
 
-        const chartData: ChartData[] = Object.entries(finalGroups).map(([name, value]) => ({
-            name,
-            value
-        })).sort((a, b) => b.value - a.value);
+        const chartData: ChartData[] = Object.entries(finalGroups)
+            .map(([name, value]) => ({ name, value }))
+            .sort((a, b) => b.value - a.value);
 
-        // 3. Aggregate Data for Line Chart (Daily Totals)
         const dailyMap: Record<string, any> = {};
         try {
-            const days = eachDayOfInterval({
-                start: parseISO(dateRange.start),
-                end: parseISO(dateRange.end)
-            });
-
-            days.forEach(day => {
+            eachDayOfInterval({ start: parseISO(dateRange.start), end: parseISO(dateRange.end) }).forEach(day => {
                 const dateStr = format(day, 'yyyy-MM-dd');
                 dailyMap[dateStr] = { date: dateStr, calorieTotal: 0, durationTotal: 0 };
             });
         } catch (e) {
-            console.error("Invalid date range for interval", e);
+            console.error('Invalid date range for interval', e);
         }
 
         filteredLogs.forEach(log => {
             let dateStr = '';
-            if (typeof log.transDate === 'string') {
-                dateStr = format(parseISO(log.transDate), 'yyyy-MM-dd');
-            } else if (typeof log.transDate === 'number') {
-                dateStr = format(new Date(log.transDate), 'yyyy-MM-dd');
-            } else {
-                return;
-            }
+            if (typeof log.transDate === 'string') dateStr = format(parseISO(log.transDate), 'yyyy-MM-dd');
+            else if (typeof log.transDate === 'number') dateStr = format(new Date(log.transDate), 'yyyy-MM-dd');
+            else return;
 
-            if (!dailyMap[dateStr]) {
-                dailyMap[dateStr] = { date: dateStr, calorieTotal: 0, durationTotal: 0 };
-            }
-
-            const typeKey = log.exerciseName;
-            dailyMap[dateStr][typeKey] = (dailyMap[dateStr][typeKey] || 0) + log.calories;
+            if (!dailyMap[dateStr]) dailyMap[dateStr] = { date: dateStr, calorieTotal: 0, durationTotal: 0 };
+            const typeName = getTypeName(log);
+            dailyMap[dateStr][typeName] = (dailyMap[dateStr][typeName] || 0) + log.calories;
             dailyMap[dateStr].calorieTotal += log.calories;
             dailyMap[dateStr].durationTotal += log.duration;
         });
@@ -98,8 +96,7 @@ export const useExerciseFilter = (logs: ExerciseLog[], keyword: string, dateRang
             filteredLogs,
             chartData,
             lineChartData,
-            exerciseTypes: Array.from(exerciseTypes)
+            exerciseTypes: Array.from(new Set(filteredLogs.map(getTypeName)))
         };
-
-    }, [logs, keyword, dateRange]);
+    }, [logs, exerciseTypes, keyword, dateRange]);
 };

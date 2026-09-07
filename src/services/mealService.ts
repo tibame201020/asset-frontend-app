@@ -14,7 +14,6 @@ export interface MealType {
     id: number;
     name: string;
     icon: string;
-    defaultCalories: number;
 }
 
 export const mealService = {
