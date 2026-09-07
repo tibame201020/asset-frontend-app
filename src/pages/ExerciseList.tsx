@@ -297,7 +297,7 @@ const ExerciseList: React.FC = () => {
                                                             {format(new Date(log.transDate), 'yyyy-MM-dd HH:mm')}
                                                         </td>
                                                         <td>
-                                                            <div className="badge badge-sm record-type-pill border-0 bg-base-200/70 text-base-content/70 gap-1.5 font-semibold whitespace-nowrap shadow-none">
+                                                            <div className="record-type-label inline-flex items-center gap-1.5 text-xs font-semibold text-base-content/60 whitespace-nowrap">
                                                                 <span>{type?.icon || '✨'}</span>
                                                                 <span>{type?.name || '未分類'}</span>
                                                             </div>
@@ -344,7 +344,7 @@ const ExerciseList: React.FC = () => {
                                                         <div className="badge badge-xs badge-outline opacity-40 mb-1 font-mono uppercase tracking-tighter">
                                                             {format(new Date(log.transDate), 'yyyy-MM-dd HH:mm')}
                                                         </div>
-                                                        <div className="badge badge-xs record-type-pill border-0 bg-base-200/70 text-base-content/70 gap-1 mb-1 font-medium shadow-none">
+                                                        <div className="record-type-label inline-flex items-center gap-1 text-[11px] font-medium text-base-content/60 whitespace-nowrap mb-1">
                                                             <span>{type?.icon || '✨'}</span>
                                                             <span>{type?.name || '未分類'}</span>
                                                         </div>
