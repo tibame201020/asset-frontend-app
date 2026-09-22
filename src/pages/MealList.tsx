@@ -110,7 +110,7 @@ const MealList: React.FC = () => {
         }
     };
 
-    const confirmDelete = (id: number) => {
+    const confirmDelete = (id: string | number) => {
         confirm({
             title: t('exercise.confirm.deleteTitle'),
             message: t('exercise.confirm.deleteMessage'),

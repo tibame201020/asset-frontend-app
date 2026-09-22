@@ -94,7 +94,7 @@ const DepositList: React.FC = () => {
         setIsModalOpen(true);
     };
 
-    const confirmDelete = (id: number) => {
+    const confirmDelete = (id: string | number) => {
         confirm({
             title: t('deposit.confirm.deleteTitle'),
             message: t('deposit.confirm.deleteMessage'),

@@ -1,5 +1,5 @@
 export interface TransLog {
-    id: number;
+    id: string | number;
     type: string;
     category: string;
     transDate: string; // ISO string form timestamp
@@ -37,7 +37,7 @@ export interface CalendarEvent {
 }
 
 export interface ExerciseLog {
-    id: number;
+    id: string | number;
     exerciseName: string;
     exerciseTypeId?: number;
     duration: number; // minutes

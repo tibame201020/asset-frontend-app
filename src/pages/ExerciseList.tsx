@@ -13,8 +13,7 @@ import {
     Copy,
     Clock,
     Flame,
-    AlertCircle,
-    Settings2
+    AlertCircle
 } from 'lucide-react';
 import { exerciseService, type ExerciseType } from '../services/exerciseService';
 import type { ExerciseLog } from '../types';
@@ -23,7 +22,6 @@ import { useNotification } from '../contexts/NotificationContext';
 import ExerciseModal from '../components/ExerciseModal';
 import ExerciseTimeline from '../components/ExerciseTimeline';
 import ExerciseChart from '../components/ExerciseChart';
-import ExerciseTypeModal from '../components/ExerciseTypeModal';
 import { subMonths, format } from 'date-fns';
 
 
@@ -45,7 +43,6 @@ const ExerciseList: React.FC = () => {
 
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isTypeModalOpen, setIsTypeModalOpen] = useState(false);
     const [editingLog, setEditingLog] = useState<ExerciseLog | null>(null);
     const [exerciseTypes, setExerciseTypes] = useState<ExerciseType[]>([]);
 
@@ -114,7 +111,7 @@ const ExerciseList: React.FC = () => {
         }
     };
 
-    const confirmDelete = (id: number) => {
+    const confirmDelete = (id: string | number) => {
         confirm({
             title: t('exercise.confirm.deleteTitle'),
             message: t('exercise.confirm.deleteMessage'),
@@ -212,9 +209,6 @@ const ExerciseList: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2 w-full xl:w-auto shrink-0">
-                    <button className="btn btn-ghost btn-sm btn-square rounded border border-base-300 shadow-sm" onClick={() => setIsTypeModalOpen(true)} title={t('settings.sections.exercise')}>
-                        <Settings2 size={18} className="opacity-60" />
-                    </button>
                     <button className="btn btn-primary btn-sm px-4 rounded shadow-lg shadow-primary/20 gap-2 flex-grow xl:flex-grow-0 hover:scale-105 transition-transform" onClick={handleAdd}>
                         <Plus size={18} /> {t('exercise.filter.add')}
                     </button>
@@ -399,11 +393,6 @@ const ExerciseList: React.FC = () => {
                 onSave={handleSave}
                 initialData={editingLog}
                 exerciseTypes={exerciseTypes}
-            />
-            <ExerciseTypeModal
-                isOpen={isTypeModalOpen}
-                onClose={() => setIsTypeModalOpen(false)}
-                onTypesChange={fetchTypes}
             />
         </div>
     );

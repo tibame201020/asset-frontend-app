@@ -1,0 +1,154 @@
+name: personal-asset-hub
+
+services:
+  app:
+    build:
+      context: .
+    container_name: asset-hub
+    environment:
+      PORT: 8080
+      APP_TIMEZONE: ${APP_TIMEZONE:-Asia/Taipei}
+      BALANCE_GOAL: ${BALANCE_GOAL:-1949}
+      APP_SETTINGS_PATH: /data/settings.json
+      SURE_BASE_URL: http://sure-web:3000
+      SURE_API_KEY: ${SURE_API_KEY:-}
+      SURE_DEFAULT_ACCOUNT_ID: ${SURE_DEFAULT_ACCOUNT_ID:-}
+      NUTRITRACE_BASE_URL: http://nutritrace:3001
+      NUTRITRACE_USERNAME: ${NUTRITRACE_USERNAME:-}
+      NUTRITRACE_PASSWORD: ${NUTRITRACE_PASSWORD:-}
+      LIFTTRACE_BASE_URL: http://lifttrace:3003
+      LIFTTRACE_USERNAME: ${LIFTTRACE_USERNAME:-}
+      LIFTTRACE_PASSWORD: ${LIFTTRACE_PASSWORD:-}
+    ports:
+      - "127.0.0.1:${ASSET_APP_PORT:-18800}:8080"
+    volumes:
+      - asset-app-data:/data
+    depends_on:
+      sure-web:
+        condition: service_started
+      nutritrace:
+        condition: service_started
+      lifttrace:
+        condition: service_started
+    restart: unless-stopped
+    networks: [personal]
+
+  sure-web:
+    image: ${SURE_IMAGE:-ghcr.io/we-promise/sure:stable}
+    environment: &sure-env
+      POSTGRES_USER: ${SURE_POSTGRES_USER:-sure_user}
+      POSTGRES_PASSWORD: ${SURE_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${SURE_POSTGRES_DB:-sure_production}
+      SECRET_KEY_BASE: ${SURE_SECRET_KEY_BASE}
+      ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY: ${SURE_ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY}
+      ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY: ${SURE_ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY}
+      ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT: ${SURE_ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT}
+      SELF_HOSTED: "true"
+      RAILS_FORCE_SSL: "false"
+      RAILS_ASSUME_SSL: "false"
+      DB_HOST: sure-db
+      DB_PORT: 5432
+      REDIS_URL: redis://sure-redis:6379/1
+    ports:
+      - "127.0.0.1:${SURE_PORT:-13030}:3000"
+    volumes:
+      - sure-storage:/rails/storage
+    depends_on:
+      sure-db:
+        condition: service_healthy
+      sure-redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [personal]
+
+  sure-worker:
+    image: ${SURE_IMAGE:-ghcr.io/we-promise/sure:stable}
+    command: bundle exec sidekiq
+    environment: *sure-env
+    volumes:
+      - sure-storage:/rails/storage
+    depends_on:
+      sure-db:
+        condition: service_healthy
+      sure-redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [personal]
+
+  sure-db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${SURE_POSTGRES_USER:-sure_user}
+      POSTGRES_PASSWORD: ${SURE_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${SURE_POSTGRES_DB:-sure_production}
+    volumes:
+      - sure-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+    networks: [personal]
+
+  sure-redis:
+    image: redis:7-alpine
+    volumes:
+      - sure-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+    networks: [personal]
+
+  nutritrace:
+    image: ${NUTRITRACE_IMAGE:-traceapps/nutritrace:latest}
+    environment:
+      DB_PATH: /data/db/nutritrace.db
+      UPLOADS_PATH: /data/uploads
+      JWT_SECRET: ${NUTRITRACE_JWT_SECRET}
+      INSECURE_COOKIES: "1"
+      MCP_ENABLED: "1"
+      MCP_WRITE_ENABLED: "1"
+      PUBLIC_API_ENABLED: "1"
+      PUBLIC_API_WRITE_ENABLED: "1"
+    ports:
+      - "127.0.0.1:${NUTRITRACE_PORT:-18761}:3001"
+    volumes:
+      - nutritrace-db:/data/db
+      - nutritrace-uploads:/data/uploads
+    restart: unless-stopped
+    networks: [personal]
+
+  lifttrace:
+    image: ${LIFTTRACE_IMAGE:-ghcr.io/traceapps/lifttrace:latest}
+    environment:
+      DB_PATH: /data/db/lifttrace.db
+      UPLOADS_PATH: /data/uploads
+      JWT_SECRET: ${LIFTTRACE_JWT_SECRET}
+      INSECURE_COOKIES: "1"
+      MCP_ENABLED: "1"
+      MCP_WRITE_ENABLED: "1"
+    ports:
+      - "127.0.0.1:${LIFTTRACE_PORT:-18762}:3003"
+    volumes:
+      - lifttrace-db:/data/db
+      - lifttrace-uploads:/data/uploads
+    restart: unless-stopped
+    networks: [personal]
+
+volumes:
+  asset-app-data:
+  sure-storage:
+  sure-postgres:
+  sure-redis:
+  nutritrace-db:
+  nutritrace-uploads:
+  lifttrace-db:
+  lifttrace-uploads:
+
+networks:
+  personal:
+    driver: bridge

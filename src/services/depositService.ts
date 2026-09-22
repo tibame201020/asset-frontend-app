@@ -12,7 +12,7 @@ export const depositService = {
         return response.data;
     },
 
-    delete: async (id: number): Promise<boolean> => {
+    delete: async (id: string | number): Promise<boolean> => {
         const response = await api.delete<boolean>(`/trans/delete/${id}`);
         return response.data;
     }

@@ -1,7 +1,7 @@
 import api from './api';
 
 export interface MealLog {
-    id: number;
+    id: string | number;
     mealName: string;
     mealTypeId?: number;
     calories: number;
@@ -26,7 +26,7 @@ export const mealService = {
         const res = await api.post<MealLog>('/meal/log', log);
         return res.data;
     },
-    deleteLog: async (id: number) => {
+    deleteLog: async (id: string | number) => {
         await api.delete(`/meal/log/${id}`);
     },
     getAllTypes: async () => {

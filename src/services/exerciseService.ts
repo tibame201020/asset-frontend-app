@@ -11,7 +11,7 @@ export interface ExerciseType {
 }
 
 export const exerciseService = {
-    deleteLog: async (id: number) => {
+    deleteLog: async (id: string | number) => {
         const response = await api.delete<boolean>(`/exercise/delete/${id}`);
         return response.data;
     },
